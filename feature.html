@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - STACKLY Real Homes</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<!-- PRELOADER START -->
+<div id="preloader">
+    <div class="loader">
+        <div class="home-icon">
+            <i class="fas fa-home"></i>
+        </div>
+        <span class="loading-text">Loading Properties...</span>
+    </div>
+</div>
+<!-- PRELOADER END -->
+ <style>/* ===== PRELOADER ===== */
+
+#preloader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#0f172a;
+z-index:9999;
+display:flex;
+justify-content:center;
+align-items:center;
+transition:opacity 0.5s ease;
+}
+
+.loader{
+text-align:center;
+}
+
+.home-icon{
+width:70px;
+height:70px;
+border-radius:50%;
+border:4px solid #1e293b;
+border-top:4px solid #22c55e;
+display:flex;
+justify-content:center;
+align-items:center;
+animation:spin 0.8s linear;
+}
+
+.home-icon i{
+color:#22c55e;
+font-size:26px;
+}
+
+.loading-text{
+color:#fff;
+margin-top:10px;
+display:block;
+font-size:14px;
+}
+
+/* Only once spin */
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.home-icon{
+width:55px;
+height:55px;
+}
+.home-icon i{
+font-size:20px;
+}
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const preloader = document.getElementById("preloader");
+
+    setTimeout(function(){
+        preloader.style.opacity="0";
+
+        setTimeout(function(){
+            preloader.style.display="none";
+        },500);
+
+    },1000); // 👈 ONLY 1 SECOND
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0f172a',
+                        accent: '#2c5f4a',
+                        light: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { overflow-x: hidden; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #2c5f4a; border-radius: 4px; }
+
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Desktop Dropdown - Fixed z-index and visibility */
+        .dropdown-wrapper {
+            position: relative;
+            z-index: 100;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            transform-origin: top;
+            transform: perspective(1000px) rotateX(-90deg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 9999;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            min-width: 224px;
+        }
+        .dropdown-active .dropdown-menu {
+            transform: perspective(1000px) rotateX(0deg);
+            opacity: 1;
+            visibility: visible;
+        }
+        .dropdown-icon {
+            transition: transform 0.3s ease;
+        }
+        .dropdown-active .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile Dropdown */
+        .mobile-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-dropdown.active { max-height: 300px; }
+        .mobile-dropdown-arrow { transition: transform 0.3s ease; }
+        .mobile-dropdown.active .mobile-dropdown-arrow { transform: rotate(180deg); }
+
+        /* Hamburger Animation */
+        .hamburger-line {
+            transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+        .menu-open .line-1 {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-open .line-2 {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .menu-open .line-3 {
+            transform: rotate(-45deg) translate(5px, -5px);
+            width: 24px !important;
+        }
+
+        /* Mobile Menu Slide */
+        .mobile-menu-container {
+            clip-path: circle(0% at calc(100% - 40px) 40px);
+            transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .mobile-menu-open .mobile-menu-container {
+            clip-path: circle(150% at calc(100% - 40px) 40px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #2c5f4a 0%, #1a1a1a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hover-lift {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        /* Logo Styles - ALWAYS VISIBLE */
+        .logo-wrapper {
+            position: relative;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        .logo-img {
+            height: 45px;
+            width: 45px;
+            object-fit: contain;
+            flex-shrink: 0;
+            display: block;
+        }
+        @media (max-width: 480px) {
+            .logo-img {
+                height: 36px;
+                width: 36px;
+            }
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+        }
+        .logo-brand {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
+        @media (max-width: 480px) {
+            .logo-brand {
+                font-size: 16px;
+            }
+        }
+        .logo-tagline {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
+        @media (max-width: 480px) {
+            .logo-tagline {
+                font-size: 8px;
+            }
+        }
+
+        /* Navigation Styles */
+        .nav-wrapper {
+            position: relative;
+            z-index: 50;
+        }
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .nav-link:hover {
+            background: white;
+            color: #0f172a !important;
+        }
+
+        /* Right side buttons */
+        .header-actions {
+            position: relative;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Mobile Auth Buttons */
+        .mobile-auth-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 0 16px;
+            width: 100%;
+            max-width: 320px;
+        }
+        .mobile-auth-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 9999px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .mobile-auth-btn.login {
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+        }
+        .mobile-auth-btn.login:hover {
+            background: white;
+            color: #0f172a;
+        }
+        .mobile-auth-btn.dashboard {
+            background: #2c5f4a;
+            color: white;
+        }
+        .mobile-auth-btn.dashboard:hover {
+            background: white;
+            color: #2c5f4a;
+        }
+
+        /* Mobile Menu Layout */
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+            padding-bottom: 40px;
+            min-height: 100vh;
+        }
+        .mobile-nav-links {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+        }
+        .mobile-link {
+            width: 100%;
+            text-align: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .mobile-link:hover, .mobile-link.active {
+            color: #2c5f4a;
+        }
+        .mobile-dropdown-container {
+            width: 100%;
+            max-width: 320px;
+        }
+        .mobile-dropdown-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .mobile-social {
+            margin-top: 24px;
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Contact Page Specifics */
+        .contact-card {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .contact-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(44, 95, 74, 0.25);
+        }
+        
+        .contact-icon-box {
+            transition: all 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+        .contact-card:hover .contact-icon-box {
+            transform: rotate(360deg) scale(1.1);
+            background-color: #2c5f4a;
+            color: white;
+        }
+
+        .form-input {
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        .form-input:focus {
+            border-color: #2c5f4a;
+            box-shadow: 0 0 0 4px rgba(44, 95, 74, 0.1);
+        }
+        .form-label {
+            transition: all 0.3s ease;
+        }
+        .form-input:focus + .form-label,
+        .form-input:not(:placeholder-shown) + .form-label {
+            transform: translateY(-24px) scale(0.85);
+            color: #2c5f4a;
+        }
+
+        .submit-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .map-container {
+            filter: grayscale(100%) contrast(1.2);
+            transition: filter 0.5s ease;
+        }
+        .map-container:hover {
+            filter: grayscale(0%) contrast(1);
+        }
+
+        .social-icon {
+            transition: all 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+        .social-icon:hover {
+            transform: translateY(-5px) rotate(10deg);
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid #2c5f4a;
+            animation: pulse-ring 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+    <!-- Header with Logo Image + STACKLY Name ALWAYS VISIBLE -->
+    <header id="header" class="fixed w-full top-0 z-50 transition-all duration-500">
+        <div class="container mx-auto px-3 sm:px-6 py-3">
+            <div class="flex justify-between items-center gap-2">
+                
+                <!-- Logo - Image + STACKLY Name ALWAYS VISIBLE -->
+                <a href="#" class="logo-wrapper magnetic-btn" data-magnetic>
+                    <!-- Logo Image -->
+                    <img src="logo.webp" 
+                         alt="STACKLY" 
+                         class="logo-img">
+                    <!-- Company Name - ALWAYS SHOW -->
+                    <div class="logo-text">
+                        <span class="logo-brand">STACKLY</span>
+                        <span class="logo-tagline">Real Estate</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-1 bg-white/10 backdrop-blur-md rounded-full px-2 py-2 border border-white/20 nav-wrapper">
+                    
+                    <!-- Home Dropdown -->
+                    <div class="dropdown-wrapper dropdown-trigger">
+                        <button class="px-4 py-2.5 rounded-full text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300 flex items-center gap-2 whitespace-nowrap bg-transparent">
+                            Home
+                            <i class="fas fa-chevron-down text-xs dropdown-icon"></i>
+                        </button>
+                        <!-- Dropdown -->
+                        <div class="dropdown-menu">
+                            <div class="p-2">
+                                <a href="index.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-building mr-2"></i> Home page1
+                                </a>
+                                <a href="home 2.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-gem mr-2"></i> Home page2
+                                </a>
+                                <a href="error.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-water mr-2"></i> Waterfront Villas
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Links -->
+                    <a href="about.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">About</a>
+                    <a href="ami.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Amenities</a>
+                    <a href="about.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Features</a>
+                    <a href="floor.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Floor Plans</a>
+                    <!-- <a href="#reviews" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Reviews</a> -->
+                    <a href="location.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Locations</a>
+                </nav>
+
+                <!-- Right Side: Auth Buttons -->
+                <div class="header-actions">
+                    
+                    <!-- Desktop: Login -->
+                    <a href="login.html" class="hidden lg:flex items-center gap-2 border border-white/30 text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-white hover:text-primary transition-all duration-300 magnetic-btn whitespace-nowrap" data-magnetic>
+                        <i class="fas fa-user text-xs"></i>
+                        <span>Login</span>
+                    </a>
+
+                    <!-- Desktop: Dashboard -->
+                    <a href="das.html" class="hidden lg:flex items-center gap-2 bg-accent text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-white hover:text-accent transition-all duration-300 shadow-lg magnetic-btn whitespace-nowrap" data-magnetic>
+                        <i class="fas fa-th-large text-xs"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <!-- Mobile: Compact Icons -->
+                    <div class="flex lg:hidden items-center gap-1 sm:gap-2">
+                        <a href="error.html" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-all">
+                            <i class="fas fa-user text-xs"></i>
+                        </a>
+                        <a href="error.html" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-accent flex items-center justify-center text-white hover:bg-white hover:text-accent transition-all">
+                            <i class="fas fa-th-large text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button id="menu-toggle" class="lg:hidden relative z-50 w-9 h-9 sm:w-10 sm:h-10 flex flex-col justify-center items-end gap-1.5 p-2 magnetic-btn shrink-0" data-magnetic>
+                        <span class="hamburger-line line-1 w-4 sm:w-5 h-0.5 bg-white block rounded-full"></span>
+                        <span class="hamburger-line line-2 w-4 sm:w-5 h-0.5 bg-white block rounded-full"></span>
+                        <span class="hamburger-line line-3 w-3 sm:w-3 h-0.5 bg-white block rounded-full"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="h-0.5 bg-white/10 w-full">
+            <div id="scroll-progress" class="h-full bg-accent w-0 transition-all duration-100"></div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 mobile-menu-container bg-primary overflow-y-auto">
+        <div class="mobile-menu-content">
+            
+            <!-- Mobile Auth Buttons -->
+            <div class="mobile-auth-container">
+                <a href="login.html" class="mobile-auth-btn login">
+                    <i class="fas fa-user"></i>
+                    Login
+                </a>
+                <a href="das.html" class="mobile-auth-btn dashboard">
+                    <i class="fas fa-th-large"></i>
+                    Dashboard
+                </a>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="mobile-nav-links">
+                <!-- Dropdown -->
+                <div class="mobile-dropdown-container">
+                    <button class="mobile-dropdown-toggle">
+                        <span>Home</span>
+                        <i class="fas fa-chevron-down mobile-dropdown-arrow text-accent text-sm"></i>
+                    </button>
+                    <div class="mobile-dropdown">
+                        <a href="index.html" class="block px-4 py-3 text-white/80 text-base hover:text-accent hover:bg-white/5 transition-all text-center">
+                            <i class="fas fa-building mr-2"></i>Home page1
+                        </a>
+                        <a href="home 2.html" class="block px-4 py-3 text-white/80 text-base hover:text-accent hover:bg-white/5 transition-all text-center">
+                            <i class="fas fa-gem mr-2"></i> Home page2
+                        </a>
+                        <a href="error.html" class="block px-4 py-3 text-white/80 text-base hover:text-accent hover:bg-white/5 transition-all text-center">
+                            <i class="fas fa-water mr-2"></i> Waterfront Villas
+                        </a>
+                    </div>
+                </div>
+
+                <a href="about.html" class="mobile-link">About</a>
+                <a href="ami.html" class="mobile-link">Amenities</a>
+                <a href="feature.html" class="mobile-link">Features</a>
+                <a href="floor.html" class="mobile-link">Floor Plans</a>
+                <!-- <a href="#reviews" class="mobile-link">Reviews</a> -->
+                <a href="location.html" class="mobile-link">Locations</a>
+                <a href="contact.html" class="mobile-link active">Contact</a>
+            </div>
+
+            <!-- Social Links -->
+            <div class="mobile-social opacity-0 translate-y-8">
+                <a href="https://www.instagram.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+
+            <!-- Phone -->
+            <div class="mt-6 opacity-0 translate-y-8 mobile-phone">
+                <a href="tel:8005435432" class="flex items-center gap-2 text-white/80 hover:text-accent transition-colors">
+                    <i class="fas fa-phone-alt text-accent"></i>
+                    <span class="text-lg font-semibold">(800) 543 5432</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="contact-hero" class="relative min-h-[70vh] flex items-center bg-primary overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+                 class="w-full h-full object-cover opacity-30" alt="Contact">
+            <div class="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/90 to-primary"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10 pt-32">
+            <div class="max-w-4xl text-center mx-auto">
+                <span class="inline-block text-accent font-bold tracking-widest uppercase text-sm mb-4 contact-hero-elem opacity-0 translate-y-4">
+                    Get In Touch
+                </span>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight contact-hero-elem opacity-0 translate-y-4">
+                    Let's Start Your <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400">Journey Home</span>
+                </h1>
+                <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-8 contact-hero-elem opacity-0 translate-y-4">
+                    Our team of luxury real estate experts is ready to help you find your perfect residence.
+                </p>
+                
+                <!-- Quick Contact Cards -->
+                <div class="grid md:grid-cols-3 gap-4 mt-12 contact-cards-container">
+                    <div class="contact-card bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl cursor-pointer opacity-0 translate-y-8">
+                        <div class="contact-icon-box w-14 h-14 bg-accent/20 rounded-full flex items-center justify-center text-accent text-2xl mx-auto mb-4 relative pulse-ring">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3 class="text-white font-bold mb-2">Call Us</h3>
+                        <p class="text-gray-400 text-sm">(800) 543 5432</p>
+                    </div>
+                    <div class="contact-card bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl cursor-pointer opacity-0 translate-y-8">
+                        <div class="contact-icon-box w-14 h-14 bg-accent/20 rounded-full flex items-center justify-center text-accent text-2xl mx-auto mb-4">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3 class="text-white font-bold mb-2">Email Us</h3>
+                        <p class="text-gray-400 text-sm">hello@stackly.com</p>
+                    </div>
+                    <div class="contact-card bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl cursor-pointer opacity-0 translate-y-8">
+                        <div class="contact-icon-box w-14 h-14 bg-accent/20 rounded-full flex items-center justify-center text-accent text-2xl mx-auto mb-4">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3 class="text-white font-bold mb-2">Visit Us</h3>
+                        <p class="text-gray-400 text-sm">123 Luxury Ave, NYC</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="py-20 md:py-32 bg-white relative overflow-hidden">
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
+                
+                <!-- Form Side -->
+                <div class="form-container opacity-0 translate-x-[-50px]">
+                    <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">Send Message</span>
+                    <h2 class="text-3xl md:text-4xl font-black text-primary mb-6">Schedule a Private Tour</h2>
+                    <p class="text-gray-600 mb-8">Fill out the form below and our concierge team will contact you within 24 hours to arrange your exclusive viewing.</p>
+                    
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="relative">
+                                <input type="text" id="firstName" placeholder=" " class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none peer" required>
+                                <label for="firstName" class="form-label absolute left-4 top-4 text-gray-500 pointer-events-none">First Name</label>
+                            </div>
+                            <div class="relative">
+                                <input type="text" id="lastName" placeholder=" " class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none peer" required>
+                                <label for="lastName" class="form-label absolute left-4 top-4 text-gray-500 pointer-events-none">Last Name</label>
+                            </div>
+                        </div>
+                        
+                        <div class="relative">
+                            <input type="email" id="email" placeholder=" " class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none peer" required>
+                            <label for="email" class="form-label absolute left-4 top-4 text-gray-500 pointer-events-none">Email Address</label>
+                        </div>
+                        
+                        <div class="relative">
+                            <input type="tel" id="phone" placeholder=" " class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none peer">
+                            <label for="phone" class="form-label absolute left-4 top-4 text-gray-500 pointer-events-none">Phone Number</label>
+                        </div>
+                        
+                        <div class="relative">
+                            <select id="interest" class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none appearance-none bg-white">
+                                <option value="">I'm interested in...</option>
+                                <option value="3bhk">3 BHK Apartment</option>
+                                <option value="4bhk">4 BHK Apartment</option>
+                                <option value="5bhk">5 BHK Apartment</option>
+                                <option value="penthouse">Penthouse Suite</option>
+                                <option value="villa">Waterfront Villa</option>
+                            </select>
+                            <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                        </div>
+                        
+                        <div class="relative">
+                            <textarea id="message" rows="4" placeholder=" " class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none resize-none peer"></textarea>
+                            <label for="message" class="form-label absolute left-4 top-4 text-gray-500 pointer-events-none">Your Message</label>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn w-full bg-accent text-white py-4 rounded-xl font-bold text-lg hover:bg-primary transition-all duration-300 flex items-center justify-center gap-2 group">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Info Side -->
+                <div class="space-y-8 info-container">
+                    <!-- Office Info -->
+                    <div class="info-card bg-gray-50 p-8 rounded-2xl opacity-0 translate-x-[50px]">
+                        <h3 class="text-2xl font-bold text-primary mb-6">Sales Gallery</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent shrink-0">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-primary">Address</p>
+                                    <p class="text-gray-600">123 Luxury Avenue, Suite 500<br>New York, NY 10001</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent shrink-0">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-primary">Hours</p>
+                                    <p class="text-gray-600">Mon - Fri: 9:00 AM - 7:00 PM<br>Sat - Sun: 10:00 AM - 5:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Preview -->
+                    <div class="info-card bg-primary p-8 rounded-2xl text-white opacity-0 translate-x-[50px]">
+                        <h3 class="text-2xl font-bold mb-6">Meet Our Team</h3>
+                        <div class="flex -space-x-3 mb-4">
+                            <img src="teach2.webp" class="w-12 h-12 rounded-full border-2 border-primary object-cover" alt="Agent">
+                            <img src="girl.webp" class="w-12 h-12 rounded-full border-2 border-primary object-cover" alt="Agent">
+                            <img src="girl2.webp" class="w-12 h-12 rounded-full border-2 border-primary object-cover" alt="Agent">
+                            <div class="w-12 h-12 rounded-full border-2 border-primary bg-accent flex items-center justify-center text-sm font-bold">+5</div>
+                        </div>
+                        <p class="text-gray-400 mb-4">Our award-winning agents are ready to guide you through every step of your luxury home purchase.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-accent hover:text-white transition-colors font-semibold">
+                            View All Agents <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Social Connect -->
+                    <div class="info-card opacity-0 translate-x-[50px]">
+                        <h3 class="text-xl font-bold text-primary mb-4">Follow Us</h3>
+                        <div class="flex gap-4">
+                            <a href="https://www.instagram.com/" class="social-icon w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-all">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="https://www.facebook.com/" class="social-icon w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-all">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/" class="social-icon w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-all">
+                                <i class="fab fa-linkedin-in text-xl"></i>
+                            </a>
+                            <a href="https://www.youtube.com/" class="social-icon w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-all">
+                                <i class="fab fa-youtube text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="h-[500px] relative overflow-hidden">
+        <div class="map-container w-full h-full">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968482413!3d40.75889497932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy"
+                class="grayscale contrast-125 hover:grayscale-0 transition-all duration-500">
+            </iframe>
+        </div>
+        <div class="absolute bottom-8 left-8 bg-white p-6 rounded-2xl shadow-2xl max-w-sm map-overlay opacity-0 translate-y-8">
+            <h4 class="font-bold text-primary text-lg mb-2">Visit Our Gallery</h4>
+            <p class="text-gray-600 text-sm mb-4">Experience luxury living firsthand. Our interactive showroom features full-scale model units.</p>
+            <a href="error.html" class="inline-flex items-center gap-2 text-accent font-semibold text-sm hover:gap-3 transition-all">
+                Get Directions <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 faq-header opacity-0 translate-y-8">
+                <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">FAQ</span>
+                <h2 class="text-3xl md:text-4xl font-black text-primary">Common Questions</h2>
+            </div>
+            
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="faq-item bg-white rounded-2xl overflow-hidden shadow-sm opacity-0 translate-y-8">
+                    <button class="faq-toggle w-full px-8 py-6 flex items-center justify-between text-left">
+                        <span class="font-bold text-primary text-lg">What is the typical buying process?</span>
+                        <i class="fas fa-plus text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500">
+                        <div class="px-8 pb-6 text-gray-600">
+                            Our streamlined process includes a private consultation, property tours, financing guidance, and dedicated closing support. Most transactions complete within 30-45 days.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-white rounded-2xl overflow-hidden shadow-sm opacity-0 translate-y-8">
+                    <button class="faq-toggle w-full px-8 py-6 flex items-center justify-between text-left">
+                        <span class="font-bold text-primary text-lg">Do you offer virtual tours?</span>
+                        <i class="fas fa-plus text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500">
+                        <div class="px-8 pb-6 text-gray-600">
+                            Yes! We offer immersive 3D virtual tours for all properties, allowing you to explore every detail from anywhere in the world. Contact us to schedule a guided virtual walkthrough.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item bg-white rounded-2xl overflow-hidden shadow-sm opacity-0 translate-y-8">
+                    <button class="faq-toggle w-full px-8 py-6 flex items-center justify-between text-left">
+                        <span class="font-bold text-primary text-lg">What financing options are available?</span>
+                        <i class="fas fa-plus text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500">
+                        <div class="px-8 pb-6 text-gray-600">
+                            We partner with premier lenders to offer competitive rates, jumbo loans, and exclusive financing packages for our clients. Our financial advisors can help structure the perfect solution.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary border-t border-white/10 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="text-xl font-black text-white mb-6 flex items-center gap-3">
+                        <img src="https://via.placeholder.com/45x45/2c5f4a/ffffff?text=S" alt="STACKLY" class="h-8 w-auto brightness-0 invert">
+                        STACKLY
+                    </div>
+                    <p class="text-gray-400 mb-6">Luxury living redefined. Experience the perfect blend of elegance, comfort, and nature.</p>
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.twitter.com/" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="about.html" class="text-gray-400 hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="amenities.html" class="text-gray-400 hover:text-accent transition-colors">Amenities</a></li>
+                        <li><a href="#floorplans" class="text-gray-400 hover:text-accent transition-colors">Floor Plans</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Properties</h4>
+                    <ul class="space-y-3">
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">3 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">4 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">5 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">Penthouse Suites</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe for updates.</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Your email" class="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-accent">
+                        <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary transition-all">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">&copy; 2023 STACKLY Real Homes. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <a href="error.html" class="hover:text-accent transition-colors">Privacy Policy</a>
+                    <a href="error.html" class="hover:text-accent transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button id="scrollTop" class="fixed bottom-8 right-8 w-12 h-12 bg-accent text-white rounded-full shadow-lg flex items-center justify-center opacity-0 translate-y-10 transition-all duration-300 hover:bg-primary z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        const scrollProgress = document.getElementById('scroll-progress');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            scrollProgress.style.width = (scrolled / maxScroll) * 100 + '%';
+            
+            if (scrolled > 50) {
+                header.classList.add('bg-primary/95', 'backdrop-blur-md', 'shadow-lg');
+            } else {
+                header.classList.remove('bg-primary/95', 'backdrop-blur-md', 'shadow-lg');
+            }
+        });
+
+        // Dropdown Logic
+        const dropdownTrigger = document.querySelector('.dropdown-trigger');
+        
+        dropdownTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownTrigger.classList.toggle('dropdown-active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!dropdownTrigger.contains(e.target)) {
+                dropdownTrigger.classList.remove('dropdown-active');
+            }
+        });
+
+        // Mobile Menu
+        const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
+        const mobileDropdown = document.querySelector('.mobile-dropdown');
+        mobileDropdownToggle.addEventListener('click', () => {
+            mobileDropdown.classList.toggle('active');
+            mobileDropdownToggle.classList.toggle('active');
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const mobileSocial = document.querySelector('.mobile-social');
+        const mobilePhone = document.querySelector('.mobile-phone');
+        let menuOpen = false;
+
+        menuToggle.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            document.body.classList.toggle('mobile-menu-open');
+            menuToggle.classList.toggle('menu-open');
+
+            if (menuOpen) {
+                gsap.to(mobileLinks, { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, ease: 'power3.out', delay: 0.2 });
+                gsap.to(mobileSocial, { y: 0, opacity: 1, duration: 0.6, delay: 0.5 });
+                gsap.to(mobilePhone, { y: 0, opacity: 1, duration: 0.6, delay: 0.6 });
+            } else {
+                gsap.to([mobileLinks, mobileSocial, mobilePhone], { y: 20, opacity: 0, duration: 0.3 });
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                document.body.classList.remove('mobile-menu-open');
+                menuToggle.classList.remove('menu-open');
+            });
+        });
+
+        // Page Animations
+        gsap.to('.contact-hero-elem', {
+            y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.3
+        });
+
+        gsap.to('.contact-card', {
+            y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'back.out(1.7)', delay: 0.8
+        });
+
+        gsap.to('.form-container', {
+            scrollTrigger: { trigger: '.form-container', start: 'top 80%' },
+            x: 0, opacity: 1, duration: 0.8, ease: 'power3.out'
+        });
+
+        gsap.to('.info-card', {
+            scrollTrigger: { trigger: '.info-container', start: 'top 80%' },
+            x: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: 'power3.out'
+        });
+
+        gsap.to('.map-overlay', {
+            scrollTrigger: { trigger: '.map-container', start: 'top 60%' },
+            y: 0, opacity: 1, duration: 0.6, ease: 'power3.out'
+        });
+
+        gsap.to('.faq-header', {
+            scrollTrigger: { trigger: '.faq-header', start: 'top 85%' },
+            y: 0, opacity: 1, duration: 0.6, ease: 'power3.out'
+        });
+
+        gsap.to('.faq-item', {
+            scrollTrigger: { trigger: '.faq-item', start: 'top 85%' },
+            y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out'
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+                
+                // Close all others
+                document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = '0px');
+                document.querySelectorAll('.faq-toggle i').forEach(i => i.style.transform = 'rotate(0deg)');
+                
+                if (!isOpen) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(45deg)';
+                }
+            });
+        });
+
+        // Form Submission Animation
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                btn.classList.remove('bg-accent');
+                btn.classList.add('bg-green-600');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.classList.add('bg-accent');
+                    btn.classList.remove('bg-green-600');
+                    btn.disabled = false;
+                    e.target.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Scroll to Top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.remove('opacity-0', 'translate-y-10');
+            } else {
+                scrollTopBtn.classList.add('opacity-0', 'translate-y-10');
+            }
+        });
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Magnetic Effect
+        document.querySelectorAll('[data-magnetic]').forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                this.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Contact Card Click Effects
+        document.querySelectorAll('.contact-card').forEach(card => {
+            card.addEventListener('click', function() {
+                gsap.to(this, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
+            });
+        });
+    </script>
+</body>
+</html>

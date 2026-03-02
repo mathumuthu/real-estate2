@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Homes - Luxury Living</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com "></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js "></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300 ;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+
+
+
+
+
+<!-- PRELOADER START -->
+<div id="preloader">
+    <div class="loader">
+        <div class="home-icon">
+            <i class="fas fa-home"></i>
+        </div>
+        <span class="loading-text">Loading Properties...</span>
+    </div>
+</div>
+<!-- PRELOADER END -->
+<!-- PRELOADER END -->
+<style>
+#preloader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#0f172a;
+z-index:9999;
+display:flex;
+justify-content:center;
+align-items:center;
+transition:opacity 0.5s ease;
+}
+
+.loader{
+text-align:center;
+}
+
+.home-icon{
+width:70px;
+height:70px;
+border-radius:50%;
+border:4px solid #1e293b;
+border-top:4px solid #22c55e;
+display:flex;
+justify-content:center;
+align-items:center;
+animation:spin 0.8s linear;
+}
+
+.home-icon i{
+color:#22c55e;
+font-size:26px;
+}
+
+.loading-text{
+color:#fff;
+margin-top:10px;
+display:block;
+font-size:14px;
+}
+
+/* Only once spin */
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.home-icon{
+width:55px;
+height:55px;
+}
+.home-icon i{
+font-size:20px;
+}
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const preloader = document.getElementById("preloader");
+
+    setTimeout(function(){
+        preloader.style.opacity="0";
+
+        setTimeout(function(){
+            preloader.style.display="none";
+        },500);
+
+    },1000); // 👈 ONLY 1 SECOND
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0f172a',
+                        accent: '#2c5f4a',
+                        light: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { overflow-x: hidden; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #2c5f4a; border-radius: 4px; }
+
+        /* Magnetic Button Effect */
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Text Reveal Animation */
+        .reveal-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+        .reveal-text span {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        /* Desktop Dropdown Animation */
+        .dropdown-menu {
+            transform-origin: top;
+            transform: perspective(1000px) rotateX(-90deg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .dropdown-active .dropdown-menu {
+            transform: perspective(1000px) rotateX(0deg);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile Dropdown - FIXED VISIBILITY */
+        .mobile-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+        .mobile-dropdown.active {
+            max-height: 500px; /* Increased to fit content */
+            opacity: 1;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .mobile-dropdown-arrow {
+            transition: transform 0.3s ease;
+        }
+        .mobile-dropdown.active .mobile-dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Hamburger Animation */
+        .hamburger-line {
+            transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+        .menu-open .line-1 {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-open .line-2 {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .menu-open .line-3 {
+            transform: rotate(-45deg) translate(5px, -5px);
+            width: 24px !important;
+        }
+
+        /* Mobile Menu Slide */
+        .mobile-menu-container {
+            clip-path: circle(0% at calc(100% - 40px) 40px);
+            transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .mobile-menu-open .mobile-menu-container {
+            clip-path: circle(150% at calc(100% - 40px) 40px);
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 6s ease-in-out 3s infinite; }
+        .animate-float-slow { animation: float 8s ease-in-out infinite; }
+
+        /* Pulse Animation */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #2c5f4a 0%, #1a1a1a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Card Hover Lift */
+        .hover-lift {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Image Reveal */
+        .img-reveal {
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .img-reveal.revealed {
+            clip-path: inset(0 0 0 0);
+        }
+
+        /* Stagger Grid Items */
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #2c5f4a;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s, background 0.2s;
+            mix-blend-mode: difference;
+        }
+        .custom-cursor.hovering {
+            transform: scale(2.5);
+            background: rgba(44, 95, 74, 0.3);
+        }
+
+        /* Premium Card Glow */
+        .premium-glow {
+            box-shadow: 0 0 60px rgba(44, 95, 74, 0.3);
+        }
+
+        /* Shimmer Effect */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        /* Typing Effect */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Wave Animation */
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .wave-animation > * {
+            animation: wave 1s ease-in-out infinite;
+        }
+        .wave-animation > *:nth-child(2) { animation-delay: 0.1s; }
+        .wave-animation > *:nth-child(3) { animation-delay: 0.2s; }
+        .wave-animation > *:nth-child(4) { animation-delay: 0.3s; }
+        .wave-animation > *:nth-child(5) { animation-delay: 0.4s; }
+
+        /* Rotate Animation */
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .rotate-slow {
+            animation: rotate-slow 20s linear infinite;
+        }
+
+        /* Bounce Soft */
+        @keyframes bounce-soft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .bounce-soft {
+            animation: bounce-soft 2s ease-in-out infinite;
+        }
+
+        /* Marquee Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
+
+        /* Logo styling */
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2c5f4a 0%, #1a1a1a 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            transform: rotate(-5deg);
+            transition: transform 0.3s ease;
+        }
+        .group:hover .logo-icon {
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        /* Dashboard button animation */
+        .dashboard-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .dashboard-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .dashboard-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Hero section mobile fixes */
+        @media (max-width: 1024px) {
+            .hero-content-wrapper {
+                padding-top: 120px;
+            }
+        }
+        @media (max-width: 640px) {
+            .hero-cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            .hero-cta-group a {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Contact section mobile fixes */
+        @media (max-width: 768px) {
+            .contact-grid {
+                gap: 2rem;
+            }
+            .contact-form-box {
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 font-sans cursor-none md:cursor-auto">
+
+    <!-- Custom Cursor (Desktop Only) -->
+    <div class="custom-cursor hidden md:block" id="cursor"></div>
+
+    <!-- Header -->
+    <header id="header" class="fixed w-full top-0 z-50 transition-all duration-500">
+        <div class="container mx-auto px-4 sm:px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo - Image Style -->
+                <a href="" class="relative z-50 group magnetic-btn flex items-center gap-3" data-magnetic>
+                    <!-- Logo Image -->
+                    <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg">
+                        <img src="logo.webp" 
+                             alt="Stackly Logo" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <!-- Logo Text -->
+                    <div class="flex flex-col leading-none">
+                        <span class="text-2xl font-black text-white tracking-tighter">STACKLY</span>
+                        <span class="text-[10px] text-accent font-bold tracking-[0.2em] uppercase">Real Estate</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-1 bg-white/10 backdrop-blur-md rounded-full px-2 py-2 border border-white/20">
+                    <!-- Dropdown Trigger -->
+                    <div class="relative dropdown-trigger">
+                        <button class="px-4 xl:px-5 py-2 rounded-full text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300 flex items-center gap-2">
+                            Home
+                            <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div class="dropdown-menu absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl overflow-hidden">
+                            <div class="p-2">
+                                <a href="index.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-building mr-2"></i> Home page1
+                                </a>
+                                <a href="home 2.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-gem mr-2"></i> Home page2
+                                </a>
+                                <!-- <a href="#" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-water mr-2"></i> Waterfront Villas
+                                </a> -->
+                                <!-- <div class="border-t border-gray-100 my-2"></div> -->
+                                 <a href="error.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-accent hover:bg-accent/10 transition-colors">
+                                    View All Properties
+                                </a> 
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="about.html" class="nav-link px-4 xl:px-5 py-2 rounded-full text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300">About</a>
+                    <a href="ami.html" class="nav-link px-4 xl:px-5 py-2 rounded-full text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300">Amenities</a>
+                    <a href="feature.html" class="nav-link px-4 xl:px-5 py-2 rounded-full text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300">Features</a>
+                    <a href="floor.html" class="nav-link px-4 xl:px-5 py-2 rounded-full text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300">Floor Plans</a>
+                    <!-- <a href="review.html" class="nav-link px-4 xl:px-5 py-2 rounded-full text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300">Reviews</a> -->
+                    <a href="location.html" class="nav-link px-4 xl:px-5 py-2 rounded-full text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300">Locations</a>
+                </nav>
+
+                <!-- CTA & Auth Buttons & Mobile Toggle -->
+                <div class="flex items-center gap-2 md:gap-4">
+                    <!-- Login Button -->
+                    <a href="login.html" class="hidden md:flex items-center gap-2 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-white/10 transition-all duration-300 magnetic-btn" data-magnetic>
+                        <i class="fas fa-user"></i>
+                        <span class="hidden xl:inline">Login</span>
+                    </a>
+
+                    <!-- Dashboard Button -->
+                    <a href="das.html" class="hidden md:flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-white hover:text-accent transition-all duration-300 shadow-lg hover:shadow-2xl magnetic-btn dashboard-btn" data-magnetic>
+                        <i class="fas fa-th-large"></i>
+                        <span class="hidden xl:inline">Dashboard</span>
+                    </a>
+
+                    <a href="tel:8005435432" class="hidden lg:flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-white hover:text-primary transition-all duration-300 border border-white/20 magnetic-btn" data-magnetic>
+                        <i class="fas fa-phone-alt"></i>
+                        <span class="hidden xl:inline">(800) 543 5432</span>
+                    </a>
+
+                    <!-- Hamburger -->
+                    <button id="menu-toggle" class="lg:hidden relative z-50 w-12 h-12 flex flex-col justify-center items-end gap-1.5 p-2 magnetic-btn" data-magnetic>
+                        <span class="hamburger-line line-1 w-6 h-0.5 bg-white block rounded-full"></span>
+                        <span class="hamburger-line line-2 w-6 h-0.5 bg-white block rounded-full"></span>
+                        <span class="hamburger-line line-3 w-4 h-0.5 bg-white block rounded-full"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Progress Bar -->
+        <div class="h-0.5 bg-white/10 w-full">
+            <div id="scroll-progress" class="h-full bg-accent w-0 transition-all duration-100"></div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 mobile-menu-container bg-primary overflow-y-auto">
+        <div class="h-full flex flex-col justify-center items-center gap-2 pt-24 pb-12 px-6">
+            
+            <!-- Mobile Auth Buttons -->
+            <div class="flex gap-4 mb-8 w-full max-w-xs">
+                <a href="login.html" class="flex-1 flex items-center justify-center gap-2 bg-white/10 text-white px-4 py-3 rounded-full text-sm font-bold hover:bg-white hover:text-primary transition-all">
+                    <i class="fas fa-user"></i> Login
+                </a>
+                <a href="das.html" class="flex-1 flex items-center justify-center gap-2 bg-accent text-white px-4 py-3 rounded-full text-sm font-bold hover:bg-white hover:text-accent transition-all">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+            </div>
+
+            <!-- Mobile Dropdown -->
+            <div class="w-full max-w-xs mobile-dropdown-container">
+                <!-- MODIFIED: Smaller text (text-xl), not bold (font-normal), medium size -->
+                <button class="mobile-dropdown-toggle w-full flex items-center justify-between text-xl font-normal text-white py-3 border-b border-white/10 tracking-wide">
+                    <span>Home</span>
+                    <i class="fas fa-chevron-down mobile-dropdown-arrow text-accent text-base"></i>
+                </button>
+                <!-- MODIFIED: Added background and padding for better visibility when expanded -->
+                <div class="mobile-dropdown bg-white/10 rounded-2xl">
+                    <a href="index.html" class="block px-6 py-3 text-white/90 text-base hover:text-accent hover:bg-white/10 transition-all border-b border-white/5">
+                        <i class="fas fa-building mr-3"></i> Home page1
+                    </a>
+                    <a href="home 2.html" class="block px-6 py-3 text-white/90 text-base hover:text-accent hover:bg-white/10 transition-all border-b border-white/5">
+                        <i class="fas fa-gem mr-3"></i>Home page2
+                    </a>
+                    <!-- <a href="#" class="block px-6 py-3 text-white/90 text-base hover:text-accent hover:bg-white/10 transition-all border-b border-white/5">
+                        <i class="fas fa-water mr-3"></i> Waterfront Villas
+                    </a> -->
+                    <a href="error.html" class="block px-6 py-3 text-accent text-base hover:bg-white/10 transition-all font-semibold">
+                        View All Properties <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- MODIFIED: Medium size text (text-xl/2xl instead of 3xl/4xl) -->
+            <a href="about.html" class="mobile-link text-xl md:text-2xl font-medium text-white py-3 border-b border-white/10 w-full max-w-xs text-center">About</a>
+            <a href="ami.html" class="mobile-link text-xl md:text-2xl font-medium text-white py-3 border-b border-white/10 w-full max-w-xs text-center">Amenities</a>
+            <a href="feature.html" class="mobile-link text-xl md:text-2xl font-medium text-white py-3 border-b border-white/10 w-full max-w-xs text-center">Features</a>
+            <a href="floor.html" class="mobile-link text-xl md:text-2xl font-medium text-white py-3 border-b border-white/10 w-full max-w-xs text-center">Floor Plans</a>
+            <!-- <a href="review.html" class="mobile-link text-xl md:text-2xl font-medium text-white py-3 border-b border-white/10 w-full max-w-xs text-center">Reviews</a> -->
+            <a href="location.html" class="mobile-link text-xl md:text-2xl font-medium text-white py-3 border-b border-white/10 w-full max-w-xs text-center">Locations</a>
+            <!-- <a href="#contact" class="mobile-link text-xl md:text-2xl font-medium text-white py-3 w-full max-w-xs text-center">Contact</a> -->
+            
+            <!-- <div class="mt-6 flex gap-4 opacity-0 translate-y-8 mobile-social">
+                <a href="#" class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-instagram text-lg"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-facebook-f text-lg"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-twitter text-lg"></i>
+                </a>
+            </div> -->
+
+            <div class="mt-8 opacity-0 translate-y-8 mobile-contact w-full max-w-xs">
+                <a href="tel:8005435432" class="flex items-center justify-center gap-3 bg-accent text-white px-6 py-3 rounded-full text-base font-bold w-full">
+                    <i class="fas fa-phone-alt"></i>
+                    (800) 543 5432
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden bg-primary">
+        <!-- Background Video/Image with Parallax -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-transparent z-10"></div>
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80 " 
+                 alt="Luxury Home" 
+                 class="w-full h-full object-cover scale-110" 
+                 id="hero-bg">
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="absolute top-1/4 right-20 w-32 h-32 bg-accent/20 rounded-full blur-3xl animate-float hidden lg:block"></div>
+        <div class="absolute bottom-1/4 right-1/3 w-48 h-48 bg-white/5 rounded-full blur-3xl animate-float-delayed hidden lg:block"></div>
+        <div class="absolute top-1/3 left-1/4 w-24 h-24 bg-accent/10 rounded-full blur-2xl animate-float-slow hidden lg:block"></div>
+
+        <div class="container mx-auto px-4 sm:px-6 relative z-20 hero-content-wrapper">
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <!-- Text Content -->
+                <div class="order-2 lg:order-1 pt-8 lg:pt-0">
+                    <div class="overflow-hidden mb-4">
+                        <p class="hero-subtitle text-accent font-bold tracking-widest uppercase text-xs sm:text-sm translate-y-full flex items-center gap-2">
+                            <span class="w-8 h-0.5 bg-accent"></span>
+                            3, 4 & 5 BHK Luxurious Apartment
+                        </p>
+                    </div>
+                    
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-none mb-6">
+                        <div class="overflow-hidden">
+                            <span class="hero-title inline-block translate-y-full">Elegance</span>
+                        </div>
+                        <div class="overflow-hidden">
+                            <span class="hero-title inline-block translate-y-full">Through</span>
+                        </div>
+                        <div class="overflow-hidden">
+                            <span class="hero-title inline-block translate-y-full text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400">Simplicity</span>
+                        </div>
+                    </h1>
+
+                    <div class="hero-line w-0 h-1 bg-accent mb-6"></div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 mb-6 hero-features opacity-0">
+                        <div class="flex items-center gap-3 text-white/80 group cursor-pointer bg-white/5 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10 hover:border-accent hover:bg-accent/20 transition-all duration-300">
+                            <div class="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
+                                <i class="fas fa-couch text-accent group-hover:text-white text-xs"></i>
+                            </div>
+                            <span class="font-medium text-xs sm:text-sm">Hi-end Furnitures</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-white/80 group cursor-pointer bg-white/5 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10 hover:border-accent hover:bg-accent/20 transition-all duration-300">
+                            <div class="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
+                                <i class="fas fa-building text-accent group-hover:text-white text-xs"></i>
+                            </div>
+                            <span class="font-medium text-xs sm:text-sm">24 Floors of Excellence</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 hero-cta-group">
+                        <a href="error.html" class="hero-cta inline-flex items-center justify-center gap-2 bg-white text-primary px-6 py-3 rounded-full font-bold hover:bg-accent hover:text-white transition-all duration-300 opacity-0 translate-y-4 magnetic-btn group text-sm sm:text-base" data-magnetic>
+                            Explore Apartments
+                            <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                        </a>
+                        <a href="#video" class="hero-video-cta inline-flex items-center justify-center gap-2 bg-transparent border-2 border-white/30 text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-primary transition-all duration-300 opacity-0 translate-y-4 magnetic-btn group text-sm sm:text-base" data-magnetic>
+                            <div class="w-6 h-6 rounded-full bg-accent flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="fas fa-play text-xs"></i>
+                            </div>
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Card - Premium Living -->
+                <div class="order-1 lg:order-2 relative mt-16 lg:mt-0">
+                    <!-- Decorative Rings -->
+                    <div class="absolute -inset-4 border border-accent/20 rounded-3xl rotate-slow hidden lg:block"></div>
+                    <div class="absolute -inset-8 border border-white/10 rounded-3xl rotate-slow hidden lg:block" style="animation-direction: reverse; animation-duration: 30s;"></div>
+                    
+                    <div class="hero-card relative bg-white/10 backdrop-blur-lg rounded-3xl p-5 sm:p-6 md:p-8 border border-white/20 premium-glow opacity-0 translate-x-20 overflow-hidden mx-auto max-w-sm lg:max-w-none">
+                        <!-- Shimmer Effect -->
+                        <div class="absolute inset-0 shimmer pointer-events-none"></div>
+                        
+                        <!-- Pulse Ring -->
+                        <div class="absolute -top-20 -right-20 w-40 h-40 bg-accent/20 rounded-full pulse-ring"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-accent to-emerald-600 flex items-center justify-center text-white text-xl sm:text-2xl shadow-lg animate-float">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-white font-bold text-lg sm:text-xl">Premium Living</h3>
+                                    <p class="text-white/60 text-xs sm:text-sm">Exclusive Collection</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3 mb-4">
+                                <div class="flex justify-between items-center text-white/80 text-xs sm:text-sm border-b border-white/10 pb-2">
+                                    <span class="flex items-center gap-2">
+                                        <i class="fas fa-home text-accent"></i> Total Units
+                                    </span>
+                                    <span class="font-bold text-white text-base sm:text-lg">120</span>
+                                </div>
+                                <div class="flex justify-between items-center text-white/80 text-xs sm:text-sm border-b border-white/10 pb-2">
+                                    <span class="flex items-center gap-2">
+                                        <i class="fas fa-calendar text-accent"></i> Completion
+                                    </span>
+                                    <span class="font-bold text-white text-base sm:text-lg">2024</span>
+                                </div>
+                                <div class="flex justify-between items-center text-white/80 text-xs sm:text-sm border-b border-white/10 pb-2">
+                                    <span class="flex items-center gap-2">
+                                        <i class="fas fa-tag text-accent"></i> Starting Price
+                                    </span>
+                                    <span class="font-bold text-accent text-base sm:text-lg">$2.4M</span>
+                                </div>
+                                <div class="flex justify-between items-center text-white/80 text-xs sm:text-sm">
+                                    <span class="flex items-center gap-2">
+                                        <i class="fas fa-star text-accent"></i> Rating
+                                    </span>
+                                    <span class="font-bold text-white flex items-center gap-1">
+                                        4.9 <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2 mb-4">
+                                <div class="flex-1 bg-white/10 rounded-xl p-2 sm:p-3 text-center">
+                                    <div class="text-xl sm:text-2xl font-bold text-white">24/7</div>
+                                    <div class="text-xs text-white/60">Security</div>
+                                </div>
+                                <div class="flex-1 bg-white/10 rounded-xl p-2 sm:p-3 text-center">
+                                    <div class="text-xl sm:text-2xl font-bold text-white">100%</div>
+                                    <div class="text-xs text-white/60">Power Backup</div>
+                                </div>
+                            </div>
+
+                            <button class="w-full bg-accent text-white py-3 sm:py-4 rounded-xl font-bold hover:bg-white hover:text-accent transition-all duration-300 shadow-lg group overflow-hidden relative text-sm sm:text-base">
+                                <span class="relative z-10 flex items-center justify-center gap-2">
+                                    Schedule Visit
+                                    <i class="fas fa-calendar-check group-hover:rotate-12 transition-transform"></i>
+                                </span>
+                                <div class="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-white text-primary p-3 sm:p-4 rounded-2xl shadow-2xl hidden sm:block hero-badge opacity-0 scale-0">
+                        <div class="flex items-center gap-2 sm:gap-3">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                <i class="fas fa-check-circle text-lg sm:text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500">Available Now</p>
+                                <p class="font-bold text-xs sm:text-sm">Ready to Move</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 hero-scroll hidden sm:flex">
+            <span class="text-white/50 text-xs tracking-widest uppercase typing-cursor">Scroll to explore</span>
+            <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+                <div class="w-1 h-2 bg-accent rounded-full animate-bounce"></div>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="absolute bottom-0 left-0 right-0 bg-white/5 backdrop-blur-md border-t border-white/10 hidden lg:block">
+            <div class="container mx-auto px-6 py-4 xl:py-6">
+                <div class="flex justify-around items-center">
+                    <div class="text-center hero-stat opacity-0 translate-y-4">
+                        <div class="text-2xl xl:text-3xl font-black text-white">15+</div>
+                        <div class="text-xs text-white/60 uppercase tracking-wider">Years Experience</div>
+                    </div>
+                    <div class="w-px h-12 bg-white/20"></div>
+                    <div class="text-center hero-stat opacity-0 translate-y-4">
+                        <div class="text-2xl xl:text-3xl font-black text-white">500+</div>
+                        <div class="text-xs text-white/60 uppercase tracking-wider">Happy Families</div>
+                    </div>
+                    <div class="w-px h-12 bg-white/20"></div>
+                    <div class="text-center hero-stat opacity-0 translate-y-4">
+                        <div class="text-2xl xl:text-3xl font-black text-white">25+</div>
+                        <div class="text-xs text-white/60 uppercase tracking-wider">Awards Won</div>
+                    </div>
+                    <div class="w-px h-12 bg-white/20"></div>
+                    <div class="text-center hero-stat opacity-0 translate-y-4">
+                        <div class="text-2xl xl:text-3xl font-black text-white">100%</div>
+                        <div class="text-xs text-white/60 uppercase tracking-wider">Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By Section -->
+    <section class="py-12 sm:py-16 bg-gray-50 overflow-hidden">
+        <div class="container mx-auto px-6 mb-6 sm:mb-8">
+            <p class="text-center text-gray-500 text-xs sm:text-sm uppercase tracking-widest">Trusted by leading companies</p>
+        </div>
+        <div class="flex overflow-hidden">
+            <div class="flex gap-12 sm:gap-16 items-center animate-marquee whitespace-nowrap">
+                <div class="flex gap-12 sm:gap-16 items-center opacity-40 grayscale hover:grayscale-0 transition-all">
+                    <i class="fab fa-google text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-microsoft text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-amazon text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-apple text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-airbnb text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-uber text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-spotify text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-slack text-3xl sm:text-4xl"></i>
+                </div>
+                <div class="flex gap-12 sm:gap-16 items-center opacity-40 grayscale hover:grayscale-0 transition-all">
+                    <i class="fab fa-google text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-microsoft text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-amazon text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-apple text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-airbnb text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-uber text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-spotify text-3xl sm:text-4xl"></i>
+                    <i class="fab fa-slack text-3xl sm:text-4xl"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 sm:py-32 bg-white relative overflow-hidden">
+        <div class="absolute -right-20 top-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
+        <div class="absolute -left-20 bottom-20 w-72 h-72 bg-emerald-100/50 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="gsap-fade-up">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs sm:text-sm mb-4 block flex items-center gap-2">
+                        <span class="w-8 h-0.5 bg-accent"></span>
+                        About RealHomes
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-primary mb-6 sm:mb-8 leading-tight">
+                        Where Life<br>
+                        Becomes <span class="text-gradient">Magical</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-accent mb-6 sm:mb-8"></div>
+                    <p class="text-gray-600 text-base sm:text-lg leading-relaxed mb-4 sm:mb-6">
+                        Nestled in the tranquil lap of Skycity, RealHomes are 4 & 5 BHK luxurious apartments and Duplex and Triplex storeyed, redefining the lifestyle. Being iconic towers in Skycity, this project offers a majestic view of the skyline.
+                    </p>
+                    <p class="text-gray-600 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8">
+                        Every detail has been carefully considered to create spaces that inspire and delight. From the grand entrance lobby to the private terraces, experience luxury like never before.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                        <div class="flex items-start gap-2 sm:gap-3">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                                <i class="fas fa-check text-sm sm:text-base"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary text-sm sm:text-base">Smart Home</h4>
+                                <p class="text-xs sm:text-sm text-gray-500">Automation ready</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2 sm:gap-3">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                                <i class="fas fa-check text-sm sm:text-base"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary text-sm sm:text-base">Eco Friendly</h4>
+                                <p class="text-xs sm:text-sm text-gray-500">Sustainable living</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2 sm:gap-3">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                                <i class="fas fa-check text-sm sm:text-base"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary text-sm sm:text-base">Premium Quality</h4>
+                                <p class="text-xs sm:text-sm text-gray-500">Best materials</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2 sm:gap-3">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                                <i class="fas fa-check text-sm sm:text-base"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary text-sm sm:text-base">24/7 Support</h4>
+                                <p class="text-xs sm:text-sm text-gray-500">Always available</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="about.html" class="inline-flex items-center gap-2 text-accent font-bold text-base sm:text-lg group">
+                        About Us 
+                        <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                    </a>
+                </div>
+
+                <div class="relative mt-8 lg:mt-0">
+                    <div class="img-reveal rounded-3xl overflow-hidden shadow-2xl relative">
+                        <img src="home4 img.webp" 
+                             alt="Interior" 
+                             class="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent"></div>
+                    </div>
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-6 -left-6 sm:-bottom-10 sm:-left-10 bg-accent text-white p-4 sm:p-8 rounded-2xl shadow-2xl hidden sm:block animate-float">
+                        <div class="text-2xl sm:text-4xl font-black mb-1 sm:mb-2">15+</div>
+                        <div class="text-xs sm:text-sm opacity-80">Years of<br>Excellence</div>
+                    </div>
+                    <!-- Another Badge -->
+                    <div class="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 bg-white p-4 sm:p-6 rounded-2xl shadow-xl hidden sm:block animate-float-delayed">
+                        <div class="flex items-center gap-2 sm:gap-3">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                <i class="fas fa-award text-lg sm:text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500">Award Winning</p>
+                                <p class="font-bold text-xs sm:text-sm text-primary">Best Architecture</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 sm:py-24 bg-primary text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+                <div class="text-center group cursor-pointer p-4 sm:p-6 rounded-2xl hover:bg-white/5 transition-all">
+                    <div class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-2 sm:mb-4 group-hover:text-accent transition-colors duration-300">
+                        <span class="counter" data-target="120">0</span>
+                    </div>
+                    <div class="w-12 sm:w-16 h-0.5 bg-accent mx-auto mb-2 sm:mb-4"></div>
+                    <p class="text-gray-400 text-xs sm:text-sm">Modern units spread<br>over twelve floors</p>
+                </div>
+                <div class="text-center group cursor-pointer p-4 sm:p-6 rounded-2xl hover:bg-white/5 transition-all">
+                    <div class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-2 sm:mb-4 group-hover:text-accent transition-colors duration-300">
+                        <span class="counter" data-target="7.5">0</span>k
+                    </div>
+                    <div class="w-12 sm:w-16 h-0.5 bg-accent mx-auto mb-2 sm:mb-4"></div>
+                    <p class="text-gray-400 text-xs sm:text-sm">Square Feet of nature<br>around the block</p>
+                </div>
+                <div class="text-center group cursor-pointer p-4 sm:p-6 rounded-2xl hover:bg-white/5 transition-all">
+                    <div class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-2 sm:mb-4 group-hover:text-accent transition-colors duration-300">
+                        <span class="counter" data-target="60">0</span>+
+                    </div>
+                    <div class="w-12 sm:w-16 h-0.5 bg-accent mx-auto mb-2 sm:mb-4"></div>
+                    <p class="text-gray-400 text-xs sm:text-sm">Parking spaces for<br>residents and guests</p>
+                </div>
+                <div class="text-center group cursor-pointer p-4 sm:p-6 rounded-2xl hover:bg-white/5 transition-all">
+                    <div class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-2 sm:mb-4 group-hover:text-accent transition-colors duration-300">
+                        <span class="counter" data-target="99">0</span>%
+                    </div>
+                    <div class="w-12 sm:w-16 h-0.5 bg-accent mx-auto mb-2 sm:mb-4"></div>
+                    <p class="text-gray-400 text-xs sm:text-sm">Customer satisfaction<br>rate achieved</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities Section -->
+    <section id="amenities" class="py-20 sm:py-32 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
+                <span class="text-accent font-bold tracking-widest uppercase text-xs sm:text-sm mb-4 block flex items-center justify-center gap-2">
+                    <span class="w-8 h-0.5 bg-accent"></span>
+                    Amenities
+                    <span class="w-8 h-0.5 bg-accent"></span>
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-primary">A New Way to<br>Live Better</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Card 1 -->
+                <div class="stagger-item bg-white rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:bg-accent group-hover:text-white transition-all duration-500 group-hover:rotate-6">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-primary mb-3 sm:mb-4">Nature Friendly</h3>
+                    <p class="text-gray-600 leading-relaxed text-xs sm:text-sm">Surrounded by lush greenery and open spaces to ensure a healthy lifestyle.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="stagger-item bg-white rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:bg-accent group-hover:text-white transition-all duration-500 group-hover:rotate-6">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-primary mb-3 sm:mb-4">100% Security</h3>
+                    <p class="text-gray-600 leading-relaxed text-xs sm:text-sm">24/7 surveillance and professional security personnel at all times.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="stagger-item bg-white rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:bg-accent group-hover:text-white transition-all duration-500 group-hover:rotate-6">
+                        <i class="fas fa-swimming-pool"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-primary mb-3 sm:mb-4">Luxury Pool</h3>
+                    <p class="text-gray-600 leading-relaxed text-xs sm:text-sm">Infinity-edge swimming pool with sun deck and panoramic views.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="stagger-item bg-white rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group" style="transition-delay: 300ms;">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:bg-accent group-hover:text-white transition-all duration-500 group-hover:rotate-6">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-primary mb-3 sm:mb-4">Fitness Center</h3>
+                    <p class="text-gray-600 leading-relaxed text-xs sm:text-sm">State-of-the-art gym equipment with personal training available.</p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="stagger-item bg-white rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group" style="transition-delay: 400ms;">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:bg-accent group-hover:text-white transition-all duration-500 group-hover:rotate-6">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-primary mb-3 sm:mb-4">Spa & Wellness</h3>
+                    <p class="text-gray-600 leading-relaxed text-xs sm:text-sm">Full-service spa with massage therapy and relaxation treatments.</p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="stagger-item bg-white rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group" style="transition-delay: 500ms;">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:bg-accent group-hover:text-white transition-all duration-500 group-hover:rotate-6">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-primary mb-3 sm:mb-4">Kids Play Area</h3>
+                    <p class="text-gray-600 leading-relaxed text-xs sm:text-sm">Safe and fun environment for children to play and explore.</p>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="stagger-item bg-white rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group" style="transition-delay: 600ms;">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:bg-accent group-hover:text-white transition-all duration-500 group-hover:rotate-6">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-primary mb-3 sm:mb-4">EV Charging</h3>
+                    <p class="text-gray-600 leading-relaxed text-xs sm:text-sm">Electric vehicle charging stations for eco-friendly transportation.</p>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="stagger-item bg-white rounded-3xl p-6 sm:p-8 hover-lift cursor-pointer group" style="transition-delay: 700ms;">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-accent/10 flex items-center justify-center text-accent text-2xl sm:text-3xl mb-4 sm:mb-6 group-hover:bg-accent group-hover:text-white transition-all duration-500 group-hover:rotate-6">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold text-primary mb-3 sm:mb-4">Smart Connectivity</h3>
+                    <p class="text-gray-600 leading-relaxed text-xs sm:text-sm">High-speed fiber internet throughout the entire property.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 sm:py-32 bg-white overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs sm:text-sm mb-4 block flex items-center gap-2">
+                        <span class="w-8 h-0.5 bg-accent"></span>
+                        Features
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-primary mb-8 sm:mb-12 leading-tight">
+                        Kind to Both -<br>
+                        <span class="text-gradient">Nature & People</span>
+                    </h2>
+
+                    <div class="space-y-3 sm:space-y-4">
+                        <div class="feature-acc active bg-gray-50 rounded-2xl p-4 sm:p-6 cursor-pointer border-l-4 border-accent transition-all duration-300">
+                            <div class="flex items-center gap-3 sm:gap-4 mb-2">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                                    <i class="fas fa-bolt text-lg sm:text-xl"></i>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-primary">Energy Efficient Technology</h3>
+                            </div>
+                            <p class="text-gray-600 pl-12 sm:pl-16 max-h-20 overflow-hidden transition-all duration-300 text-sm">
+                                Embrace sustainability with smart insulation, LED lighting, and energy-efficient appliances for a greener living experience.
+                            </p>
+                        </div>
+
+                        <div class="feature-acc bg-white rounded-2xl p-4 sm:p-6 cursor-pointer border-l-4 border-transparent hover:bg-gray-50 transition-all duration-300 opacity-70 hover:opacity-100">
+                            <div class="flex items-center gap-3 sm:gap-4 mb-2">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                                    <i class="fas fa-seedling text-lg sm:text-xl"></i>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-primary">Green Roofs</h3>
+                            </div>
+                            <p class="text-gray-600 pl-12 sm:pl-16 max-h-0 overflow-hidden transition-all duration-300 text-sm">
+                                Our rooftop gardens reduce heat absorption and provide a beautiful recreational space for residents.
+                            </p>
+                        </div>
+
+                        <div class="feature-acc bg-white rounded-2xl p-4 sm:p-6 cursor-pointer border-l-4 border-transparent hover:bg-gray-50 transition-all duration-300 opacity-70 hover:opacity-100">
+                            <div class="flex items-center gap-3 sm:gap-4 mb-2">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                                    <i class="fas fa-tree text-lg sm:text-xl"></i>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-primary">Natural Materials</h3>
+                            </div>
+                            <p class="text-gray-600 pl-12 sm:pl-16 max-h-0 overflow-hidden transition-all duration-300 text-sm">
+                                Constructed using locally sourced wood, stone, and bamboo to minimize carbon footprint.
+                            </p>
+                        </div>
+
+                        <div class="feature-acc bg-white rounded-2xl p-4 sm:p-6 cursor-pointer border-l-4 border-transparent hover:bg-gray-50 transition-all duration-300 opacity-70 hover:opacity-100">
+                            <div class="flex items-center gap-3 sm:gap-4 mb-2">
+                                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                                    <i class="fas fa-solar-panel text-lg sm:text-xl"></i>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold text-primary">Solar Power</h3>
+                            </div>
+                            <p class="text-gray-600 pl-12 sm:pl-16 max-h-0 overflow-hidden transition-all duration-300 text-sm">
+                                Integrated solar panel systems providing clean energy for common areas and reducing electricity costs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-1 lg:order-2 relative">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                        <img src="house1.webp" 
+                             alt="Green Architecture" 
+                             class="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover feature-img hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent"></div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -z-10 -top-6 sm:-top-10 -right-6 sm:-right-10 w-full h-full border-2 border-accent/20 rounded-3xl rotate-slow"></div>
+                    <div class="absolute -z-10 -bottom-6 sm:-bottom-10 -left-6 sm:-left-10 w-32 h-32 sm:w-48 sm:h-48 bg-accent/10 rounded-full blur-2xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floor Plans -->
+    <section id="floorplans" class="py-20 sm:py-32 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10 sm:mb-16 gap-6 sm:gap-8">
+                <div>
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs sm:text-sm mb-4 block flex items-center gap-2">
+                        <span class="w-8 h-0.5 bg-accent"></span>
+                        Our Residences
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-primary">Check Real Homes<br>Apartments</h2>
+                </div>
+                <p class="text-gray-600 max-w-md text-base sm:text-lg">The Real Homes is a home buyers dream. It's a condo in the nature, with beautiful views.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Plan 1 -->
+                <div class="group relative h-[400px] sm:h-[500px] rounded-3xl overflow-hidden cursor-pointer stagger-item">
+                    <img src="home5 img (1).webp" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="3 BHK">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent opacity-80"></div>
+                    <div class="absolute top-4 sm:top-6 left-4 sm:left-6">
+                        <span class="bg-accent text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold">Popular</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-6 sm:p-8 w-full">
+                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2">Three Bedrooms</h3>
+                            <p class="text-accent font-semibold mb-3 sm:mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">From $2,40,000</p>
+                            <div class="flex gap-4 sm:gap-6 text-white/80 text-xs sm:text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                                <span><i class="fas fa-bed mr-1 sm:mr-2"></i>3</span>
+                                <span><i class="fas fa-bath mr-1 sm:mr-2"></i>2</span>
+                                <span><i class="fas fa-ruler-combined mr-1 sm:mr-2"></i>1800 sq ft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan 2 -->
+                <div class="group relative h-[400px] sm:h-[500px] rounded-3xl overflow-hidden cursor-pointer stagger-item" style="transition-delay: 100ms;">
+                    <img src="hom6 img.webp" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="4 BHK">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent opacity-80"></div>
+                    <div class="absolute top-4 sm:top-6 left-4 sm:left-6">
+                        <span class="bg-white text-primary px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold">Best Value</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-6 sm:p-8 w-full">
+                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2">Four Bedrooms</h3>
+                            <p class="text-accent font-semibold mb-3 sm:mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">From $3,10,000</p>
+                            <div class="flex gap-4 sm:gap-6 text-white/80 text-xs sm:text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                                <span><i class="fas fa-bed mr-1 sm:mr-2"></i>4</span>
+                                <span><i class="fas fa-bath mr-1 sm:mr-2"></i>3</span>
+                                <span><i class="fas fa-ruler-combined mr-1 sm:mr-2"></i>2100 sq ft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="group relative h-[400px] sm:h-[500px] rounded-3xl overflow-hidden cursor-pointer stagger-item" style="transition-delay: 200ms;">
+                    <img src="home7 img.webp" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="5 BHK">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent opacity-80"></div>
+                    <div class="absolute top-4 sm:top-6 left-4 sm:left-6">
+                        <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold">Luxury</span>
+                    </div>
+                    <div class="absolute bottom-0 left-0 p-6 sm:p-8 w-full">
+                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2">Five Bedrooms</h3>
+                            <p class="text-accent font-semibold mb-3 sm:mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">From $3,70,000</p>
+                            <div class="flex gap-4 sm:gap-6 text-white/80 text-xs sm:text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
+                                <span><i class="fas fa-bed mr-1 sm:mr-2"></i>5</span>
+                                <span><i class="fas fa-bath mr-1 sm:mr-2"></i>5</span>
+                                <span><i class="fas fa-ruler-combined mr-1 sm:mr-2"></i>2440 sq ft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 sm:mt-16 text-center">
+                <a href="error.html" class="inline-flex items-center gap-2 sm:gap-3 bg-primary text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-accent transition-all duration-300 group text-sm sm:text-base">
+                    View All Floor Plans
+                    <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 sm:py-32 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
+                <span class="text-accent font-bold tracking-widest uppercase text-xs sm:text-sm mb-4 block flex items-center justify-center gap-2">
+                    <span class="w-8 h-0.5 bg-accent"></span>
+                    Testimonials
+                    <span class="w-8 h-0.5 bg-accent"></span>
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-primary">What Our Residents Say</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                <div class="stagger-item bg-gray-50 rounded-3xl p-6 sm:p-8 hover-lift">
+                    <div class="flex items-center gap-1 mb-4 sm:mb-6 text-yellow-400 text-sm sm:text-base">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">"Moving to Real Homes was the best decision we made. The amenities are world-class and the community is wonderful. Our kids love the play area!"</p>
+                    <div class="flex items-center gap-3 sm:gap-4">
+                        <img src="girl.webp" alt="Sarah" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-primary text-sm sm:text-base">Sarah Johnson</h4>
+                            <p class="text-xs sm:text-sm text-gray-500">Resident since 2022</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stagger-item bg-gray-50 rounded-3xl p-6 sm:p-8 hover-lift" style="transition-delay: 100ms;">
+                    <div class="flex items-center gap-1 mb-4 sm:mb-6 text-yellow-400 text-sm sm:text-base">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">"The attention to detail in every aspect of this property is remarkable. From the smart home features to the eco-friendly design, everything is perfect."</p>
+                    <div class="flex items-center gap-3 sm:gap-4">
+                        <img src="girl2.webp" alt="Michael" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-primary text-sm sm:text-base">Michael Chen</h4>
+                            <p class="text-xs sm:text-sm text-gray-500">Resident since 2023</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stagger-item bg-gray-50 rounded-3xl p-6 sm:p-8 hover-lift" style="transition-delay: 200ms;">
+                    <div class="flex items-center gap-1 mb-4 sm:mb-6 text-yellow-400 text-sm sm:text-base">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">"The location is unbeatable - close to everything yet peaceful. The staff is incredibly responsive and the maintenance is top-notch."</p>
+                    <div class="flex items-center gap-3 sm:gap-4">
+                        <img src="teach2.webp" alt="Emily" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover">
+                        <div>
+                            <h4 class="font-bold text-primary text-sm sm:text-base">Emily Rodriguez</h4>
+                            <p class="text-xs sm:text-sm text-gray-500">Resident since 2021</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations -->
+    <section id="locations" class="py-20 sm:py-32 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
+                <span class="text-accent font-bold tracking-widest uppercase text-xs sm:text-sm mb-4 block flex items-center justify-center gap-2">
+                    <span class="w-8 h-0.5 bg-accent"></span>
+                    Location
+                    <span class="w-8 h-0.5 bg-accent"></span>
+                </span>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-primary">Nearby Locations</h2>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
+                <div class="location-item flex flex-col items-center text-center group cursor-pointer bg-white p-4 sm:p-6 rounded-2xl hover-lift">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:bg-accent group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h4 class="font-bold text-primary text-base sm:text-lg">Airport</h4>
+                    <p class="text-gray-500 text-xs sm:text-sm">12.5 KM</p>
+                </div>
+
+                <div class="location-item flex flex-col items-center text-center group cursor-pointer bg-white p-4 sm:p-6 rounded-2xl hover-lift">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:bg-accent group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-bus"></i>
+                    </div>
+                    <h4 class="font-bold text-primary text-base sm:text-lg">Bus Stand</h4>
+                    <p class="text-gray-500 text-xs sm:text-sm">6.8 KM</p>
+                </div>
+
+                <div class="location-item flex flex-col items-center text-center group cursor-pointer bg-white p-4 sm:p-6 rounded-2xl hover-lift">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:bg-accent group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <h4 class="font-bold text-primary text-base sm:text-lg">School</h4>
+                    <p class="text-gray-500 text-xs sm:text-sm">2.4 KM</p>
+                </div>
+
+                <div class="location-item flex flex-col items-center text-center group cursor-pointer bg-white p-4 sm:p-6 rounded-2xl hover-lift">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:bg-accent group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h4 class="font-bold text-primary text-base sm:text-lg">Bank</h4>
+                    <p class="text-gray-500 text-xs sm:text-sm">1.8 KM</p>
+                </div>
+
+                <div class="location-item flex flex-col items-center text-center group cursor-pointer bg-white p-4 sm:p-6 rounded-2xl hover-lift">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:bg-accent group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h4 class="font-bold text-primary text-base sm:text-lg">Library</h4>
+                    <p class="text-gray-500 text-xs sm:text-sm">0.5 KM</p>
+                </div>
+
+                <div class="location-item flex flex-col items-center text-center group cursor-pointer bg-white p-4 sm:p-6 rounded-2xl hover-lift">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:bg-accent group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h4 class="font-bold text-primary text-base sm:text-lg">Hospital</h4>
+                    <p class="text-gray-500 text-xs sm:text-sm">1.1 KM</p>
+                </div>
+
+                <div class="location-item flex flex-col items-center text-center group cursor-pointer bg-white p-4 sm:p-6 rounded-2xl hover-lift">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:bg-accent group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h4 class="font-bold text-primary text-base sm:text-lg">Cinema</h4>
+                    <p class="text-gray-500 text-xs sm:text-sm">2.5 KM</p>
+                </div>
+
+                <div class="location-item flex flex-col items-center text-center group cursor-pointer bg-white p-4 sm:p-6 rounded-2xl hover-lift">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xl sm:text-2xl mb-3 sm:mb-4 group-hover:bg-accent group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-subway"></i>
+                    </div>
+                    <h4 class="font-bold text-primary text-base sm:text-lg">Metro</h4>
+                    <p class="text-gray-500 text-xs sm:text-sm">1.8 KM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 sm:py-32 bg-primary relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
+
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-accent/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-48 sm:w-72 h-48 sm:h-72 bg-white/5 rounded-full blur-3xl"></div>
+
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 contact-grid">
+                <!-- Left Content -->
+                <div class="order-2 lg:order-1">
+                    <span class="text-accent font-bold tracking-widest uppercase text-xs sm:text-sm mb-4 block flex items-center gap-2">
+                        <span class="w-8 h-0.5 bg-accent"></span>
+                        Quick Connect
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 sm:mb-8 leading-tight">
+                        Get in touch with us<br>
+                        for any questions<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400">& help</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-accent mb-6 sm:mb-8"></div>
+                    
+                    <p class="text-gray-400 mb-8 sm:mb-12 text-base sm:text-lg">Our team is available 24/7 to assist you with your inquiries regarding the property, pricing, or scheduling a visit.</p>
+                    
+                    <div class="space-y-4 sm:space-y-6">
+                        <div class="flex items-center gap-3 sm:gap-4 text-white/80 group cursor-pointer bg-white/5 backdrop-blur-sm p-3 sm:p-4 rounded-2xl border border-white/10 hover:border-accent hover:bg-accent/20 transition-all">
+                            <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-accent/20 flex items-center justify-center group-hover:bg-accent transition-all shrink-0">
+                                <i class="fas fa-phone text-lg sm:text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-white/50">Call us anytime</p>
+                                <p class="text-lg sm:text-xl font-bold">(800) 543 5432</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 sm:gap-4 text-white/80 group cursor-pointer bg-white/5 backdrop-blur-sm p-3 sm:p-4 rounded-2xl border border-white/10 hover:border-accent hover:bg-accent/20 transition-all">
+                            <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-accent/20 flex items-center justify-center group-hover:bg-accent transition-all shrink-0">
+                                <i class="fas fa-envelope text-lg sm:text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-white/50">Send us an email</p>
+                                <p class="text-lg sm:text-xl font-bold">contact@realhomes.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 sm:gap-4 text-white/80 group cursor-pointer bg-white/5 backdrop-blur-sm p-3 sm:p-4 rounded-2xl border border-white/10 hover:border-accent hover:bg-accent/20 transition-all">
+                            <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-accent/20 flex items-center justify-center group-hover:bg-accent transition-all shrink-0">
+                                <i class="fas fa-map-marker-alt text-lg sm:text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs sm:text-sm text-white/50">Visit our office</p>
+                                <p class="text-base sm:text-xl font-bold">123 Skyline Avenue, Skycity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="order-1 lg:order-2 contact-form-box">
+                    <div class="bg-white rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl">
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">Schedule a tour</h3>
+                        <p class="text-gray-500 mb-6 sm:mb-8 text-sm sm:text-base">Fill in your details and we'll get back to you within 24 hours.</p>
+                        
+                        <form class="space-y-4 sm:space-y-5" onsubmit="event.preventDefault(); alert('Thank you! We will contact you shortly.');">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                                <div class="relative">
+                                    <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Full Name</label>
+                                    <input type="text" placeholder="John Doe" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm">
+                                </div>
+                                <div class="relative">
+                                    <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Phone Number</label>
+                                    <input type="tel" placeholder="+1 (555) 000-0000" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm">
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Email Address</label>
+                                <input type="email" placeholder="john@example.com" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm">
+                            </div>
+                            <div class="relative">
+                                <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Preferred Date</label>
+                                <input type="date" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-accent focus:bg-white transition-all text-sm">
+                            </div>
+                            <div class="relative">
+                                <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Message</label>
+                                <textarea rows="4" placeholder="Tell us about your requirements..." class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:border-accent focus:bg-white transition-all resize-none text-sm"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-accent text-white font-bold py-3 sm:py-4 rounded-xl hover:bg-primary transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 flex items-center justify-center gap-2 group text-sm sm:text-base">
+                                Send Message
+                                <i class="fas fa-paper-plane group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary border-t border-white/10 py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-10 sm:mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-4 sm:mb-6">
+                        <!-- <div class="w-8 h-8 sm:w-10 sm:h-10 bg-accent rounded-lg flex items-center justify-center text-white">
+                            <i class="fas fa-building text-sm sm:text-base"></i>
+                        </div> -->
+                        <div class="text-xl sm:text-2xl font-black text-white">
+                            STACKLY<span class="text-accent"></span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">Luxury living redefined. Experience the perfect blend of elegance, comfort, and nature.</p>
+                    <div class="flex gap-3 sm:gap-4">
+                        <a href="https://www.facebook.com/ " class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="https://x.com/ " class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-twitter text-sm"></i>
+                        </a>
+                        <a href="https://www.instagram.com/ " class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="https://in.linkedin.com/ " class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-linkedin-in text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 sm:mb-6 text-base sm:text-lg">Quick Links</h4>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="about.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">About Us</a></li>
+                        <li><a href="ami.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">Amenities</a></li>
+                        <li><a href="floor.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">Floor Plans</a></li>
+                        <li><a href="location.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">Locations</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 sm:mb-6 text-base sm:text-lg">Properties</h4>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">3 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">4 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">5 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">Penthouse Suites</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 sm:mb-6 text-base sm:text-lg">Newsletter</h4>
+                    <p class="text-gray-400 mb-4 text-sm sm:text-base">Subscribe to get latest updates and offers.</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Your email" class="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-accent text-sm">
+                        <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary transition-all">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-xs sm:text-sm text-center md:text-left">&copy; 2023 Real Homes. All rights reserved.</p>
+                <div class="flex gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
+                    <a href="error.html" class="hover:text-accent transition-colors">Privacy Policy</a>
+                    <a href="error.html" class="hover:text-accent transition-colors">Terms of Service</a>
+                    <a href="error.html" class="hover:text-accent transition-colors">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button id="scrollTop" class="fixed bottom-6 sm:bottom-8 right-6 sm:right-8 w-12 h-12 sm:w-14 sm:h-14 bg-accent text-white rounded-full shadow-2xl flex items-center justify-center opacity-0 translate-y-10 transition-all duration-300 hover:bg-primary hover:scale-110 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Register GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+        if (!isTouchDevice && cursor) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            document.querySelectorAll('a, button, .magnetic-btn').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+            });
+        }
+
+        // Magnetic Effect
+        document.querySelectorAll('[data-magnetic]').forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                this.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        const scrollProgress = document.getElementById('scroll-progress');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrolled / maxScroll) * 100;
+            
+            scrollProgress.style.width = progress + '%';
+            
+            if (scrolled > 50) {
+                header.classList.add('bg-primary/95', 'backdrop-blur-md', 'shadow-lg');
+            } else {
+                header.classList.remove('bg-primary/95', 'backdrop-blur-md', 'shadow-lg');
+            }
+        });
+
+        // Desktop Dropdown Toggle
+        const dropdownTrigger = document.querySelector('.dropdown-trigger');
+        dropdownTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownTrigger.classList.toggle('dropdown-active');
+        });
+
+        document.addEventListener('click', () => {
+            dropdownTrigger.classList.remove('dropdown-active');
+        });
+
+        // Mobile Dropdown Toggle
+        const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
+        const mobileDropdown = document.querySelector('.mobile-dropdown');
+        
+        mobileDropdownToggle.addEventListener('click', () => {
+            mobileDropdown.classList.toggle('active');
+            mobileDropdownToggle.classList.toggle('active');
+        });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const mobileSocial = document.querySelector('.mobile-social');
+        const mobileContact = document.querySelector('.mobile-contact');
+        let menuOpen = false;
+
+        menuToggle.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            document.body.classList.toggle('mobile-menu-open');
+            menuToggle.classList.toggle('menu-open');
+
+            if (menuOpen) {
+                gsap.to(mobileLinks, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.6,
+                    stagger: 0.08,
+                    ease: 'power3.out',
+                    delay: 0.3
+                });
+                gsap.to([mobileSocial, mobileContact], {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.6,
+                    delay: 0.8
+                });
+            } else {
+                gsap.to([mobileLinks, mobileSocial, mobileContact], {
+                    y: 32,
+                    opacity: 0,
+                    duration: 0.3
+                });
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                document.body.classList.remove('mobile-menu-open');
+                menuToggle.classList.remove('menu-open');
+            });
+        });
+
+        // Hero Animations
+        const heroTl = gsap.timeline();
+        
+        heroTl.to('.hero-subtitle', {
+            y: 0,
+            duration: 0.8,
+            ease: 'power3.out'
+        })
+        .to('.hero-title', {
+            y: 0,
+            duration: 1,
+            stagger: 0.1,
+            ease: 'power3.out'
+        }, '-=0.4')
+        .to('.hero-line', {
+            width: '5rem',
+            duration: 0.8,
+            ease: 'power2.out'
+        }, '-=0.6')
+        .to('.hero-features', {
+            opacity: 1,
+            duration: 0.8
+        }, '-=0.4')
+        .to('.hero-cta', {
+            opacity: 1,
+            y: 0,
+            duration: 0.6
+        }, '-=0.4')
+        .to('.hero-video-cta', {
+            opacity: 1,
+            y: 0,
+            duration: 0.6
+        }, '-=0.5')
+        .to('.hero-card', {
+            opacity: 1,
+            x: 0,
+            duration: 1.2,
+            ease: 'power3.out'
+        }, '-=1')
+        .to('.hero-badge', {
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            ease: 'back.out(1.7)'
+        }, '-=0.4')
+        .to('.hero-scroll', {
+            opacity: 1,
+            duration: 0.6
+        }, '-=0.4')
+        .to('.hero-stat', {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.1
+        }, '-=0.2');
+
+        // Hero Parallax
+        gsap.to('#hero-bg', {
+            yPercent: 30,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#home',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+
+        // Image Reveal
+        gsap.utils.toArray('.img-reveal').forEach(img => {
+            ScrollTrigger.create({
+                trigger: img,
+                start: 'top 80%',
+                onEnter: () => img.classList.add('revealed')
+            });
+        });
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            const isFloat = target % 1 !== 0;
+            
+            ScrollTrigger.create({
+                trigger: counter,
+                start: 'top 85%',
+                onEnter: () => {
+                    gsap.to(counter, {
+                        innerHTML: target,
+                        duration: 2,
+                        snap: { innerHTML: isFloat ? 0.1 : 1 },
+                        onUpdate: function() {
+                            counter.innerHTML = isFloat ? parseFloat(this.targets()[0].innerHTML).toFixed(1) : Math.ceil(this.targets()[0].innerHTML);
+                        }
+                    });
+                }
+            });
+        });
+
+        // Stagger Items
+        gsap.utils.toArray('.stagger-item').forEach((item, i) => {
+            gsap.to(item, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%'
+                }
+            });
+        });
+
+        // Location Items
+        gsap.utils.toArray('.location-item').forEach((item, i) => {
+            gsap.from(item, {
+                scale: 0.8,
+                opacity: 0,
+                duration: 0.6,
+                delay: i * 0.05,
+                ease: 'back.out(1.7)',
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%'
+                }
+            });
+        });
+
+        // Feature Accordion
+        const featureAccs = document.querySelectorAll('.feature-acc');
+        featureAccs.forEach(acc => {
+            acc.addEventListener('click', () => {
+                featureAccs.forEach(a => {
+                    a.classList.remove('active', 'bg-gray-50', 'border-accent', 'opacity-100');
+                    a.classList.add('bg-white', 'border-transparent', 'opacity-70');
+                    a.querySelector('p').style.maxHeight = '0';
+                });
+                
+                acc.classList.add('active', 'bg-gray-50', 'border-accent', 'opacity-100');
+                acc.classList.remove('bg-white', 'border-transparent', 'opacity-70');
+                acc.querySelector('p').style.maxHeight = '100px';
+            });
+        });
+
+        // Scroll to Top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.remove('opacity-0', 'translate-y-10');
+            } else {
+                scrollTopBtn.classList.add('opacity-0', 'translate-y-10');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Premium Card Hover Effect
+        const heroCard = document.querySelector('.hero-card');
+        if (heroCard) {
+            heroCard.addEventListener('mousemove', (e) => {
+                const rect = heroCard.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                heroCard.style.setProperty('--x', `${x}px`);
+                heroCard.style.setProperty('--y', `${y}px`);
+            });
+        }
+
+    </script>
+</body>
+</html>

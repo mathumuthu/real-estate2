@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Homes</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+/* ===== HEADER ===== */
+header{
+position:fixed;
+width:100%;
+z-index:999;
+background:rgba(0,0,0,0.2);
+backdrop-filter:blur(15px);
+}
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 40px;
+}
+
+/* ===== LOGO ===== */
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:22px;
+font-weight:700;
+color:#fff;
+}
+
+.logo img{width:40px}
+
+/* ===== MENU ===== */
+.menu{
+display:flex;
+gap:25px;
+align-items:center;
+list-style:none;
+}
+
+.menu a{
+text-decoration:none;
+color:#fff;
+font-weight:500;
+}
+
+/* ===== DROPDOWN ===== */
+.home-menu{position:relative;}
+.home-menu{
+position:relative;
+padding:15px 0;
+}
+
+.dropdown{
+position:absolute;
+top:100%;   /* 🔥 முக்கியம் */
+left:0;
+min-width:180px;
+background:linear-gradient(135deg,#2ea89b,#1e6dfb);
+border-radius:10px;
+display:block;
+opacity:0;
+visibility:hidden;
+transform:translateY(10px);
+transition:0.3s;
+pointer-events:none;
+}
+
+/* 🔥 Hover Stable */
+.home-menu:hover .dropdown{
+opacity:1;
+visibility:visible;
+transform:translateY(0);
+pointer-events:auto;
+}
+
+/* ===== LOGIN BTN ===== */
+.login-btn{
+background:linear-gradient(45deg,#2ea89b,#1e6dfb);
+padding:8px 20px;
+border-radius:30px;
+transition:0.4s;
+}
+
+.login-btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 15px #2ea89b;
+}
+
+/* ===== HAMBURGER ===== */
+.hamburger{
+display:none;
+font-size:26px;
+cursor:pointer;
+color:#fff;
+}
+
+/* ===== HERO ===== */
+.hero{
+height:100vh;
+position:relative;
+overflow:visible;
+display:flex;
+align-items:center;
+
+}
+.hero{
+margin-bottom:100px;
+}
+
+/* 🔥 IMPORTANT FIX */
+.slide{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+opacity:0;
+transition:1s;
+z-index:0;
+}
+
+/* ACTIVE SLIDE */
+.slide.active{
+opacity:1;
+z-index:1;
+}
+
+.slide{
+z-index:0;
+}
+.hero{
+z-index:1;
+}
+
+
+/* OVERLAY */
+.overlay{
+position:absolute;
+width:100%;
+height:100%;
+top:0;
+left:0;
+background:linear-gradient(to right,rgba(0,0,0,0.6),rgba(0,0,0,0.1));
+z-index:2;
+}
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+
+.hamburger{display:block;}
+
+.menu{
+position:fixed;
+top:70px;
+left:-100%;
+width:75%;
+height:100%;
+flex-direction:column;
+padding:20px;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(20px);
+transition:0.4s;
+}
+
+.menu.active{left:0;}
+
+.menu li{
+width:100%;
+margin-bottom:10px;
+}
+
+.dropdown{
+position:relative;
+top:0;
+width:100%;
+display:none;
+}
+
+.home-menu.active .dropdown{
+display:block;
+}
+
+}
+
+
+.property-details{
+padding:100px 40px;
+background:#f5f7fa;
+}
+
+.container{max-width:1200px;margin:auto;}
+
+.breadcrumb{
+color:#2ea89b;
+font-weight:500;
+margin-bottom:10px;
+}
+
+.title-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+margin-bottom:30px;
+}
+
+.title-row h2{
+font-size:28px;
+margin-bottom:5px;
+}
+
+.price-box{
+background:#fff;
+padding:15px 25px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+text-align:right;
+}
+
+.price-box h3{
+color:#2ea89b;
+}
+
+.gallery{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:15px;
+}
+
+.main-img img,
+.side-img img{
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:10px;
+transition:0.4s;
+}
+
+.main-img img:hover,
+.side-img img:hover{
+transform:scale(1.05);
+}
+
+.side-img{
+display:grid;
+grid-template-rows:1fr 1fr;
+gap:15px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.gallery{
+grid-template-columns:1fr;
+}
+
+.side-img{
+grid-template-columns:1fr 1fr;
+grid-template-rows:auto;
+}
+
+}
+
+.property-info{
+padding:80px 40px;
+background:#fff;
+}
+
+.info-container{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:40px;
+max-width:1200px;
+margin:auto;
+}
+
+.prop-id span{
+color:#2ea89b;
+}
+.featured{
+background:#ff7a18;
+color:#fff;
+padding:4px 10px;
+margin-left:10px;
+border-radius:5px;
+}
+
+.features{
+display:flex;
+gap:30px;
+margin:20px 0;
+}
+
+.details li{
+background:#f1f1f1;
+padding:10px;
+margin-bottom:10px;
+border-radius:5px;
+transition:0.3s;
+}
+.details li:hover{
+background:#e3f7f4;
+transform:translateX(10px);
+}
+
+.agent-card{
+background:#f9f9f9;
+padding:20px;
+border-radius:10px;
+text-align:center;
+position:sticky;
+top:100px;
+}
+
+.agent-card img{
+width:100px;
+border-radius:50%;
+margin-bottom:10px;
+}
+
+.agent-card button{
+background:#2ea89b;
+color:#fff;
+padding:10px 20px;
+border:none;
+margin-top:10px;
+border-radius:5px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+.info-container{
+grid-template-columns:1fr;
+}
+.features{
+flex-direction:column;
+}
+.agent-card{
+position:relative;
+top:0;
+}
+}
+
+
+
+
+
+
+.property-extra{
+padding:80px 40px;
+background:#fff;
+}
+
+.extra-container{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:40px;
+max-width:1200px;
+margin:auto;
+}
+
+.feature-list{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin:20px 0;
+}
+.feature-list div{
+background:#f5f5f5;
+padding:8px;
+border-radius:5px;
+transition:0.3s;
+}
+.feature-list div:hover{
+transform:translateX(10px);
+background:#e3f7f4;
+}
+
+.attachments div{
+background:#f1f1f1;
+padding:10px;
+margin-bottom:10px;
+border-radius:5px;
+}
+
+.accordion{
+margin-top:10px;
+}
+.acc-head{
+background:#eee;
+padding:12px;
+cursor:pointer;
+}
+.acc-body{
+display:none;
+background:#fafafa;
+padding:10px;
+}
+
+.contact-box{
+background:#f9f9f9;
+padding:20px;
+border-radius:10px;
+position:sticky;
+top:100px;
+}
+.contact-box input,
+.contact-box textarea{
+width:100%;
+margin:10px 0;
+padding:10px;
+}
+.contact-box button{
+width:100%;
+margin:5px 0;
+padding:10px;
+border:none;
+background:#2ea89b;
+color:#fff;
+cursor:pointer;
+}
+.send{
+background:#1e6dfb;
+}
+
+@media(max-width:768px){
+.extra-container{
+grid-template-columns:1fr;
+}
+.feature-list{
+grid-template-columns:1fr;
+}
+.contact-box{
+position:relative;
+top:0;
+}
+}
+
+
+
+
+.property-video-sec{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:40px;
+padding:80px 40px;
+max-width:1200px;
+margin:auto;
+}
+
+.video-box{
+position:relative;
+overflow:hidden;
+border-radius:10px;
+}
+.video-box img{
+width:100%;
+display:block;
+}
+
+.play-btn{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#000;
+color:#fff;
+padding:15px;
+border-radius:50%;
+font-size:22px;
+}
+
+.featured-card{
+background:#fff;
+border-radius:10px;
+overflow:hidden;
+position:relative;
+}
+
+.badge{
+position:absolute;
+top:10px;
+left:-40px;
+background:#ff7a18;
+color:#fff;
+padding:5px 40px;
+transform:rotate(-45deg);
+}
+
+.f-content{
+padding:15px;
+}
+
+.f-price{
+color:#2ea89b;
+font-size:22px;
+}
+
+@media(max-width:768px){
+.property-video-sec{
+grid-template-columns:1fr;
+}
+}
+
+
+
+
+
+
+
+
+/* PROPERTY DETAILS SECTION */
+
+.property-wrapper{
+display:flex;
+gap:30px;
+flex-wrap:wrap;
+margin-top:40px;
+}
+
+.property-left{flex:2;}
+.property-right{flex:1;}
+
+.property-box{
+background:#fff;
+padding:20px;
+border-radius:15px;
+margin-bottom:30px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.property-video{
+position:relative;
+overflow:hidden;
+border-radius:15px;
+}
+
+.property-video img{
+width:100%;
+transition:0.6s;
+}
+
+.property-video:hover img{
+transform:scale(1.05);
+}
+
+.play-btn{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(0,0,0,0.5);
+color:#fff;
+padding:18px;
+border-radius:50%;
+font-size:24px;
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(0,0,0,0.6);}
+70%{box-shadow:0 0 0 20px rgba(0,0,0,0);}
+100%{box-shadow:0 0 0 0 rgba(0,0,0,0);}
+}
+
+/* SIDEBAR CARD */
+
+.feature-card{
+border-radius:15px;
+overflow:hidden;
+background:#fff;
+margin-bottom:20px;
+transition:0.4s;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.feature-card img{
+width:100%;
+transition:0.5s;
+}
+
+.feature-card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.feature-card:hover img{
+transform:scale(1.08);
+}
+
+.feature-info{
+padding:15px;
+}
+
+.price{
+color:#00a896;
+font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+.property-wrapper{
+flex-direction:column;
+}
+.feature-card:hover img{
+transform:scale(1.02);
+}
+}
+
+
+
+
+
+/* ===== AOS FIX ===== */
+[data-aos]{
+opacity:1 !important;
+transform:none !important;
+}
+
+
+
+
+
+.estate-footer{
+position:relative;
+background:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa') center/cover no-repeat;
+padding:80px 20px 30px;
+color:#fff;
+}
+
+.footer-overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+}
+
+.footer-content{
+position:relative;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:30px;
+max-width:1200px;
+margin:auto;
+z-index:1;
+}
+
+.footer-card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(8px);
+padding:25px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,0.2);
+transition:.4s;
+}
+
+.footer-card:hover{
+border:1px solid #00eaff;
+box-shadow:0 0 15px #00eaff;
+transform:translateY(-5px);
+}
+
+.footer-card a{
+display:block;
+color:#ddd;
+text-decoration:none;
+margin:5px 0;
+}
+
+.footer-card input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:none;
+border-radius:5px;
+}
+
+.footer-card button{
+padding:10px 20px;
+background:#00eaff;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.visit-btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 20px;
+background:#00eaff;
+color:#000;
+text-decoration:none;
+border-radius:5px;
+}
+
+.footer-bottom{
+text-align:center;
+margin-top:40px;
+position:relative;
+z-index:1;
+font-size:14px;
+}
+
+
+
+
+
+.estate-social{
+text-align:center;
+margin-top:30px;
+}
+
+.estate-social a{
+display:inline-block;
+width:45px;
+height:45px;
+line-height:45px;
+margin:0 8px;
+background:rgba(255,255,255,0.08);
+border-radius:50%;
+color:#fff;
+font-size:18px;
+transition:.4s;
+backdrop-filter:blur(5px);
+border:1px solid rgba(255,255,255,0.2);
+}
+
+.estate-social a:hover{
+background:#00eaff;
+color:#000;
+box-shadow:0 0 15px #00eaff;
+transform:translateY(-5px) scale(1.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="navbar">
+
+<div class="logo">
+<img src="logo.webp" width="45px" height="45px">
+STACKLY</div>
+
+<ul class="menu" id="menu">
+
+<li class="home-menu">
+<a href="home 2.html" class="home-toggle">Home ▾</a>
+<div class="dropdown">
+<a href="index.html">Home 1</a>
+<a href="home 2.html">Home 2</a>
+</div>
+</li>
+
+<li><a href="property.html">Property</a></li>
+<li><a href="real.html">Real Estate</a></li>
+<!-- <li><a href="#">Location</a></li>
+<li><a href="#">About Us</a></li> -->
+<li><a href="blog.html">Blog</a></li>
+<li><a href="contact.html">Contact</a></li>
+<li><a class="login-btn" href="login.html">Login</a></li>
+
+</ul>
+
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+
+</div>
+</header>
+
+<section class="hero">
+
+<div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1600607687644-c7171b42498f')"></div>
+<div class="slide" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c')"></div>
+<div class="slide" style="background-image:url('https://images.unsplash.com/photo-1572120360610-d971b9d7767c')"></div>
+
+<div class="overlay"></div>
+
+</section>
+
+
+<!-- ===== PROPERTY DETAILS ===== -->
+<section class="property-details">
+
+<div class="container">
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb" data-aos="fade-right">
+Home › Miami
+</div>
+
+<!-- TITLE + PRICE -->
+<div class="title-row">
+
+<div data-aos="fade-up">
+<h2>Home in Merrick Way</h2>
+<p>Merrick Way, Miami, FL 33134, USA</p>
+</div>
+
+<div class="price-box" data-aos="zoom-in">
+<span>For Sale</span>
+<h3>$540,000</h3>
+</div>
+
+</div>
+
+<!-- GALLERY GRID -->
+<div class="gallery">
+
+<div class="main-img" data-aos="fade-right">
+<img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f">
+</div>
+
+<div class="side-img" data-aos="fade-left">
+<img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d">
+<img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed">
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+
+<section class="property-info">
+
+<div class="info-container">
+
+<!-- LEFT -->
+<div class="property-left">
+
+<div class="prop-id" data-aos="fade-right">
+Property ID: <span>RH-2017-06</span>
+<span class="featured">Featured</span>
+</div>
+
+<div class="features" data-aos="fade-up">
+<div><b>Bedrooms:</b> 3</div>
+<div><b>Bathrooms:</b> 3</div>
+<div><b>Area:</b> 4300 Sq Ft</div>
+</div>
+
+<h3 data-aos="fade-up">Description</h3>
+
+<p data-aos="fade-up">
+Enchanting three bedroom, three bath home with spacious living
+area, formal dining room, remodeled kitchen with granite countertops.
+</p>
+
+<h3 data-aos="fade-up">Additional Details</h3>
+
+<ul class="details" data-aos="fade-up">
+<li>Bedroom Features: Walk-In Closet</li>
+<li>Dining Area: Living Combo</li>
+<li>Doors & Windows: Bay Window</li>
+<li>Entry Location: Mid Level</li>
+</ul>
+
+</div>
+
+<!-- RIGHT -->
+<div class="agent-card" data-aos="fade-left">
+
+<img src="https://randomuser.me/api/portraits/women/65.jpg">
+
+<h4>Agent Melissa William</h4>
+
+<p>Office: 1-222-333-4444</p>
+<p>Mobile: 1-234-456-7892</p>
+<p>Email: melissa@realhomes.io</p>
+
+<a href="404.html"><button>View My Listings</button></a>
+
+</div>
+
+</div>
+</section>
+
+
+
+<section class="property-extra">
+
+<div class="extra-container">
+
+<!-- LEFT SIDE -->
+<div class="extra-left">
+
+<h3 data-aos="fade-down">Features</h3>
+
+<div class="feature-list">
+
+<div data-aos="fade-up">✔ 2 Stories</div>
+<div data-aos="fade-up">✔ Central Heating</div>
+<div data-aos="fade-up">✔ Fire Place</div>
+<div data-aos="fade-up">✔ Lawn</div>
+<div data-aos="fade-up">✔ Bike Path</div>
+<div data-aos="fade-up">✔ Dual Sinks</div>
+<div data-aos="fade-up">✔ Home Theater</div>
+<div data-aos="fade-up">✔ Marble Floors</div>
+<div data-aos="fade-up">✔ Central Cooling</div>
+<div data-aos="fade-up">✔ Electric Range</div>
+<div data-aos="fade-up">✔ Laundry Room</div>
+<div data-aos="fade-up">✔ Swimming Pool</div>
+
+</div>
+
+<h3 data-aos="fade-down">Property Attachments</h3>
+
+<div class="attachments" data-aos="fade-up">
+<div>📄 Demo Word Document</div>
+<div>📄 Demo PDF Document</div>
+</div>
+
+<h3 data-aos="fade-down">Floor Plans</h3>
+
+<div class="accordion" data-aos="fade-up">
+
+<div class="acc-head" onclick="toggleAcc(this)">
+Ground Floor - 2500 sq ft | 1 Bedroom | 1 Bathroom
+</div>
+
+<div class="acc-body">
+<p>
+Progressively maintain extensive info after resource leveling processes.
+</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="contact-box" data-aos="fade-left">
+
+<h4>Send Message</h4>
+
+<input type="text" placeholder="Name">
+<input type="email" placeholder="Email">
+<input type="text" placeholder="Phone">
+<textarea placeholder="Message"></textarea>
+
+<label class="gdpr">
+<input type="checkbox"> I agree to GDPR Policy
+</label>
+
+<a href="404.html"><button>WhatsApp</button></a>
+<a href="404.html"><button>Call Now</button></a>
+<a href="404.html"><button class="send">Send Message</button></a>
+
+</div>
+
+</div>
+</section>
+
+
+
+<section class="property-wrapper">
+
+<div class="property-left">
+
+<div class="property-box" data-aos="fade-down">
+<h3>Property Video</h3>
+
+<div class="property-video">
+<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c">
+<div class="play-btn">▶</div>
+</div>
+
+</div>
+
+<div class="property-box" data-aos="fade-up">
+<h3>Virtual Tour</h3>
+
+<div class="property-video">
+<img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c">
+</div>
+
+</div>
+
+</div>
+
+<div class="property-right" data-aos="fade-left">
+
+<div class="feature-card">
+<img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be">
+<div class="feature-info">
+<h4>Home in Coral Gables</h4>
+<p>4 Beds | 4.5 Baths | 3800 Sq Ft</p>
+<p class="price">$850,000</p>
+</div>
+</div>
+
+<div class="feature-card">
+<img src="https://images.unsplash.com/photo-1600573472592-401b489a3cdc">
+<div class="feature-info">
+<h4>Luxury Family Villa</h4>
+<p>3 Beds | 3 Baths | 2500 Sq Ft</p>
+<p class="price">$650,000</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ===== UPDATED REAL ESTATE FOOTER START ===== -->
+
+
+
+<footer class="estate-footer">
+
+<div class="footer-overlay"></div>
+
+<div class="footer-content">
+
+<div class="footer-card" data-aos="fade-up">
+<h2>Stackly Properties</h2>
+<p>Premium homes in Chennai. Buy, Rent or Sell your dream property with trusted agents.</p>
+<a href="contact.html" class="visit-btn">Schedule Visit</a>
+</div>
+
+
+
+<div class="estate-social" data-aos="zoom-in">
+<a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+<a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+<a href="https://in.linkedin.com/"><i class="fab fa-linkedin-in"></i></a>
+<a href="https://x.com/"><i class="fab fa-twitter"></i></a>
+<!-- <a href="#"><i class="fab fa-youtube"></i></a> -->
+
+</div>
+
+
+
+
+
+
+
+
+<div class="footer-card" data-aos="fade-up" data-aos-delay="200">
+<h3>Explore</h3>
+<a href="property.html">Propertis</a>
+<a href="real.html">Real estate</a>
+<a href="blog.html">blog</a>
+<a href="contact.html">Contact</a>
+</div>
+
+<div class="footer-card" data-aos="fade-up" data-aos-delay="400">
+<h3>Contact</h3>
+<p>📍 Chennai, Tamil Nadu</p>
+<p>📞 +91 9876543210</p>
+<p>📧 support@stackly.com</p>
+</div>
+
+<div class="footer-card" data-aos="fade-up" data-aos-delay="600">
+<h3>Newsletter</h3>
+<input type="email" placeholder="Enter Email">
+<button>Subscribe</button>
+</div>
+
+</div>
+
+<div class="footer-bottom">
+<p>© 2026 Stackly Real Estate</p>
+</div>
+
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+// ===== MOBILE MENU =====
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("active");
+}
+
+// ===== HOME DROPDOWN MOBILE TOGGLE =====
+const homeToggle = document.querySelector(".home-toggle");
+const homeMenu = document.querySelector(".home-menu");
+
+homeToggle.addEventListener("click",function(e){
+if(window.innerWidth<=768){
+e.preventDefault();  // 🔥 important
+homeMenu.classList.toggle("active");
+}
+});
+
+// ===== CLICK OUTSIDE CLOSE =====
+document.addEventListener("click",function(e){
+if(window.innerWidth<=768){
+if(!homeMenu.contains(e.target)){
+homeMenu.classList.remove("active");
+}
+}
+});
+
+// ===== HERO SLIDER =====
+let slides = document.querySelectorAll(".slide");
+let index=0;
+
+setInterval(()=>{
+slides[index].classList.remove("active");
+index=(index+1)%slides.length;
+slides[index].classList.add("active");
+},5000);
+
+
+</script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+AOS.init({
+duration:1200,
+once:true,
+disableMutationObserver:true
+});
+// GSAP ANIMATION
+gsap.from(".title-row h2",{
+y:50,
+opacity:0,
+duration:1,
+delay:0.3
+});
+
+gsap.from(".price-box",{
+scale:0,
+opacity:0,
+duration:1,
+delay:0.5
+});
+
+
+
+
+AOS.init({
+duration:1200,
+once:true,
+disableMutationObserver:true
+});
+
+window.addEventListener('load',()=>{
+AOS.refresh();
+});
+
+
+
+
+
+function subscribeNow(){
+
+let email = document.getElementById("subscribeEmail").value;
+let msg = document.getElementById("subscribeMsg");
+
+let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+if(email==""){
+msg.style.color="red";
+msg.innerHTML="⚠ Please enter email address";
+}
+else if(!email.match(emailPattern)){
+msg.style.color="orange";
+msg.innerHTML="⚠ Invalid Email Format";
+}
+else{
+msg.style.color="lightgreen";
+msg.innerHTML="✅ Subscription Successful!";
+document.getElementById("subscribeEmail").value="";
+}
+
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

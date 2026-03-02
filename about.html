@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - STACKLY Real Homes</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<!-- PRELOADER START -->
+ <div id="preloader">
+    <div class="loader">
+        <div class="home-icon">
+            <i class="fas fa-home"></i>
+        </div>
+        <span class="loading-text">Loading Properties...</span>
+    </div>
+</div>
+
+ <!-- PRELOADER END -->
+<style>
+#preloader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#0f172a;
+z-index:9999;
+display:flex;
+justify-content:center;
+align-items:center;
+transition:opacity 0.5s ease;
+}
+
+.loader{
+text-align:center;
+}
+
+.home-icon{
+width:70px;
+height:70px;
+border-radius:50%;
+border:4px solid #1e293b;
+border-top:4px solid #22c55e;
+display:flex;
+justify-content:center;
+align-items:center;
+animation:spin 0.8s linear;
+}
+
+.home-icon i{
+color:#22c55e;
+font-size:26px;
+}
+
+.loading-text{
+color:#fff;
+margin-top:10px;
+display:block;
+font-size:14px;
+}
+
+/* Only once spin */
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.home-icon{
+width:55px;
+height:55px;
+}
+.home-icon i{
+font-size:20px;
+}
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const preloader = document.getElementById("preloader");
+
+    setTimeout(function(){
+        preloader.style.opacity="0";
+
+        setTimeout(function(){
+            preloader.style.display="none";
+        },500);
+
+    },1000); // 👈 ONLY 1 SECOND
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0f172a',
+                        accent: '#2c5f4a',
+                        light: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { overflow-x: hidden; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #2c5f4a; border-radius: 4px; }
+
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Desktop Dropdown - Fixed z-index and visibility */
+        .dropdown-wrapper {
+            position: relative;
+            z-index: 100;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            transform-origin: top;
+            transform: perspective(1000px) rotateX(-90deg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 9999;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            min-width: 224px;
+        }
+        .dropdown-active .dropdown-menu {
+            transform: perspective(1000px) rotateX(0deg);
+            opacity: 1;
+            visibility: visible;
+        }
+        .dropdown-icon {
+            transition: transform 0.3s ease;
+        }
+        .dropdown-active .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile Dropdown */
+        .mobile-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-dropdown.active { max-height: 300px; }
+        .mobile-dropdown-arrow { transition: transform 0.3s ease; }
+        .mobile-dropdown.active .mobile-dropdown-arrow { transform: rotate(180deg); }
+
+        /* Hamburger Animation */
+        .hamburger-line {
+            transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+        .menu-open .line-1 {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-open .line-2 {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .menu-open .line-3 {
+            transform: rotate(-45deg) translate(5px, -5px);
+            width: 24px !important;
+        }
+
+        /* Mobile Menu Slide */
+        .mobile-menu-container {
+            clip-path: circle(0% at calc(100% - 40px) 40px);
+            transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .mobile-menu-open .mobile-menu-container {
+            clip-path: circle(150% at calc(100% - 40px) 40px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #2c5f4a 0%, #1a1a1a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hover-lift {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        /* Logo Styles - ALWAYS VISIBLE */
+        .logo-wrapper {
+            position: relative;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        .logo-img {
+            height: 45px;
+            width: 45px;
+            object-fit: contain;
+            flex-shrink: 0;
+            display: block;
+        }
+        @media (max-width: 480px) {
+            .logo-img {
+                height: 36px;
+                width: 36px;
+            }
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+        }
+        .logo-brand {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
+        @media (max-width: 480px) {
+            .logo-brand {
+                font-size: 16px;
+            }
+        }
+        .logo-tagline {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
+        @media (max-width: 480px) {
+            .logo-tagline {
+                font-size: 8px;
+            }
+        }
+
+        /* Navigation Styles */
+        .nav-wrapper {
+            position: relative;
+            z-index: 50;
+        }
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .nav-link:hover {
+            background: white;
+            color: #0f172a !important;
+        }
+
+        /* Right side buttons */
+        .header-actions {
+            position: relative;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Mobile Auth Buttons */
+        .mobile-auth-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 0 16px;
+            width: 100%;
+            max-width: 320px;
+        }
+        .mobile-auth-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 9999px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .mobile-auth-btn.login {
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+        }
+        .mobile-auth-btn.login:hover {
+            background: white;
+            color: #0f172a;
+        }
+        .mobile-auth-btn.dashboard {
+            background: #2c5f4a;
+            color: white;
+        }
+        .mobile-auth-btn.dashboard:hover {
+            background: white;
+            color: #2c5f4a;
+        }
+
+        /* Mobile Menu Layout */
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+            padding-bottom: 40px;
+            min-height: 100vh;
+        }
+        .mobile-nav-links {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+        }
+        .mobile-link {
+            width: 100%;
+            text-align: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .mobile-link:hover, .mobile-link.active {
+            color: #2c5f4a;
+        }
+        .mobile-dropdown-container {
+            width: 100%;
+            max-width: 320px;
+        }
+        .mobile-dropdown-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .mobile-social {
+            margin-top: 24px;
+            display: flex;
+            gap: 16px;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+    <!-- Header with Logo Image + STACKLY Name ALWAYS VISIBLE -->
+    <header id="header" class="fixed w-full top-0 z-50 transition-all duration-500">
+        <div class="container mx-auto px-3 sm:px-6 py-3">
+            <div class="flex justify-between items-center gap-2">
+                
+                <!-- Logo - Image + STACKLY Name ALWAYS VISIBLE -->
+                <a href="#" class="logo-wrapper magnetic-btn" data-magnetic>
+                    <!-- Logo Image -->
+                    <img src="logo.webp" 
+                         alt="STACKLY" 
+                         class="logo-img">
+                    <!-- Company Name - ALWAYS SHOW -->
+                    <div class="logo-text">
+                        <span class="logo-brand">STACKLY</span>
+                        <span class="logo-tagline">Real Estate</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-1 bg-white/10 backdrop-blur-md rounded-full px-2 py-2 border border-white/20 nav-wrapper">
+                    
+                    <!-- Home Dropdown -->
+                    <div class="dropdown-wrapper dropdown-trigger">
+                        <button class="px-4 py-2.5 rounded-full text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300 flex items-center gap-2 whitespace-nowrap bg-transparent">
+                            Home
+                            <i class="fas fa-chevron-down text-xs dropdown-icon"></i>
+                        </button>
+                        <!-- Dropdown -->
+                        <div class="dropdown-menu">
+                            <div class="p-2">
+                                <a href="index.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-building mr-2"></i> Home page1
+                                </a>
+                                <a href="home 2.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-gem mr-2"></i> Home page2
+                                </a>
+                                <a href="error.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-water mr-2"></i> Waterfront Villas
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Links -->
+                    <a href="about.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">About</a>
+                    <a href="ami.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Amenities</a>
+                    <a href="feature.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Features</a>
+                    <a href="floor.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Floor Plans</a>
+                    <!-- <a href="#reviews" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Reviews</a> -->
+                    <a href="location.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Locations</a>
+                </nav>
+
+                <!-- Right Side: Auth Buttons -->
+                <div class="header-actions">
+                    
+                    <!-- Desktop: Login -->
+                    <a href="login.html" class="hidden lg:flex items-center gap-2 border border-white/30 text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-white hover:text-primary transition-all duration-300 magnetic-btn whitespace-nowrap" data-magnetic>
+                        <i class="fas fa-user text-xs"></i>
+                        <span>Login</span>
+                    </a>
+
+                    <!-- Desktop: Dashboard -->
+                    <a href="das.html" class="hidden lg:flex items-center gap-2 bg-accent text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-white hover:text-accent transition-all duration-300 shadow-lg magnetic-btn whitespace-nowrap" data-magnetic>
+                        <i class="fas fa-th-large text-xs"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <!-- Mobile: Compact Icons -->
+                    <div class="flex lg:hidden items-center gap-1 sm:gap-2">
+                        <a href="error.html" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-all">
+                            <i class="fas fa-user text-xs"></i>
+                        </a>
+                        <a href="error.html" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-accent flex items-center justify-center text-white hover:bg-white hover:text-accent transition-all">
+                            <i class="fas fa-th-large text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button id="menu-toggle" class="lg:hidden relative z-50 w-9 h-9 sm:w-10 sm:h-10 flex flex-col justify-center items-end gap-1.5 p-2 magnetic-btn shrink-0" data-magnetic>
+                        <span class="hamburger-line line-1 w-4 sm:w-5 h-0.5 bg-white block rounded-full"></span>
+                        <span class="hamburger-line line-2 w-4 sm:w-5 h-0.5 bg-white block rounded-full"></span>
+                        <span class="hamburger-line line-3 w-3 sm:w-3 h-0.5 bg-white block rounded-full"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="h-0.5 bg-white/10 w-full">
+            <div id="scroll-progress" class="h-full bg-accent w-0 transition-all duration-100"></div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 mobile-menu-container bg-primary overflow-y-auto">
+        <div class="mobile-menu-content">
+            
+            <!-- Mobile Auth Buttons -->
+            <div class="mobile-auth-container">
+                <a href="login.html" class="mobile-auth-btn login">
+                    <i class="fas fa-user"></i>
+                    Login
+                </a>
+                <a href="das.html" class="mobile-auth-btn dashboard">
+                    <i class="fas fa-th-large"></i>
+                    Dashboard
+                </a>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="mobile-nav-links">
+                <!-- Dropdown -->
+                <div class="mobile-dropdown-container">
+                    <button class="mobile-dropdown-toggle">
+                        <span>Home</span>
+                        <i class="fas fa-chevron-down mobile-dropdown-arrow text-accent text-sm"></i>
+                    </button>
+                    <div class="mobile-dropdown">
+                        <a href="index.html" class="block px-4 py-3 text-white/80 text-base hover:text-accent hover:bg-white/5 transition-all text-center">
+                            <i class="fas fa-building mr-2"></i> Home page1
+                        </a>
+                        <a href="home 2.html" class="block px-4 py-3 text-white/80 text-base hover:text-accent hover:bg-white/5 transition-all text-center">
+                            <i class="fas fa-gem mr-2"></i> Home page2
+                        </a>
+                        <!-- <a href="#" class="block px-4 py-3 text-white/80 text-base hover:text-accent hover:bg-white/5 transition-all text-center">
+                            <i class="fas fa-water mr-2"></i> Waterfront Villas
+                        </a> -->
+                    </div>
+                </div>
+
+                <a href="about.html" class="mobile-link ">About</a>
+                <a href="ami.html" class="mobile-link">Amenities</a>
+                <a href="feature.html" class="mobile-link">Features</a>
+                <a href="floor.html" class="mobile-link">Floor Plans</a>
+                <!-- <a href="#reviews" class="mobile-link">Reviews</a> -->
+                <a href="location.html" class="mobile-link">Locations</a>
+                <!-- <a href="#contact" class="mobile-link">Contact</a> -->
+            </div>
+
+            <!-- Social Links -->
+            <div class="mobile-social opacity-0 translate-y-8">
+                <a href="https://www.instagram.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://in.linkedin.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+
+            <!-- Phone -->
+            <div class="mt-6 opacity-0 translate-y-8 mobile-phone">
+                <a href="tel:8005435432" class="flex items-center gap-2 text-white/80 hover:text-accent transition-colors">
+                    <i class="fas fa-phone-alt text-accent"></i>
+                    <span class="text-lg font-semibold">(800) 543 5432</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="about" class="relative min-h-[70vh] flex items-center bg-primary overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="home5 img (1).webp" 
+                 class="w-full h-full object-cover opacity-30" alt="Building">
+            <div class="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/90 to-primary"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10 pt-32">
+            <div class="max-w-3xl">
+                <span class="inline-block text-accent font-bold tracking-widest uppercase text-sm mb-4 about-hero-elem opacity-0 translate-y-4">
+                    About Us
+                </span>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight about-hero-elem opacity-0 translate-y-4">
+                    Building Your <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400">Dream Home</span>
+                </h1>
+                <p class="text-gray-400 text-lg md:text-xl max-w-2xl about-hero-elem opacity-0 translate-y-4">
+                    We create exceptional living spaces that blend modern luxury with timeless comfort.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative reveal-left opacity-0 -translate-x-10">
+                    <div class="rounded-3xl overflow-hidden shadow-2xl">
+                        <img src="home7 img.webp" 
+                             alt="Interior" class="w-full h-[400px] md:h-[500px] object-cover hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 bg-accent text-white p-6 rounded-2xl shadow-xl hidden md:block animate-float">
+                        <div class="text-3xl font-black">15+</div>
+                        <div class="text-sm opacity-80">Years</div>
+                    </div>
+                </div>
+
+                <div class="reveal-right opacity-0 translate-x-10">
+                    <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block flex items-center gap-2">
+                        <span class="w-8 h-0.5 bg-accent"></span>
+                        Our Story
+                    </span>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-primary mb-6 leading-tight">
+                        Crafting Spaces <br> for <span class="text-gradient">Better Living</span>
+                    </h2>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        Founded in 2008, Real Homes has grown from a small local builder to a trusted name in luxury real estate. We believe every home should tell a story.
+                    </p>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-8">
+                        Our commitment to quality craftsmanship and sustainable design has earned us the trust of over 500 families who call our properties home.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center gap-3 bg-gray-50 px-5 py-3 rounded-full">
+                            <i class="fas fa-check-circle text-accent"></i>
+                            <span class="font-medium text-primary">Premium Quality</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-gray-50 px-5 py-3 rounded-full">
+                            <i class="fas fa-check-circle text-accent"></i>
+                            <span class="font-medium text-primary">Sustainable Design</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section id="amenities" class="py-20 bg-primary text-white">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="stat-item opacity-0 translate-y-8">
+                    <div class="text-4xl md:text-5xl font-black text-accent mb-2">500+</div>
+                    <p class="text-gray-400 text-sm">Happy Families</p>
+                </div>
+                <div class="stat-item opacity-0 translate-y-8">
+                    <div class="text-4xl md:text-5xl font-black text-accent mb-2">25+</div>
+                    <p class="text-gray-400 text-sm">Projects Completed</p>
+                </div>
+                <div class="stat-item opacity-0 translate-y-8">
+                    <div class="text-4xl md:text-5xl font-black text-accent mb-2">15</div>
+                    <p class="text-gray-400 text-sm">Years Experience</p>
+                </div>
+                <div class="stat-item opacity-0 translate-y-8">
+                    <div class="text-4xl md:text-5xl font-black text-accent mb-2">99%</div>
+                    <p class="text-gray-400 text-sm">Client Satisfaction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-20 md:py-32 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">Features</span>
+                <h2 class="text-3xl md:text-5xl font-black text-primary">What We Offer</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover-lift">
+                    <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center text-accent text-2xl mb-6">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">24/7 Security</h3>
+                    <p class="text-gray-600">Round-the-clock surveillance and professional security personnel.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover-lift">
+                    <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center text-accent text-2xl mb-6">
+                        <i class="fas fa-swimming-pool"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Luxury Pool</h3>
+                    <p class="text-gray-600">Infinity-edge swimming pool with panoramic city views.</p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover-lift">
+                    <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center text-accent text-2xl mb-6">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Fitness Center</h3>
+                    <p class="text-gray-600">State-of-the-art gym with personal training available.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floor Plans -->
+    <section id="floorplans" class="py-20 md:py-32 bg-white">
+         <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">Floor Plans</span>
+                <h2 class="text-3xl md:text-5xl font-black text-primary">Choose Your Space</h2>
+            </div> 
+            <div class="grid md:grid-cols-3 gap-8">
+                 <div class="group relative h-80 rounded-2xl overflow-hidden cursor-pointer">
+                    <img src="house3.webp" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="3 BHK">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h3 class="text-2xl font-bold text-white">3 BHK</h3>
+                        <p class="text-accent">From $2,40,000</p>
+                    </div> 
+                </div>
+                <div class="group relative h-80 rounded-2xl overflow-hidden cursor-pointer">
+                    <img src="house1.webp" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="4 BHK">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h3 class="text-2xl font-bold text-white">4 BHK</h3>
+                        <p class="text-accent">From $3,10,000</p>
+                    </div>
+                </div>
+                <div class="group relative h-80 rounded-2xl overflow-hidden cursor-pointer">
+                    <img src="hom6 img.webp" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="5 BHK">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <h3 class="text-2xl font-bold text-white">5 BHK</h3>
+                        <p class="text-accent">From $3,70,000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section id="reviews" class="py-20 md:py-32 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">Reviews</span>
+                <h2 class="text-3xl md:text-5xl font-black text-primary">What Residents Say</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex gap-1 text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6">"Moving to Real Homes was the best decision. The amenities are world-class and the community is wonderful."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="teach2.webp" class="w-12 h-12 rounded-full object-cover" alt="Sarah">
+                        <div>
+                            <h4 class="font-bold text-primary">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-500">Resident since 2022</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex gap-1 text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6">"The attention to detail is remarkable. From smart home features to eco-friendly design, everything is perfect."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="girl.webp" class="w-12 h-12 rounded-full object-cover" alt="Michael">
+                        <div>
+                            <h4 class="font-bold text-primary">Michael Chen</h4>
+                            <p class="text-sm text-gray-500">Resident since 2023</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex gap-1 text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6">"The location is unbeatable - close to everything yet peaceful. Staff is incredibly responsive."</p>
+                    <div class="flex items-center gap-3">
+                        <img src="girl2.webp" class="w-12 h-12 rounded-full object-cover" alt="Emily">
+                        <div>
+                            <h4 class="font-bold text-primary">Emily Rodriguez</h4>
+                            <p class="text-sm text-gray-500">Resident since 2021</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations -->
+    <section id="locations" class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">Locations</span>
+                <h2 class="text-3xl md:text-5xl font-black text-primary">Nearby Essentials</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="flex flex-col items-center p-6 bg-gray-50 rounded-2xl hover-lift cursor-pointer">
+                    <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center text-accent text-2xl mb-4">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h4 class="font-bold text-primary">Airport</h4>
+                    <p class="text-gray-500 text-sm">12.5 KM</p>
+                </div>
+                <div class="flex flex-col items-center p-6 bg-gray-50 rounded-2xl hover-lift cursor-pointer">
+                    <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center text-accent text-2xl mb-4">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <h4 class="font-bold text-primary">School</h4>
+                    <p class="text-gray-500 text-sm">2.4 KM</p>
+                </div>
+                <div class="flex flex-col items-center p-6 bg-gray-50 rounded-2xl hover-lift cursor-pointer">
+                    <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center text-accent text-2xl mb-4">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h4 class="font-bold text-primary">Hospital</h4>
+                    <p class="text-gray-500 text-sm">1.1 KM</p>
+                </div>
+                <div class="flex flex-col items-center p-6 bg-gray-50 rounded-2xl hover-lift cursor-pointer">
+                    <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center text-accent text-2xl mb-4">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h4 class="font-bold text-primary">Mall</h4>
+                    <p class="text-gray-500 text-sm">3.2 KM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="py-20 md:py-32 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">Our Team</span>
+                <h2 class="text-3xl md:text-5xl font-black text-primary">Meet the Leaders</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover-lift team-card opacity-0 translate-y-8">
+                    <img src="girl.webp" alt="CEO" class="w-full h-64 object-cover">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-primary">David Chen</h3>
+                        <p class="text-accent text-sm mb-3">Founder & CEO</p>
+                        <p class="text-gray-500 text-sm">Visionary leader with 20 years in real estate.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover-lift team-card opacity-0 translate-y-8">
+                    <img src="teach2.webp" alt="Architect" class="w-full h-64 object-cover">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-primary">Sarah Miller</h3>
+                        <p class="text-accent text-sm mb-3">Head Architect</p>
+                        <p class="text-gray-500 text-sm">Award-winning sustainable designer.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover-lift team-card opacity-0 translate-y-8">
+                    <img src="teach3.webp" alt="Director" class="w-full h-64 object-cover">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-primary">James Wilson</h3>
+                        <p class="text-accent text-sm mb-3">Sales Director</p>
+                        <p class="text-gray-500 text-sm">Finding your perfect home match.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="py-20 bg-accent text-white text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-black mb-6">Ready to Find Your Home?</h2>
+            <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">Let us help you discover the perfect space for your family.</p>
+            <a href="#" class="inline-flex items-center gap-3 bg-white text-primary px-8 py-4 rounded-full font-bold hover:bg-primary hover:text-white transition-all duration-300">
+                Contact Us
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary border-t border-white/10 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="text-xl font-black text-white mb-6 flex items-center gap-3">
+                        <img src="https://via.placeholder.com/45x45/2c5f4a/ffffff?text=S" alt="STACKLY" class="h-8 w-auto brightness-0 invert">
+                        STACKLY
+                    </div>
+                    <p class="text-gray-400 mb-6">Luxury living redefined. Experience the perfect blend of elegance, comfort, and nature.</p>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://x.com/" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="about.html" class="text-gray-400 hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="ami.html" class="text-gray-400 hover:text-accent transition-colors">Amenities</a></li>
+                        <li><a href="floor.html" class="text-gray-400 hover:text-accent transition-colors">Floor Plans</a></li>
+                        <li><a href="location.html" class="text-gray-400 hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Properties</h4>
+                    <ul class="space-y-3">
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">3 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">4 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">5 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">Penthouse Suites</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe for updates.</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Your email" class="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-accent">
+                        <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary transition-all">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">&copy; 2023 STACKLY Real Homes. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <a href="error.html" class="hover:text-accent transition-colors">Privacy Policy</a>
+                    <a href="error.html" class="hover:text-accent transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button id="scrollTop" class="fixed bottom-8 right-8 w-12 h-12 bg-accent text-white rounded-full shadow-lg flex items-center justify-center opacity-0 translate-y-10 transition-all duration-300 hover:bg-primary z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        const scrollProgress = document.getElementById('scroll-progress');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            scrollProgress.style.width = (scrolled / maxScroll) * 100 + '%';
+            
+            if (scrolled > 50) {
+                header.classList.add('bg-primary/95', 'backdrop-blur-md', 'shadow-lg');
+            } else {
+                header.classList.remove('bg-primary/95', 'backdrop-blur-md', 'shadow-lg');
+            }
+        });
+
+        // Dropdown Logic
+        const dropdownTrigger = document.querySelector('.dropdown-trigger');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+        const dropdownIcon = document.querySelector('.dropdown-icon');
+        
+        dropdownTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isActive = dropdownTrigger.classList.contains('dropdown-active');
+            
+            if (isActive) {
+                dropdownTrigger.classList.remove('dropdown-active');
+            } else {
+                dropdownTrigger.classList.add('dropdown-active');
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!dropdownTrigger.contains(e.target)) {
+                dropdownTrigger.classList.remove('dropdown-active');
+            }
+        });
+
+        // Mobile Menu
+        const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
+        const mobileDropdown = document.querySelector('.mobile-dropdown');
+        mobileDropdownToggle.addEventListener('click', () => {
+            mobileDropdown.classList.toggle('active');
+            mobileDropdownToggle.classList.toggle('active');
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const mobileSocial = document.querySelector('.mobile-social');
+        const mobilePhone = document.querySelector('.mobile-phone');
+        let menuOpen = false;
+
+        menuToggle.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            document.body.classList.toggle('mobile-menu-open');
+            menuToggle.classList.toggle('menu-open');
+
+            if (menuOpen) {
+                gsap.to(mobileLinks, { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, ease: 'power3.out', delay: 0.2 });
+                gsap.to(mobileSocial, { y: 0, opacity: 1, duration: 0.6, delay: 0.5 });
+                gsap.to(mobilePhone, { y: 0, opacity: 1, duration: 0.6, delay: 0.6 });
+            } else {
+                gsap.to([mobileLinks, mobileSocial, mobilePhone], { y: 20, opacity: 0, duration: 0.3 });
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                document.body.classList.remove('mobile-menu-open');
+                menuToggle.classList.remove('menu-open');
+            });
+        });
+
+        // Page Animations
+        gsap.to('.about-hero-elem', {
+            y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.3
+        });
+
+        gsap.to('.reveal-left', {
+            scrollTrigger: { trigger: '.reveal-left', start: 'top 80%' },
+            x: 0, opacity: 1, duration: 1, ease: 'power3.out'
+        });
+
+        gsap.to('.reveal-right', {
+            scrollTrigger: { trigger: '.reveal-right', start: 'top 80%' },
+            x: 0, opacity: 1, duration: 1, ease: 'power3.out'
+        });
+
+        gsap.to('.stat-item', {
+            scrollTrigger: { trigger: '.stat-item', start: 'top 85%' },
+            y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out'
+        });
+
+        gsap.to('.team-card', {
+            scrollTrigger: { trigger: '.team-card', start: 'top 85%' },
+            y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: 'power3.out'
+        });
+
+        // Scroll to Top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.remove('opacity-0', 'translate-y-10');
+            } else {
+                scrollTopBtn.classList.add('opacity-0', 'translate-y-10');
+            }
+        });
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Magnetic Effect
+        document.querySelectorAll('[data-magnetic]').forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                this.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

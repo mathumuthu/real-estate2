@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - STACKLY Real Homes</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<!-- PRELOADER START -->
+<div id="preloader">
+    <div class="loader">
+        <div class="home-icon">
+            <i class="fas fa-home"></i>
+        </div>
+        <span class="loading-text">Loading Properties...</span>
+    </div>
+</div>
+<!-- PRELOADER END -->
+ <!-- PRELOADER END -->
+<style>
+#preloader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#0f172a;
+z-index:9999;
+display:flex;
+justify-content:center;
+align-items:center;
+transition:opacity 0.5s ease;
+}
+
+.loader{
+text-align:center;
+}
+
+.home-icon{
+width:70px;
+height:70px;
+border-radius:50%;
+border:4px solid #1e293b;
+border-top:4px solid #22c55e;
+display:flex;
+justify-content:center;
+align-items:center;
+animation:spin 0.8s linear;
+}
+
+.home-icon i{
+color:#22c55e;
+font-size:26px;
+}
+
+.loading-text{
+color:#fff;
+margin-top:10px;
+display:block;
+font-size:14px;
+}
+
+/* Only once spin */
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.home-icon{
+width:55px;
+height:55px;
+}
+.home-icon i{
+font-size:20px;
+}
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const preloader = document.getElementById("preloader");
+
+    setTimeout(function(){
+        preloader.style.opacity="0";
+
+        setTimeout(function(){
+            preloader.style.display="none";
+        },500);
+
+    },1000); // 👈 ONLY 1 SECOND
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0f172a',
+                        accent: '#2c5f4a',
+                        light: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { overflow-x: hidden; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #2c5f4a; border-radius: 4px; }
+
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Desktop Dropdown */
+        .dropdown-wrapper {
+            position: relative;
+            z-index: 100;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            transform-origin: top;
+            transform: perspective(1000px) rotateX(-90deg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 9999;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            min-width: 224px;
+        }
+        .dropdown-active .dropdown-menu {
+            transform: perspective(1000px) rotateX(0deg);
+            opacity: 1;
+            visibility: visible;
+        }
+        .dropdown-icon {
+            transition: transform 0.3s ease;
+        }
+        .dropdown-active .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile Dropdown */
+        .mobile-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-dropdown.active { max-height: 300px; }
+        .mobile-dropdown-arrow { transition: transform 0.3s ease; }
+        .mobile-dropdown.active .mobile-dropdown-arrow { transform: rotate(180deg); }
+
+        /* Hamburger Animation */
+        .hamburger-line {
+            transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+        }
+        .menu-open .line-1 {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-open .line-2 {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .menu-open .line-3 {
+            transform: rotate(-45deg) translate(5px, -5px);
+            width: 24px !important;
+        }
+
+        /* Mobile Menu Slide */
+        .mobile-menu-container {
+            clip-path: circle(0% at calc(100% - 40px) 40px);
+            transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .mobile-menu-open .mobile-menu-container {
+            clip-path: circle(150% at calc(100% - 40px) 40px);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #2c5f4a 0%, #1a1a1a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Logo Styles */
+        .logo-wrapper {
+            position: relative;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        .logo-img {
+            height: 45px;
+            width: 45px;
+            object-fit: contain;
+            flex-shrink: 0;
+            display: block;
+        }
+        @media (max-width: 480px) {
+            .logo-img {
+                height: 36px;
+                width: 36px;
+            }
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+        }
+        .logo-brand {
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
+        @media (max-width: 480px) {
+            .logo-brand {
+                font-size: 16px;
+            }
+        }
+        .logo-tagline {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
+        @media (max-width: 480px) {
+            .logo-tagline {
+                font-size: 8px;
+            }
+        }
+
+        .nav-wrapper {
+            position: relative;
+            z-index: 50;
+        }
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .nav-link:hover {
+            background: white;
+            color: #0f172a !important;
+        }
+
+        .header-actions {
+            position: relative;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .mobile-auth-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 0 16px;
+            width: 100%;
+            max-width: 320px;
+        }
+        .mobile-auth-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 9999px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .mobile-auth-btn.login {
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+        }
+        .mobile-auth-btn.login:hover {
+            background: white;
+            color: #0f172a;
+        }
+        .mobile-auth-btn.dashboard {
+            background: #2c5f4a;
+            color: white;
+        }
+        .mobile-auth-btn.dashboard:hover {
+            background: white;
+            color: #2c5f4a;
+        }
+
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+            padding-bottom: 40px;
+            min-height: 100vh;
+        }
+        .mobile-nav-links {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+        }
+        .mobile-link {
+            width: 100%;
+            text-align: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .mobile-link:hover, .mobile-link.active {
+            color: #2c5f4a;
+        }
+        .mobile-dropdown-container {
+            width: 100%;
+            max-width: 320px;
+        }
+        .mobile-dropdown-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .mobile-social {
+            margin-top: 24px;
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Contact Page Specific Styles */
+        
+        /* Animated Background */
+        .animated-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            inset: -50%;
+            background: radial-gradient(circle, rgba(44,95,74,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Floating Shapes */
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        /* Form Input Animations */
+        .form-group {
+            position: relative;
+        }
+        .form-input {
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        .form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(44, 95, 74, 0.3);
+        }
+        .form-label {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            color: #6b7280;
+        }
+        .form-input:focus ~ .form-label,
+        .form-input:not(:placeholder-shown) ~ .form-label {
+            top: -0.5rem;
+            left: 0.5rem;
+            font-size: 0.75rem;
+            color: #2c5f4a;
+            background: white;
+            padding: 0 0.5rem;
+        }
+        .form-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #2c5f4a;
+            transition: width 0.4s ease;
+        }
+        .form-input:focus ~ .form-line {
+            width: 100%;
+        }
+
+        /* Contact Card Hover */
+        .contact-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .contact-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .contact-card:hover .contact-icon {
+            transform: rotateY(360deg);
+            background: #2c5f4a;
+            color: white;
+        }
+        .contact-icon {
+            transition: all 0.6s ease;
+        }
+
+        /* Map Container */
+        .map-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .map-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(44,95,74,0.9), rgba(15,23,42,0.9));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .map-container:hover .map-overlay {
+            opacity: 1;
+        }
+
+        /* Social Icon Animation */
+        .social-icon {
+            position: relative;
+            overflow: hidden;
+        }
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #2c5f4a;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            border-radius: inherit;
+        }
+        .social-icon:hover::before {
+            transform: translateY(0);
+        }
+        .social-icon i {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+        .social-icon:hover i {
+            color: white;
+        }
+
+        /* Submit Button Animation */
+        .submit-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .submit-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        .submit-btn.loading {
+            pointer-events: none;
+        }
+        .submit-btn.loading .btn-text {
+            opacity: 0;
+        }
+        .submit-btn.loading .btn-loader {
+            opacity: 1;
+        }
+        .btn-loader {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Success Message */
+        .success-message {
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        .success-message.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Office Image Zoom */
+        .office-img {
+            transition: transform 0.7s ease;
+        }
+        .office-card:hover .office-img {
+            transform: scale(1.1);
+        }
+
+        /* Typing Animation */
+        .typing-text::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Pulse Animation for Phone */
+        @keyframes phonePulse {
+            0% { box-shadow: 0 0 0 0 rgba(44, 95, 74, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(44, 95, 74, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(44, 95, 74, 0); }
+        }
+        .phone-pulse {
+            animation: phonePulse 2s infinite;
+        }
+
+        /* Image Grid Styles */
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+        }
+        @media (max-width: 768px) {
+            .image-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+        .image-grid-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            cursor: pointer;
+        }
+        .image-grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .image-grid-item:hover img {
+            transform: scale(1.1);
+        }
+        .image-grid-item.large {
+            grid-row: span 2;
+        }
+        @media (max-width: 768px) {
+            .image-grid-item.large {
+                grid-row: span 1;
+                height: 250px;
+            }
+            .image-grid-item {
+                height: 200px;
+            }
+        }
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15,23,42,0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+        .image-grid-item:hover .image-overlay {
+            opacity: 1;
+        }
+        .image-caption {
+            color: white;
+            font-weight: 600;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .image-grid-item:hover .image-caption {
+            transform: translateY(0);
+        }
+        .image-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #2c5f4a;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Floating Stats Card */
+        .float-anim {
+            animation: floatCard 3s ease-in-out infinite;
+        }
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,0.95);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 1rem;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .lightbox.active img {
+            transform: scale(1);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .lightbox-close:hover {
+            background: #2c5f4a;
+            transform: rotate(90deg);
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .lightbox-nav:hover {
+            background: #2c5f4a;
+        }
+        .lightbox-prev { left: 2rem; }
+        .lightbox-next { right: 2rem; }
+        @media (max-width: 768px) {
+            .lightbox-nav {
+                width: 45px;
+                height: 45px;
+                font-size: 1.5rem;
+            }
+            .lightbox-prev { left: 1rem; }
+            .lightbox-next { right: 1rem; }
+            .lightbox-close {
+                top: 1rem;
+                right: 1rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .form-container {
+                transform: none !important;
+                opacity: 1 !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero-elem h1 {
+                font-size: 2.5rem !important;
+            }
+            .hero-elem p {
+                font-size: 1rem !important;
+            }
+            .contact-card {
+                margin-bottom: 1rem;
+            }
+            .floating-card-mobile {
+                position: relative !important;
+                bottom: auto !important;
+                left: auto !important;
+                right: auto !important;
+                top: auto !important;
+                margin: 1rem 0;
+                display: inline-block;
+            }
+            .image-grid-section {
+                order: -1;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+    <!-- Header -->
+    <header id="header" class="fixed w-full top-0 z-50 transition-all duration-500">
+        <div class="container mx-auto px-3 sm:px-6 py-3">
+            <div class="flex justify-between items-center gap-2">
+                
+                <a href="index.html" class="logo-wrapper magnetic-btn" data-magnetic>
+                    <img src="logo.webp" 
+                         alt="STACKLY" 
+                         class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-brand">STACKLY</span>
+                        <span class="logo-tagline">Real Estate</span>
+                    </div>
+                </a>
+
+                <nav class="hidden lg:flex items-center gap-1 bg-white/10 backdrop-blur-md rounded-full px-2 py-2 border border-white/20 nav-wrapper">
+                    
+                    <div class="dropdown-wrapper dropdown-trigger">
+                        <button class="px-4 py-2.5 rounded-full text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300 flex items-center gap-2 whitespace-nowrap bg-transparent">
+                            Home
+                            <i class="fas fa-chevron-down text-xs dropdown-icon"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="p-2">
+                                <a href="index.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-building mr-2"></i> Home page1
+                                </a>
+                                <a href="home 2.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-gem mr-2"></i>Home page2
+                                </a>
+                                <a href="error.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-accent hover:text-white transition-colors">
+                                    <i class="fas fa-water mr-2"></i> Waterfront Villas
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="about.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">About</a>
+                    <a href="ami.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Amenities</a>
+                    <a href="feature.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Features</a>
+                    <a href="floor.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Floor Plans</a>
+                    <!-- <a href="#reviews" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Reviews</a> -->
+                    <a href="location.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap bg-white/20">Location</a>
+                </nav>
+
+                <div class="header-actions">
+                    
+                    <a href="login.html" class="hidden lg:flex items-center gap-2 border border-white/30 text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-white hover:text-primary transition-all duration-300 magnetic-btn whitespace-nowrap" data-magnetic>
+                        <i class="fas fa-user text-xs"></i>
+                        <span>Login</span>
+                    </a>
+
+                    <a href="das.html" class="hidden lg:flex items-center gap-2 bg-accent text-white px-4 py-2.5 rounded-full text-sm font-semibold hover:bg-white hover:text-accent transition-all duration-300 shadow-lg magnetic-btn whitespace-nowrap" data-magnetic>
+                        <i class="fas fa-th-large text-xs"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <div class="flex lg:hidden items-center gap-1 sm:gap-2">
+                        <a href="error.html" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-all">
+                            <i class="fas fa-user text-xs"></i>
+                        </a>
+                        <a href="error.html" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-accent flex items-center justify-center text-white hover:bg-white hover:text-accent transition-all">
+                            <i class="fas fa-th-large text-xs"></i>
+                        </a>
+                    </div>
+
+                    <button id="menu-toggle" class="lg:hidden relative z-50 w-9 h-9 sm:w-10 sm:h-10 flex flex-col justify-center items-end gap-1.5 p-2 magnetic-btn shrink-0" data-magnetic>
+                        <span class="hamburger-line line-1 w-4 sm:w-5 h-0.5 bg-white block rounded-full"></span>
+                        <span class="hamburger-line line-2 w-4 sm:w-5 h-0.5 bg-white block rounded-full"></span>
+                        <span class="hamburger-line line-3 w-3 sm:w-3 h-0.5 bg-white block rounded-full"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="h-0.5 bg-white/10 w-full">
+            <div id="scroll-progress" class="h-full bg-accent w-0 transition-all duration-100"></div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 mobile-menu-container bg-primary overflow-y-auto">
+        <div class="mobile-menu-content">
+            
+            <div class="mobile-auth-container">
+                <a href="login.html" class="mobile-auth-btn login">
+                    <i class="fas fa-user"></i>
+                    Login
+                </a>
+                <a href="das.html" class="mobile-auth-btn dashboard">
+                    <i class="fas fa-th-large"></i>
+                    Dashboard
+                </a>
+            </div>
+
+            <div class="mobile-nav-links">
+                <div class="mobile-dropdown-container">
+                    <button class="mobile-dropdown-toggle">
+                        <span>Home</span>
+                        <i class="fas fa-chevron-down mobile-dropdown-arrow text-accent text-sm"></i>
+                    </button>
+                    <div class="mobile-dropdown">
+                        <a href="index.html" class="block px-4 py-3 text-white/80 text-base hover:text-accent hover:bg-white/5 transition-all text-center">
+                            <i class="fas fa-building mr-2"></i> Home page1
+                        </a>
+                        <a href="home 2.html" class="block px-4 py-3 text-white/80 text-base hover:text-accent hover:bg-white/5 transition-all text-center">
+                            <i class="fas fa-gem mr-2"></i> Home page2
+                        </a>
+                        <a href="error.html" class="block px-4 py-3 text-white/80 text-base hover:text-accent hover:bg-white/5 transition-all text-center">
+                            <i class="fas fa-water mr-2"></i> Waterfront Villas
+                        </a>
+                    </div>
+                </div>
+
+                <a href="about.html" class="mobile-link">About</a>
+                <a href="ami.html" class="mobile-link">Amenities</a>
+                <a href="feature.html" class="mobile-link">Features</a>
+                <a href="floor.html" class="mobile-link">Floor Plans</a>
+                <!-- <a href="#reviews" class="mobile-link">Reviews</a> -->
+                <a href="location.html" class="mobile-link active">Location</a>
+            </div>
+
+            <div class="mobile-social opacity-0 translate-y-8">
+                <a href="https://www.instagram.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+
+            <div class="mt-6 opacity-0 translate-y-8 mobile-phone">
+                <a href="tel:8005435432" class="flex items-center gap-2 text-white/80 hover:text-accent transition-colors">
+                    <i class="fas fa-phone-alt text-accent"></i>
+                    <span class="text-lg font-semibold">(800) 543 5432</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[70vh] flex items-center bg-primary overflow-hidden pt-20">
+        <!-- Animated Background -->
+        <div class="animated-bg">
+            <div class="floating-shape w-96 h-96 bg-accent top-0 left-0" style="animation-delay: 0s;"></div>
+            <div class="floating-shape w-64 h-64 bg-purple-600 bottom-0 right-0" style="animation-delay: -2s;"></div>
+            <div class="floating-shape w-48 h-48 bg-amber-500 top-1/2 left-1/2" style="animation-delay: -4s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="inline-block text-accent font-bold tracking-widest uppercase text-sm mb-4 hero-elem opacity-0 translate-y-8">
+                    Get in Touch
+                </span>
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight hero-elem opacity-0 translate-y-8">
+                    Let's Start a <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-400 typing-text">Conversation</span>
+                </h1>
+                <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto hero-elem opacity-0 translate-y-8">
+                    Ready to find your dream home? Our team of experts is here to guide you every step of the way.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Cards -->
+    <section class="py-20 md:py-32 bg-white relative -mt-20">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Phone Card -->
+                <div class="contact-card bg-white rounded-2xl p-8 shadow-xl border border-gray-100 text-center stagger-item">
+                    <div class="contact-icon w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center text-accent text-3xl mx-auto mb-6 phone-pulse">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-2">Call Us</h3>
+                    <p class="text-gray-500 mb-4">Mon-Fri from 8am to 6pm</p>
+                    <a href="tel:8005435432" class="text-2xl font-bold text-accent hover:text-primary transition-colors">(800) 543 5432</a>
+                </div>
+
+                <!-- Email Card -->
+                <div class="contact-card bg-white rounded-2xl p-8 shadow-xl border border-gray-100 text-center stagger-item">
+                    <div class="contact-icon w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center text-accent text-3xl mx-auto mb-6">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-2">Email Us</h3>
+                    <p class="text-gray-500 mb-4">We'll respond within 24 hours</p>
+                    <a href="mailto:hello@stackly.com" class="text-lg font-bold text-accent hover:text-primary transition-colors">hello@stackly.com</a>
+                </div>
+
+                <!-- Visit Card -->
+                <div class="contact-card bg-white rounded-2xl p-8 shadow-xl border border-gray-100 text-center stagger-item">
+                    <div class="contact-icon w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center text-accent text-3xl mx-auto mb-6">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-2">Visit Us</h3>
+                    <p class="text-gray-500 mb-4">Come say hello at our office</p>
+                    <span class="text-lg font-bold text-accent">123 Luxury Lane, NY 10001</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="py-20 md:py-32 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+                <!-- Form -->
+                <div class="form-container opacity-0 translate-x-[-50px] order-2 lg:order-1">
+                    <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">Send Message</span>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-primary mb-8">Get in Touch</h2>
+                    
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <input type="text" id="firstName" class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-accent" placeholder=" " required>
+                                <label for="firstName" class="form-label">First Name</label>
+                                <div class="form-line"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="lastName" class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-accent" placeholder=" " required>
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <div class="form-line"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="email" class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-accent" placeholder=" " required>
+                            <label for="email" class="form-label">Email Address</label>
+                            <div class="form-line"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="tel" id="phone" class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-accent" placeholder=" ">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <div class="form-line"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <select id="interest" class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-accent bg-white" required>
+                                <option value="" disabled selected></option>
+                                <option value="3bhk">3 BHK Apartment</option>
+                                <option value="4bhk">4 BHK Apartment</option>
+                                <option value="5bhk">5 BHK Apartment</option>
+                                <option value="penthouse">Penthouse Suite</option>
+                                <option value="other">Other Inquiry</option>
+                            </select>
+                            <label for="interest" class="form-label">I'm Interested In</label>
+                            <div class="form-line"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea id="message" rows="4" class="form-input w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-accent resize-none" placeholder=" " required></textarea>
+                            <label for="message" class="form-label" style="top: 1.5rem;">Your Message</label>
+                            <div class="form-line"></div>
+                        </div>
+
+                        <button type="submit" class="submit-btn w-full bg-accent text-white py-4 rounded-xl font-bold text-lg hover:bg-primary transition-all relative">
+                            <span class="btn-text">Send Message</span>
+                            <div class="btn-loader">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                        </button>
+                    </form>
+
+                    <!-- Success Message -->
+                    <div id="successMessage" class="success-message hidden mt-6 bg-green-50 border border-green-200 rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-2xl mx-auto mb-4">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-green-800 mb-2">Message Sent!</h3>
+                        <p class="text-green-600">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                    </div>
+                </div>
+
+                <!-- Image Grid Gallery - Right Side -->
+                <div class="relative opacity-0 translate-x-[50px] h-auto lg:h-[600px] order-1 lg:order-2 image-grid-section">
+                    <div class="image-grid h-full">
+                        <!-- Large Image -->
+                        <div class="image-grid-item large" onclick="openLightbox(0)">
+                            <img src="home4 img.webp" alt="Luxury Living Room">
+                            <span class="image-badge">Featured</span>
+                            <div class="image-overlay">
+                                <span class="image-caption">Luxury Living Spaces</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Top Right -->
+                        <div class="image-grid-item" onclick="openLightbox(1)">
+                            <img src="house3.webp" alt="Modern Kitchen">
+                            <div class="image-overlay">
+                                <span class="image-caption">Modern Kitchen</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Bottom Right -->
+                        <div class="image-grid-item" onclick="openLightbox(2)">
+                            <img src="house1.webp" alt="Bedroom Suite">
+                            <div class="image-overlay">
+                                <span class="image-caption">Master Bedroom</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Stats Card - Desktop -->
+                    <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-6 hidden lg:block float-anim z-10">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center text-accent">
+                                <i class="fas fa-home text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-black text-primary">150+</div>
+                                <div class="text-sm text-gray-500">Premium Properties</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Another Floating Card - Desktop -->
+                    <div class="absolute -top-6 -right-6 bg-accent text-white rounded-2xl shadow-xl p-4 hidden lg:block float-anim z-10" style="animation-delay: 1.5s;">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-star text-yellow-400 text-xl"></i>
+                            <div>
+                                <div class="text-lg font-bold">4.9/5</div>
+                                <div class="text-xs opacity-80">Client Rating</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Stats Cards -->
+                    <div class="flex gap-4 mt-4 lg:hidden">
+                        <div class="floating-card-mobile bg-white rounded-xl shadow-lg p-4 flex-1">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center text-accent">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xl font-black text-primary">150+</div>
+                                    <div class="text-xs text-gray-500">Properties</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="floating-card-mobile bg-accent text-white rounded-xl shadow-lg p-4 flex-1">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <div>
+                                    <div class="text-lg font-bold">4.9/5</div>
+                                    <div class="text-xs opacity-80">Rating</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightboxOnBackground(event)">
+        <div class="lightbox-close" onclick="closeLightbox()">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        <img id="lightbox-img" src="" alt="Gallery Image">
+        <div class="lightbox-nav lightbox-next" onclick="changeImage(1)">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+    </div>
+
+    <!-- Map Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12 section-header opacity-0 translate-y-8">
+                <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">Location</span>
+                <h2 class="text-4xl md:text-5xl font-black text-primary">Find Us on Map</h2>
+            </div>
+
+            <div class="map-container rounded-2xl overflow-hidden shadow-2xl h-[300px] md:h-[400px] stagger-item">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.217676750664!2d-73.98784408459418!3d40.75797467932688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1635959567400!5m2!1sen!2sus" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+                <div class="map-overlay">
+                    <a href="https://maps.google.com" target="_blank" class="bg-white text-primary px-6 py-3 md:px-8 md:py-4 rounded-full font-bold hover:bg-accent hover:text-white transition-all text-sm md:text-base">
+                        <i class="fas fa-external-link-alt mr-2"></i>Open in Google Maps
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 md:py-32 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16 section-header opacity-0 translate-y-8">
+                <span class="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">FAQ</span>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-primary">Common Questions</h2>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden stagger-item">
+                    <button class="faq-toggle w-full px-6 py-5 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                        <span class="font-bold text-primary text-base md:text-lg">What is the process of buying a property?</span>
+                        <i class="fas fa-chevron-down text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-5 text-gray-600 text-sm md:text-base">
+                        Our process is simple: schedule a tour, choose your floor plan, complete the documentation, and move in! Our team guides you through every step.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden stagger-item">
+                    <button class="faq-toggle w-full px-6 py-5 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                        <span class="font-bold text-primary text-base md:text-lg">Do you offer financing options?</span>
+                        <i class="fas fa-chevron-down text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-5 text-gray-600 text-sm md:text-base">
+                        Yes! We partner with leading banks to offer competitive mortgage rates and flexible payment plans tailored to your needs.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden stagger-item">
+                    <button class="faq-toggle w-full px-6 py-5 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                        <span class="font-bold text-primary text-base md:text-lg">Can I customize my apartment?</span>
+                        <i class="fas fa-chevron-down text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-5 text-gray-600 text-sm md:text-base">
+                        Absolutely! We offer various customization options for finishes, layouts, and smart home features before you move in.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden stagger-item">
+                    <button class="faq-toggle w-full px-6 py-5 flex items-center justify-between text-left hover:bg-gray-50 transition-colors">
+                        <span class="font-bold text-primary text-base md:text-lg">What amenities are included?</span>
+                        <i class="fas fa-chevron-down text-accent transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-5 text-gray-600 text-sm md:text-base">
+                        All residents enjoy access to our infinity pool, fitness center, spa, 24/7 security, smart home features, and much more.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Connect -->
+    <section class="py-20 bg-primary text-white text-center relative overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-3xl md:text-5xl font-black mb-6 cta-title opacity-0 translate-y-8">Connect With Us</h2>
+            <p class="text-gray-400 text-lg mb-8 max-w-2xl mx-auto cta-text opacity-0 translate-y-8">Follow us on social media for the latest updates, property launches, and behind-the-scenes content.</p>
+            
+            <div class="flex justify-center gap-4 md:gap-6 cta-buttons opacity-0 translate-y-8 flex-wrap">
+                <a href="https://www.facebook.com/" class="social-icon w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-white/30 flex items-center justify-center text-xl md:text-2xl hover:border-accent transition-all">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.twitter.com/" class="social-icon w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-white/30 flex items-center justify-center text-xl md:text-2xl hover:border-accent transition-all">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/" class="social-icon w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-white/30 flex items-center justify-center text-xl md:text-2xl hover:border-accent transition-all">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/" class="social-icon w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-white/30 flex items-center justify-center text-xl md:text-2xl hover:border-accent transition-all">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://www.youtube.com/" class="social-icon w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-white/30 flex items-center justify-center text-xl md:text-2xl hover:border-accent transition-all">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary border-t border-white/10 py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
+                <div>
+                    <div class="text-xl font-black text-white mb-6 flex items-center gap-3">
+                        <!-- <img src="https://via.placeholder.com/45x45/2c5f4a/ffffff?text=S" alt="STACKLY" class="h-8 w-auto brightness-0 invert"> -->
+                        STACKLY
+                    </div>
+                    <p class="text-gray-400 mb-6 text-sm md:text-base">Luxury living redefined. Experience the perfect blend of elegance, comfort, and nature.</p>
+                    <div class="flex gap-4">
+                        <a href="error.html" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="error.html" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="error.html" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="about.html" class="text-gray-400 hover:text-accent transition-colors text-sm md:text-base">About Us</a></li>
+                        <li><a href="ami.html" class="text-gray-400 hover:text-accent transition-colors text-sm md:text-base">Amenities</a></li>
+                        <li><a href="floor.html" class="text-gray-400 hover:text-accent transition-colors text-sm md:text-base">Floor Plans</a></li>
+                        <li><a href="location.html" class="text-gray-400 hover:text-accent transition-colors text-sm md:text-base">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Properties</h4>
+                    <ul class="space-y-3">
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm md:text-base">3 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm md:text-base">4 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm md:text-base">5 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm md:text-base">Penthouse Suites</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6">Newsletter</h4>
+                    <p class="text-gray-400 mb-4 text-sm md:text-base">Subscribe for updates.</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Your email" class="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-accent text-sm">
+                        <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary transition-all">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">&copy; 2023 STACKLY Real Homes. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <a href="error.html" class="hover:text-accent transition-colors">Privacy Policy</a>
+                    <a href="error.html" class="hover:text-accent transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button id="scrollTop" class="fixed bottom-8 right-8 w-12 h-12 bg-accent text-white rounded-full shadow-lg flex items-center justify-center opacity-0 translate-y-10 transition-all duration-300 hover:bg-primary z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Gallery Images Array
+        const galleryImages = [
+            'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+        ];
+        
+        let currentImageIndex = 0;
+        
+        function openLightbox(index) {
+            currentImageIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = galleryImages[currentImageIndex];
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function closeLightboxOnBackground(event) {
+            if (event.target.id === 'lightbox') {
+                closeLightbox();
+            }
+        }
+        
+        function changeImage(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = galleryImages.length - 1;
+            if (currentImageIndex >= galleryImages.length) currentImageIndex = 0;
+            
+            const img = document.getElementById('lightbox-img');
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = galleryImages[currentImageIndex];
+                img.style.opacity = '1';
+            }, 200);
+        }
+        
+        // Close lightbox on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') changeImage(-1);
+            if (e.key === 'ArrowRight') changeImage(1);
+        });
+
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        const scrollProgress = document.getElementById('scroll-progress');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            scrollProgress.style.width = (scrolled / maxScroll) * 100 + '%';
+            
+            if (scrolled > 50) {
+                header.classList.add('bg-primary/95', 'backdrop-blur-md', 'shadow-lg');
+            } else {
+                header.classList.remove('bg-primary/95', 'backdrop-blur-md', 'shadow-lg');
+            }
+        });
+
+        // Dropdown Logic
+        const dropdownTrigger = document.querySelector('.dropdown-trigger');
+        
+        dropdownTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownTrigger.classList.toggle('dropdown-active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!dropdownTrigger.contains(e.target)) {
+                dropdownTrigger.classList.remove('dropdown-active');
+            }
+        });
+
+        // Mobile Menu
+        const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
+        const mobileDropdown = document.querySelector('.mobile-dropdown');
+        mobileDropdownToggle.addEventListener('click', () => {
+            mobileDropdown.classList.toggle('active');
+            mobileDropdownToggle.classList.toggle('active');
+        });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const mobileSocial = document.querySelector('.mobile-social');
+        const mobilePhone = document.querySelector('.mobile-phone');
+        let menuOpen = false;
+
+        menuToggle.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            document.body.classList.toggle('mobile-menu-open');
+            menuToggle.classList.toggle('menu-open');
+
+            if (menuOpen) {
+                gsap.to(mobileLinks, { y: 0, opacity: 1, duration: 0.6, stagger: 0.05, ease: 'power3.out', delay: 0.2 });
+                gsap.to(mobileSocial, { y: 0, opacity: 1, duration: 0.6, delay: 0.5 });
+                gsap.to(mobilePhone, { y: 0, opacity: 1, duration: 0.6, delay: 0.6 });
+            } else {
+                gsap.to([mobileLinks, mobileSocial, mobilePhone], { y: 20, opacity: 0, duration: 0.3 });
+            }
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuOpen = false;
+                document.body.classList.remove('mobile-menu-open');
+                menuToggle.classList.remove('menu-open');
+            });
+        });
+
+        // Hero Animations
+        gsap.to('.hero-elem', {
+            y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.3
+        });
+
+        // Typing Effect
+        const typingText = document.querySelector('.typing-text');
+        const words = ['Conversation', 'Partnership', 'Journey', 'Future'];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                typingText.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingText.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        setTimeout(type, 1000);
+
+        // Stagger Items Animation
+        gsap.utils.toArray('.stagger-item').forEach((item, i) => {
+            gsap.to(item, {
+                scrollTrigger: { trigger: item, start: 'top 85%' },
+                y: 0, opacity: 1, duration: 0.6, delay: i * 0.1, ease: 'power3.out'
+            });
+        });
+
+        // Form Container Animation
+        gsap.to('.form-container', {
+            scrollTrigger: { trigger: '.form-container', start: 'top 80%' },
+            x: 0, opacity: 1, duration: 1, ease: 'power3.out'
+        });
+
+        // Image Grid Animation
+        gsap.to('.image-grid-section', {
+            scrollTrigger: { trigger: '.image-grid-section', start: 'top 80%' },
+            x: 0, opacity: 1, duration: 1, delay: 0.2, ease: 'power3.out'
+        });
+
+        // Section Headers Animation
+        gsap.utils.toArray('.section-header').forEach(header => {
+            gsap.to(header, {
+                scrollTrigger: { trigger: header, start: 'top 85%' },
+                y: 0, opacity: 1, duration: 0.8, ease: 'power3.out'
+            });
+        });
+
+        // CTA Animation
+        gsap.to('.cta-title', {
+            scrollTrigger: { trigger: '.cta-title', start: 'top 85%' },
+            y: 0, opacity: 1, duration: 0.8, ease: 'power3.out'
+        });
+
+        gsap.to('.cta-text', {
+            scrollTrigger: { trigger: '.cta-text', start: 'top 85%' },
+            y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: 'power3.out'
+        });
+
+        gsap.to('.cta-buttons', {
+            scrollTrigger: { trigger: '.cta-buttons', start: 'top 85%' },
+            y: 0, opacity: 1, duration: 0.8, delay: 0.4, ease: 'power3.out'
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-toggle').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+            });
+        });
+
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        const submitBtn = contactForm.querySelector('.submit-btn');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show loading
+            submitBtn.classList.add('loading');
+            
+            // Simulate API call
+            setTimeout(() => {
+                submitBtn.classList.remove('loading');
+                contactForm.style.display = 'none';
+                successMessage.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    successMessage.classList.add('show');
+                }, 100);
+            }, 2000);
+        });
+
+        // Scroll to Top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.remove('opacity-0', 'translate-y-10');
+            } else {
+                scrollTopBtn.classList.add('opacity-0', 'translate-y-10');
+            }
+        });
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Magnetic Effect
+        document.querySelectorAll('[data-magnetic]').forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                this.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Touch device detection for better mobile experience
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            document.body.classList.add('touch-device');
+        }
+    </script>
+</body>
+</html>

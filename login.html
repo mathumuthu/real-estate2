@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stackly - Authentication</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0f172a',
+                        accent: '#2c5f4a',
+                        light: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        
+        body { 
+            overflow-x: hidden;
+            font-family: 'Manrope', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #2c5f4a; border-radius: 2px; }
+
+        /* Glass Effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        @supports not (backdrop-filter: blur(20px)) {
+            .glass-effect {
+                background: rgba(255, 255, 255, 0.99);
+            }
+        }
+
+        /* Input Animation */
+        .input-group {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field {
+            transition: all 0.3s ease;
+            border: 1.5px solid #e5e7eb;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        .input-field:focus {
+            border-color: #2c5f4a;
+            box-shadow: 0 0 0 3px rgba(44, 95, 74, 0.1);
+            outline: none;
+        }
+
+        .input-label {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            background: white;
+            padding: 0 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        @media (min-width: 640px) {
+            .input-label {
+                left: 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        .input-field:focus + .input-label,
+        .input-field:not(:placeholder-shown) + .input-label {
+            top: 0;
+            font-size: 0.65rem;
+            color: #2c5f4a;
+            font-weight: 600;
+        }
+        @media (min-width: 640px) {
+            .input-field:focus + .input-label,
+            .input-field:not(:placeholder-shown) + .input-label {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #9ca3af;
+            transition: color 0.3s ease;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+        }
+        @media (min-width: 640px) {
+            .password-toggle {
+                right: 1rem;
+                font-size: 1rem;
+            }
+        }
+        
+        .password-toggle:hover {
+            color: #2c5f4a;
+        }
+
+        /* Button Hover Effect */
+        .btn-primary {
+            background: linear-gradient(135deg, #2c5f4a 0%, #1a1a1a 100%);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -10px rgba(44, 95, 74, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Social Button */
+        .social-btn {
+            transition: all 0.3s ease;
+            border: 1.5px solid #e5e7eb;
+        }
+        
+        .social-btn:hover {
+            border-color: #2c5f4a;
+            background: rgba(44, 95, 74, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .social-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Checkbox Custom */
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 1.125rem;
+            height: 1.125rem;
+            border: 2px solid #d1d5db;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        @media (min-width: 640px) {
+            .custom-checkbox {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+        }
+        
+        .custom-checkbox:checked {
+            background-color: #2c5f4a;
+            border-color: #2c5f4a;
+        }
+        
+        .custom-checkbox:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.625rem;
+        }
+        @media (min-width: 640px) {
+            .custom-checkbox:checked::after {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Form Transition */
+        .form-container {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, opacity;
+        }
+        
+        .form-hidden {
+            opacity: 0;
+            transform: translateX(20px);
+            pointer-events: none;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        
+        .form-visible {
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .animate-float { animation: float 5s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 5s ease-in-out 2.5s infinite; }
+
+        /* Background Pattern */
+        .bg-pattern {
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0);
+            background-size: 30px 30px;
+        }
+
+        /* Success Animation */
+        @keyframes checkmark {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .success-icon {
+            animation: checkmark 0.5s ease-in-out;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 2px solid white;
+            width: 18px;
+            height: 18px;
+            animation: spin 1s linear infinite;
+        }
+        @media (min-width: 640px) {
+            .spinner {
+                width: 20px;
+                height: 20px;
+                border-width: 3px;
+            }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Link Hover Effect */
+        .link-hover {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .link-hover::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1.5px;
+            bottom: -1px;
+            left: 0;
+            background-color: #2c5f4a;
+            transition: width 0.3s ease;
+        }
+        
+        .link-hover:hover::after {
+            width: 100%;
+        }
+
+        /* Error Shake */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-8px); }
+            80% { transform: translateX(8px); }
+        }
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 639px) {
+            .mobile-full {
+                min-height: 100vh;
+                min-height: 100dvh;
+                padding: 0;
+            }
+            .mobile-card {
+                border-radius: 0;
+                min-height: 100vh;
+                min-height: 100dvh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .input-compact {
+                padding-top: 0.875rem;
+                padding-bottom: 0.875rem;
+            }
+        }
+
+        /* Toast Notification */
+        .toast-enter {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        .toast-enter-active {
+            transform: translateX(0);
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+        .toast-exit {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .toast-exit-active {
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Prevent zoom on iOS inputs */
+        @media screen and (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Logo Styles */
+        .logo-container {
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-image-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px -12px rgba(44, 95, 74, 0.4);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: white;
+            padding: 8px;
+        }
+        
+        .logo-image-wrapper:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 30px 60px -12px rgba(44, 95, 74, 0.5);
+        }
+        
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            display: block;
+        }
+        
+        .logo-text {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .logo-dot {
+            color: #2c5f4a;
+            font-weight: 800;
+        }
+
+        .brand-tagline {
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Mobile Logo Adjustments */
+        .mobile-logo .logo-image-wrapper {
+            box-shadow: 0 10px 30px -8px rgba(44, 95, 74, 0.3);
+            padding: 6px;
+            border-radius: 16px;
+        }
+        
+        .mobile-logo .logo-text {
+            color: #0f172a;
+            text-shadow: none;
+        }
+        
+        .mobile-logo .brand-tagline {
+            color: #6b7280;
+        }
+
+        /* Shine Effect on Logo */
+        .logo-image-wrapper::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255,255,255,0.3) 50%,
+                transparent 70%
+            );
+            transform: rotate(30deg) translateX(-100%);
+            transition: transform 0.8s;
+            pointer-events: none;
+        }
+        
+        .logo-image-wrapper:hover::after {
+            transform: rotate(30deg) translateX(100%);
+        }
+    </style>
+</head>
+<body class="bg-primary min-h-screen relative overflow-x-hidden">
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 bg-pattern opacity-30 pointer-events-none"></div>
+    <div class="fixed top-10 left-5 w-48 h-48 sm:w-72 sm:h-72 bg-accent/20 rounded-full blur-3xl animate-float pointer-events-none"></div>
+    <div class="fixed bottom-10 right-5 w-56 h-56 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-3xl animate-float-delayed pointer-events-none"></div>
+    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 w-full min-h-screen flex items-center justify-center p-0 sm:p-4 lg:p-8 mobile-full">
+        
+        <!-- Left Side - Branding (Desktop Only) -->
+        <div class="hidden lg:flex flex-col items-center justify-center text-center p-8 w-1/2 max-w-xl">
+            <div class="mb-8 logo-container">
+                <!-- Desktop Logo Image -->
+                <!-- <div class="w-28 h-28 logo-image-wrapper mb-6"> 
+                     Replace this src with your actual logo image path 
+                     <img src="home7 img.webp"  -->
+                         <!-- alt="Stackly Logo" 
+                         class="logo-image"
+                         id="desktopLogo">  -->
+                <!-- </div>  -->
+                <h1 class="text-5xl font-black logo-text mb-2 flex items-baseline justify-center gap-1">
+                    STACKLY<span class="logo-dot text-6xl">.</span>
+                </h1>
+                <p class="text-sm brand-tagline tracking-widest">Luxury Real Estate</p>
+            </div>
+            
+            <div class="space-y-4 text-left w-full max-w-sm">
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center text-accent text-xl group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-base mb-0.5">Secure Access</h3>
+                        <p class="text-gray-400 text-xs">Enterprise-grade security protocols</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center text-accent text-xl group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-base mb-0.5">Instant Access</h3>
+                        <p class="text-gray-400 text-xs">Quick login to your dashboard</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center text-accent text-xl group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-base mb-0.5">24/7 Support</h3>
+                        <p class="text-gray-400 text-xs">Always here to help you</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Forms Container -->
+        <div class="w-full lg:w-1/2 max-w-md lg:max-w-lg mx-auto">
+            <div class="glass-effect sm:rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-10 relative overflow-hidden mobile-card">
+                
+                <!-- Decorative Elements -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+                <div class="absolute bottom-0 left-0 w-24 h-24 bg-primary/10 rounded-full -ml-12 -mb-12 blur-xl"></div>
+
+                <!-- Logo Mobile -->
+                <div class="lg:hidden text-center mb-8 mobile-logo">
+                    <div class="logo-container flex flex-col items-center">
+                        <!-- Mobile Logo Image -->
+                        <div class="w-20 h-20 logo-image-wrapper mb-4">
+                            <!-- Replace this src with your actual logo image path -->
+                            <img src="logo.webp" 
+                                 alt="Stackly Logo" 
+                                 class="logo-image"
+                                 id="mobileLogo">
+                        </div>
+                        <h2 class="text-2xl font-black logo-text flex items-baseline gap-0.5">
+                            STACKLY<span class="logo-dot text-3xl">.</span>
+                        </h2>
+                        <p class="text-xs brand-tagline tracking-widest mt-1">Luxury Real Estate</p>
+                    </div>
+                </div>
+
+                <!-- Form Wrapper -->
+                <div class="relative min-h-[420px] sm:min-h-[480px]">
+                    
+                    <!-- LOGIN FORM -->
+                    <div id="loginForm" class="form-container form-visible">
+                        <div class="text-center mb-6">
+                            <h2 class="text-2xl lg:text-3xl font-black text-primary mb-2">Welcome Back!</h2>
+                            <p class="text-gray-500 text-sm">Sign in to access your dashboard</p>
+                        </div>
+
+                        <form onsubmit="handleLogin(event)" class="space-y-4">
+                            <!-- Email -->
+                            <div class="input-group">
+                                <input type="email" id="loginEmail" class="input-field w-full px-4 py-3.5 rounded-xl bg-transparent text-base" placeholder=" " required autocomplete="email">
+                                <label for="loginEmail" class="input-label">Email Address</label>
+                                <i class="fas fa-envelope absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="input-group">
+                                <input type="password" id="loginPassword" class="input-field w-full px-4 py-3.5 rounded-xl bg-transparent text-base" placeholder=" " required autocomplete="current-password">
+                                <label for="loginPassword" class="input-label">Password</label>
+                                <i class="fas fa-eye password-toggle" onclick="togglePassword('loginPassword', this)"></i>
+                            </div>
+
+                            <!-- Remember & Forgot -->
+                            <div class="flex items-center justify-between text-sm">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" class="custom-checkbox">
+                                    <span class="text-gray-600">Remember me</span>
+                                </label>
+                                <button type="button" onclick="showForm('forgotForm')" class="text-accent font-semibold link-hover">
+                                    Forgot Password?
+                                </button>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" id="loginBtn" class="btn-primary w-full py-3.5 rounded-xl text-white font-bold text-base flex items-center justify-center gap-2 mt-2">
+                                <span>Sign In</span>
+                                <i class="fas fa-arrow-right text-sm"></i>
+                            </button>
+                        </form>
+
+                        <!-- Divider -->
+                        <div class="relative my-6">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-200"></div>
+                            </div>
+                            <div class="relative flex justify-center text-xs">
+                                <span class="px-3 bg-white text-gray-500">Or continue with</span>
+                            </div>
+                        </div>
+
+                        <!-- Social Login -->
+                        <div class="grid grid-cols-3 gap-3">
+                            <button class="social-btn py-3 rounded-xl flex items-center justify-center text-gray-600 hover:text-primary transition-colors" aria-label="Sign in with Google">
+                                <i class="fab fa-google text-xl"></i>
+                            </button>
+                            <button class="social-btn py-3 rounded-xl flex items-center justify-center text-gray-600 hover:text-primary transition-colors" aria-label="Sign in with Apple">
+                                <i class="fab fa-apple text-xl"></i>
+                            </button>
+                            <button class="social-btn py-3 rounded-xl flex items-center justify-center text-gray-600 hover:text-primary transition-colors" aria-label="Sign in with Facebook">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </button>
+                        </div>
+
+                        <!-- Sign Up Link -->
+                        <p class="text-center mt-6 text-gray-600 text-sm">
+                            Don't have an account? 
+                            <button onclick="showForm('signupForm')" class="text-accent font-bold link-hover ml-1">Sign up</button>
+                        </p>
+                    </div>
+
+                    <!-- SIGNUP FORM -->
+                    <div id="signupForm" class="form-container form-hidden">
+                        <div class="text-center mb-6">
+                            <h2 class="text-2xl lg:text-3xl font-black text-primary mb-2">Create Account</h2>
+                            <p class="text-gray-500 text-sm">Join Stackly Real Estate today</p>
+                        </div>
+
+                        <form onsubmit="handleSignup(event)" class="space-y-3">
+                            <!-- Name -->
+                            <div class="input-group">
+                                <input type="text" id="signupName" class="input-field w-full px-4 py-3 rounded-xl bg-transparent text-base" placeholder=" " required autocomplete="name">
+                                <label for="signupName" class="input-label">Full Name</label>
+                                <i class="fas fa-user absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="input-group">
+                                <input type="email" id="signupEmail" class="input-field w-full px-4 py-3 rounded-xl bg-transparent text-base" placeholder=" " required autocomplete="email">
+                                <label for="signupEmail" class="input-label">Email Address</label>
+                                <i class="fas fa-envelope absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="input-group">
+                                <input type="tel" id="signupPhone" class="input-field w-full px-4 py-3 rounded-xl bg-transparent text-base" placeholder=" " autocomplete="tel">
+                                <label for="signupPhone" class="input-label">Phone (Optional)</label>
+                                <i class="fas fa-phone absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="input-group">
+                                <input type="password" id="signupPassword" class="input-field w-full px-4 py-3 rounded-xl bg-transparent text-base" placeholder=" " required minlength="8" autocomplete="new-password">
+                                <label for="signupPassword" class="input-label">Password (8+ chars)</label>
+                                <i class="fas fa-eye password-toggle" onclick="togglePassword('signupPassword', this)"></i>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="input-group">
+                                <input type="password" id="signupConfirmPassword" class="input-field w-full px-4 py-3 rounded-xl bg-transparent text-base" placeholder=" " required autocomplete="new-password">
+                                <label for="signupConfirmPassword" class="input-label">Confirm Password</label>
+                                <i class="fas fa-eye password-toggle" onclick="togglePassword('signupConfirmPassword', this)"></i>
+                            </div>
+
+                            <!-- Terms -->
+                            <label class="flex items-start gap-3 cursor-pointer mt-2">
+                                <input type="checkbox" id="termsCheck" class="custom-checkbox mt-0.5" required>
+                                <span class="text-gray-600 text-xs leading-relaxed">
+                                    I agree to the <a href="#" class="text-accent font-semibold hover:underline">Terms of Service</a> and 
+                                    <a href="#" class="text-accent font-semibold hover:underline">Privacy Policy</a>
+                                </span>
+                            </label>
+
+                            <!-- Submit Button -->
+                            <button type="submit" id="signupBtn" class="btn-primary w-full py-3.5 rounded-xl text-white font-bold text-base flex items-center justify-center gap-2 mt-2">
+                                <span>Create Account</span>
+                                <i class="fas fa-user-plus text-sm"></i>
+                            </button>
+                        </form>
+
+                        <!-- Login Link -->
+                        <p class="text-center mt-5 text-gray-600 text-sm">
+                            Already have an account? 
+                            <button onclick="showForm('loginForm')" class="text-accent font-bold link-hover ml-1">Sign in</button>
+                        </p>
+                    </div>
+
+                    <!-- FORGOT PASSWORD FORM -->
+                    <div id="forgotForm" class="form-container form-hidden">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center text-accent text-2xl mb-4 mx-auto">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <h2 class="text-2xl lg:text-3xl font-black text-primary mb-2">Reset Password</h2>
+                            <p class="text-gray-500 text-sm">Enter your email for reset instructions</p>
+                        </div>
+
+                        <form onsubmit="handleForgot(event)" class="space-y-5">
+                            <!-- Email -->
+                            <div class="input-group">
+                                <input type="email" id="forgotEmail" class="input-field w-full px-4 py-3.5 rounded-xl bg-transparent text-base" placeholder=" " required autocomplete="email">
+                                <label for="forgotEmail" class="input-label">Email Address</label>
+                                <i class="fas fa-envelope absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" id="forgotBtn" class="btn-primary w-full py-3.5 rounded-xl text-white font-bold text-base flex items-center justify-center gap-2">
+                                <span>Send Reset Link</span>
+                                <i class="fas fa-paper-plane text-sm"></i>
+                            </button>
+                        </form>
+
+                        <!-- Back to Login -->
+                        <div class="text-center mt-6">
+                            <button onclick="showForm('loginForm')" class="text-gray-500 hover:text-accent transition-colors flex items-center justify-center gap-2 text-sm mx-auto group">
+                                <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
+                                Back to Sign In
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- SUCCESS MESSAGE (Forgot Password) -->
+                    <div id="successMessage" class="form-container form-hidden text-center py-8">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-500 text-3xl mb-6 mx-auto success-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <h2 class="text-2xl font-black text-primary mb-3">Check Your Email!</h2>
+                        <p class="text-gray-600 mb-6 text-sm leading-relaxed px-4">
+                            We've sent reset instructions to <br>
+                            <span id="successEmail" class="font-semibold text-primary break-all"></span>
+                        </p>
+                        <div class="bg-gray-50 rounded-xl p-4 mb-6 text-left mx-4">
+                            <p class="text-xs text-gray-500 mb-2 font-semibold">Didn't receive it?</p>
+                            <ul class="text-xs text-gray-600 space-y-1.5 list-disc list-inside">
+                                <li>Check your spam folder</li>
+                                <li>Verify your email address</li>
+                                <li>Wait a few minutes</li>
+                            </ul>
+                        </div>
+                        <button onclick="showForm('loginForm')" class="btn-primary w-full py-3.5 rounded-xl text-white font-bold text-base">
+                            Back to Sign In
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-[150%] transition-transform duration-300 max-w-[90vw] sm:max-w-none">
+        <div class="bg-white rounded-xl shadow-2xl p-4 flex items-center gap-3 border-l-4 border-accent min-w-[320px]">
+            <div id="toastIcon" class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0">
+                <i class="fas fa-info text-sm"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+                <h4 id="toastTitle" class="font-bold text-primary text-sm">Notification</h4>
+                <p id="toastMessage" class="text-gray-600 text-xs truncate">Message here</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form Navigation
+        function showForm(formId) {
+            // Hide all forms
+            document.querySelectorAll('.form-container').forEach(form => {
+                form.classList.remove('form-visible');
+                form.classList.add('form-hidden');
+            });
+            
+            // Show target form
+            const targetForm = document.getElementById(formId);
+            targetForm.classList.remove('form-hidden');
+            targetForm.classList.add('form-visible');
+            
+            // Animate entrance
+            gsap.fromTo(targetForm, 
+                { opacity: 0, x: 15 },
+                { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }
+            );
+            
+            // Scroll to top on mobile
+            if (window.innerWidth < 640) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Password Toggle
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Toast Notification
+        function showToast(title, message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+            
+            // Set icon based on type
+            const icons = {
+                success: 'fa-check',
+                error: 'fa-exclamation',
+                info: 'fa-info'
+            };
+            
+            const colors = {
+                success: 'bg-green-100 text-green-500 border-green-500',
+                error: 'bg-red-100 text-red-500 border-red-500',
+                info: 'bg-accent/10 text-accent border-accent'
+            };
+            
+            toastIcon.innerHTML = `<i class="fas ${icons[type]} text-sm"></i>`;
+            toastIcon.className = `w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${colors[type].split(' ').slice(0, 2).join(' ')}`;
+            
+            const toastDiv = toast.querySelector('div');
+            toastDiv.className = `bg-white rounded-xl shadow-2xl p-4 flex items-center gap-3 border-l-4 min-w-[320px] ${colors[type].split(' ')[2]}`;
+            
+            toast.classList.remove('translate-x-[150%]');
+            toast.classList.add('translate-x-0');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-x-0');
+                toast.classList.add('translate-x-[150%]');
+            }, 3500);
+        }
+
+        // Handle Login
+        function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const originalContent = btn.innerHTML;
+            
+            // Show loading
+            btn.innerHTML = '<div class="spinner"></div><span class="ml-2">Signing in...</span>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                showToast('Welcome Back!', 'Successfully signed in.', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = 'das.html';
+                }, 1200);
+            }, 1800);
+        }
+
+        // Handle Signup
+        function handleSignup(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showToast('Error', 'Passwords do not match!', 'error');
+                
+                const form = document.getElementById('signupForm');
+                form.classList.add('shake');
+                setTimeout(() => form.classList.remove('shake'), 400);
+                return;
+            }
+            
+            if (password.length < 8) {
+                showToast('Error', 'Password must be 8+ characters!', 'error');
+                return;
+            }
+            
+            const btn = document.getElementById('signupBtn');
+            const originalContent = btn.innerHTML;
+            
+            btn.innerHTML = '<div class="spinner"></div><span class="ml-2">Creating...</span>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                showToast('Success!', 'Account created. Please verify email.', 'success');
+                
+                setTimeout(() => {
+                    showForm('loginForm');
+                }, 1800);
+            }, 2000);
+        }
+
+        // Handle Forgot Password
+        function handleForgot(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('forgotEmail').value;
+            const btn = document.getElementById('forgotBtn');
+            const originalContent = btn.innerHTML;
+            
+            btn.innerHTML = '<div class="spinner"></div><span class="ml-2">Sending...</span>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                
+                document.getElementById('successEmail').textContent = email;
+                
+                document.querySelectorAll('.form-container').forEach(form => {
+                    form.classList.remove('form-visible');
+                    form.classList.add('form-hidden');
+                });
+                
+                const successMsg = document.getElementById('successMessage');
+                successMsg.classList.remove('form-hidden');
+                successMsg.classList.add('form-visible');
+                
+                gsap.fromTo(successMsg,
+                    { opacity: 0, scale: 0.9 },
+                    { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.5)" }
+                );
+            }, 1800);
+        }
+
+        // Input Animation on Load
+        gsap.from(".input-group", {
+            y: 15,
+            opacity: 0,
+            duration: 0.4,
+            stagger: 0.08,
+            ease: "power2.out",
+            delay: 0.1
+        });
+
+        // Logo Animation on Load
+        gsap.from(".logo-image-wrapper", {
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.6,
+            ease: "back.out(1.5)",
+            delay: 0.2
+        });
+
+        // Check for saved login
+        window.addEventListener('load', () => {
+            const savedEmail = localStorage.getItem('rememberedEmail');
+            if (savedEmail) {
+                document.getElementById('loginEmail').value = savedEmail;
+                document.querySelector('#loginForm .custom-checkbox').checked = true;
+            }
+        });
+
+        // Save remember me
+        document.querySelector('#loginForm').addEventListener('submit', (e) => {
+            const remember = document.querySelector('#loginForm .custom-checkbox').checked;
+            const email = document.getElementById('loginEmail').value;
+            if (remember) {
+                localStorage.setItem('rememberedEmail', email);
+            } else {
+                localStorage.removeItem('rememberedEmail');
+            }
+        });
+
+        // Handle logo image errors
+        document.getElementById('desktopLogo').addEventListener('error', function() {
+            this.src = 'https://via.placeholder.com/400x400/2c5f4a/ffffff?text=STACKLY';
+        });
+        document.getElementById('mobileLogo').addEventListener('error', function() {
+            this.src = 'https://via.placeholder.com/400x400/2c5f4a/ffffff?text=STACKLY';
+        });
+    </script>
+</body>
+</html>
