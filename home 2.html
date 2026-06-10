@@ -445,11 +445,11 @@ nav.active{
 
 <section class="hero">
 
-  <div class="hero-text">
+ <div class="hero-text">
     <h1>PREMIUM PRIVATE<br>CONSTRUCTION COMPANY</h1>
     <p>Ullamcorper morbi tincidunt ornare massa. Ut pharetra sit amet aliquam id diam maecenas ultricies mi.</p>
-    <button>KNOW MORE</button>
-  </div>
+    <a href="404.html"><button>KNOW MORE</button>
+  </div></a>
 
   <div class="hero-image"></div>
 
@@ -2577,9 +2577,18 @@ function scrollToTop(){
   <div class="footer-container">
 
     <!-- Brand Column -->
-    <div class="footer-brand">
-      <h3>STACK<span>LY</span></h3>
-      <p>We are providing best real estate solutions for buying, selling and renting properties with trusted service and modern technology.</p>
+   <div class="footer-brand">
+
+  <a href="home 2.html" class="footer-brand-header">
+    <img src="logoo.webp" alt="Stackly Logo">
+    <h3>STACK<span>LY</span></h3>
+  </a>
+
+  <p>
+    We are providing best real estate solutions for buying,
+    selling and renting properties with trusted service and
+    modern technology.
+  </p>
       
       <div class="contact-info">
         <div class="contact-item">
@@ -3377,6 +3386,69 @@ function scrollToTop(){
     text-align:center;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.footer-brand-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  margin-bottom:20px;
+}
+
+.footer-brand-header img{
+  width:55px;
+  height:55px;
+  object-fit:contain;
+}
+
+.footer-brand-header h3{
+  margin:0;
+  font-size:24px;
+  letter-spacing:3px;
+  color:#fff;
+}
+
+.footer-brand-header h3 span{
+  color:var(--primary);
+}
+
+.footer-brand-header:hover{
+  opacity:0.9;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media(max-width:768px){
   .pages-grid{
