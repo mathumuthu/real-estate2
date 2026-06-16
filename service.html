@@ -1,1993 +1,1249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stackly Real Estate - Services</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<style>
-:root{
-  --primary:#c6a97e;
-  --primary-dark:#b89568;
-  --dark:#3c3a47;
-  --darker:#2a2835;
-  --light:#f4f4f4;
-  --white:#ffffff;
-  --text:#555;
-  --text-light:#999;
-  --gold-gradient: linear-gradient(135deg, #c6a97e 0%, #b89568 100%);
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
-
-body{
-  overflow-x:hidden;
-  background:var(--light);
-  color:var(--dark);
-}
-
-/* ================= HEADER ================= */
-header{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  padding:20px 60px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  z-index:1000;
-  background:rgba(255,255,255,0.95);
-  backdrop-filter:blur(15px);
-  box-shadow:0 2px 20px rgba(0,0,0,0.05);
-  transition:0.4s;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  text-decoration:none;
-}
-
-.logo img{
-  width:45px;
-  height:45px;
-  border-radius:8px;
-  object-fit:cover;
-}
-
-.logo-text{
-  font-weight:700;
-  font-size:20px;
-  color:var(--dark);
-  letter-spacing:2px;
-}
-
-.logo-text span{
-  color:var(--primary);
-}
-
-nav{
-  display:flex;
-  gap:35px;
-  align-items:center;
-}
-
-nav a{
-  text-decoration:none;
-  color:var(--dark);
-  letter-spacing:1px;
-  font-size:14px;
-  font-weight:500;
-  position:relative;
-  transition:0.3s;
-}
-
-nav a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-6px;
-  width:0%;
-  height:2px;
-  background:var(--primary);
-  transition:0.4s;
-}
-
-nav a:hover::after{
-  width:100%;
-}
-
-nav a:hover{
-  color:var(--primary);
-}
-
-/* ================= DROPDOWN MENU ================= */
-.dropdown{
-  position:relative;
-}
-
-.dropdown-toggle{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  cursor:pointer;
-  text-decoration:none;
-  color:var(--dark);
-  letter-spacing:1px;
-  font-size:14px;
-  font-weight:500;
-  transition:0.3s;
-  padding:8px 0;
-}
-
-.dropdown-toggle:hover{
-  color:var(--primary);
-}
-
-.dropdown-toggle i{
-  font-size:11px;
-  transition:0.3s;
-}
-
-.dropdown:hover .dropdown-toggle i{
-  transform:rotate(180deg);
-}
-
-.dropdown-menu{
-  position:absolute;
-  top:100%;
-  left:-20px;
-  background:var(--white);
-  min-width:220px;
-  border-radius:12px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.12);
-  padding:12px 0;
-  opacity:0;
-  visibility:hidden;
-  transform:translateY(15px);
-  transition:all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  z-index:1001;
-  border:1px solid rgba(0,0,0,0.04);
-}
-
-.dropdown:hover .dropdown-menu{
-  opacity:1;
-  visibility:visible;
-  transform:translateY(0);
-}
-
-.dropdown-menu a{
-  display:block;
-  padding:12px 24px;
-  color:var(--dark);
-  font-size:13px;
-  letter-spacing:0.5px;
-  transition:0.3s;
-  border-left:3px solid transparent;
-  text-decoration:none;
-}
-
-.dropdown-menu a:hover{
-  background:rgba(198,169,126,0.08);
-  color:var(--primary);
-  border-left:3px solid var(--primary);
-  padding-left:28px;
-}
-
-.dropdown-menu a i{
-  margin-right:10px;
-  font-size:12px;
-  width:16px;
-  text-align:center;
-}
-
-.dropdown-divider{
-  height:1px;
-  background:rgba(0,0,0,0.06);
-  margin:8px 16px;
-}
-
-/* Dropdown 2 - Pages */
-.dropdown-2 .dropdown-menu{
-  left:-30px;
-}
-
-.btn-primary{
-  background:var(--gold-gradient);
-  color:#fff;
-  padding:12px 30px;
-  text-decoration:none;
-  font-size:13px;
-  font-weight:600;
-  letter-spacing:2px;
-  border-radius:30px;
-  transition:0.4s;
-  border:none;
-  cursor:pointer;
-  display:inline-block;
-}
-
-.btn-primary:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 30px rgba(198,169,126,0.4);
-}
-
-.btn-outline{
-  background:transparent;
-  color:var(--primary);
-  padding:12px 30px;
-  text-decoration:none;
-  font-size:13px;
-  font-weight:600;
-  letter-spacing:2px;
-  border-radius:30px;
-  transition:0.4s;
-  border:2px solid var(--primary);
-  cursor:pointer;
-  display:inline-block;
-}
-
-.btn-outline:hover{
-  background:var(--primary);
-  color:#fff;
-  transform:translateY(-3px);
-}
-
-/* ================= HAMBURGER ================= */
-.hamburger{
-  display:none;
-  flex-direction:column;
-  gap:5px;
-  cursor:pointer;
-  z-index:1001;
-}
-
-.hamburger span{
-  width:25px;
-  height:3px;
-  background:var(--dark);
-  transition:0.4s;
-  border-radius:2px;
-}
-
-.hamburger.active span:nth-child(1){
-  transform:rotate(45deg) translate(5px,5px);
-}
-.hamburger.active span:nth-child(2){
-  opacity:0;
-}
-.hamburger.active span:nth-child(3){
-  transform:rotate(-45deg) translate(6px,-6px);
-}
-
-/* ================= HERO ================= */
-.hero{
-  margin-top:85px;
-  height:50vh;
-  min-height:400px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  position:relative;
-  background:linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-  overflow:hidden;
-}
-
-.hero::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=60') center/cover no-repeat;
-  opacity:0.15;
-}
-
-.hero-content{
-  position:relative;
-  z-index:2;
-  animation:fadeUp 1s ease forwards;
-}
-
-.hero-content h1{
-  font-size:52px;
-  font-weight:300;
-  letter-spacing:8px;
-  color:var(--white);
-  margin-bottom:20px;
-}
-
-.hero-content h1 span{
-  color:var(--primary);
-  font-weight:600;
-}
-
-.hero-content p{
-  color:rgba(255,255,255,0.7);
-  font-size:16px;
-  letter-spacing:2px;
-  max-width:600px;
-  margin:0 auto 30px;
-}
-
-.breadcrumb{
-  display:flex;
-  gap:15px;
-  justify-content:center;
-  align-items:center;
-  color:rgba(255,255,255,0.6);
-  font-size:14px;
-}
-
-.breadcrumb a{
-  color:var(--primary);
-  text-decoration:none;
-  transition:0.3s;
-}
-
-.breadcrumb a:hover{
-  color:var(--white);
-}
-
-.breadcrumb i{
-  font-size:10px;
-}
-
-/* ================= SERVICES SECTION ================= */
-.services-section{
-  padding:80px 60px;
-  max-width:1400px;
-  margin:0 auto;
-}
-
-.section-header{
-  text-align:center;
-  margin-bottom:60px;
-  animation:fadeUp 1s ease forwards;
-}
-
-.section-header h2{
-  font-size:36px;
-  letter-spacing:4px;
-  color:var(--dark);
-  margin-bottom:15px;
-  font-weight:600;
-}
-
-.section-header h2 span{
-  color:var(--primary);
-}
-
-.section-header p{
-  color:var(--text);
-  max-width:600px;
-  margin:0 auto;
-  line-height:1.7;
-}
-
-.services-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:35px;
-}
-
-/* Service Card */
-.service-card{
-  background:var(--white);
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 5px 25px rgba(0,0,0,0.06);
-  transition:0.5s;
-  position:relative;
-  animation:fadeUp 0.8s ease forwards;
-  opacity:0;
-  text-align:center;
-  padding:50px 30px;
-}
-
-.service-card:nth-child(1){ animation-delay:0.1s; }
-.service-card:nth-child(2){ animation-delay:0.2s; }
-.service-card:nth-child(3){ animation-delay:0.3s; }
-.service-card:nth-child(4){ animation-delay:0.4s; }
-.service-card:nth-child(5){ animation-delay:0.5s; }
-.service-card:nth-child(6){ animation-delay:0.6s; }
-
-.service-card:hover{
-  transform:translateY(-12px);
-  box-shadow:0 20px 50px rgba(0,0,0,0.12);
-}
-
-.service-icon{
-  width:80px;
-  height:80px;
-  border-radius:50%;
-  background:var(--gold-gradient);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 25px;
-  color:#fff;
-  font-size:28px;
-  transition:0.4s;
-  box-shadow:0 10px 30px rgba(198,169,126,0.3);
-}
-
-.service-card:hover .service-icon{
-  transform:scale(1.1) rotateY(360deg);
-  box-shadow:0 15px 40px rgba(198,169,126,0.5);
-}
-
-.service-card h3{
-  font-size:22px;
-  font-weight:600;
-  color:var(--dark);
-  margin-bottom:15px;
-  letter-spacing:1px;
-}
-
-.service-card p{
-  color:var(--text);
-  font-size:14px;
-  line-height:1.8;
-  margin-bottom:25px;
-}
-
-.service-card .btn-primary{
-  padding:10px 25px;
-  font-size:12px;
-}
-
-/* ================= WHY CHOOSE US ================= */
-.why-section{
-  background:var(--white);
-  padding:100px 60px;
-  position:relative;
-  overflow:hidden;
-}
-
-.why-section::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=60') center/cover no-repeat;
-  opacity:0.03;
-}
-
-.why-container{
-  max-width:1300px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:60px;
-  align-items:center;
-  position:relative;
-  z-index:2;
-}
-
-.why-image{
-  position:relative;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 20px 50px rgba(0,0,0,0.15);
-}
-
-.why-image img{
-  width:100%;
-  height:auto;
-  display:block;
-  transition:0.6s;
-}
-
-.why-image:hover img{
-  transform:scale(1.05);
-}
-
-.why-image .experience-badge{
-  position:absolute;
-  bottom:30px;
-  left:30px;
-  background:var(--gold-gradient);
-  color:#fff;
-  padding:20px 30px;
-  border-radius:12px;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(198,169,126,0.4);
-}
-
-.experience-badge .number{
-  font-size:36px;
-  font-weight:700;
-  display:block;
-  line-height:1;
-}
-
-.experience-badge .text{
-  font-size:13px;
-  letter-spacing:1px;
-  text-transform:uppercase;
-}
-
-.why-content h2{
-  font-size:36px;
-  letter-spacing:3px;
-  color:var(--dark);
-  margin-bottom:20px;
-  font-weight:600;
-}
-
-.why-content h2 span{
-  color:var(--primary);
-}
-
-.why-content > p{
-  color:var(--text);
-  line-height:1.8;
-  margin-bottom:30px;
-}
-
-.why-features{
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-}
-
-.why-feature{
-  display:flex;
-  align-items:flex-start;
-  gap:15px;
-}
-
-.why-feature i{
-  width:50px;
-  height:50px;
-  min-width:50px;
-  border-radius:50%;
-  background:rgba(198,169,126,0.1);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--primary);
-  font-size:18px;
-  transition:0.4s;
-}
-
-.why-feature:hover i{
-  background:var(--primary);
-  color:#fff;
-}
-
-.why-feature h4{
-  font-size:18px;
-  font-weight:600;
-  color:var(--dark);
-  margin-bottom:5px;
-}
-
-.why-feature p{
-  color:var(--text);
-  font-size:14px;
-  line-height:1.6;
-}
-
-/* ================= PROCESS SECTION ================= */
-.process-section{
-  padding:100px 60px;
-  max-width:1400px;
-  margin:0 auto;
-  text-align:center;
-}
-
-.process-section .section-header{
-  margin-bottom:80px;
-}
-
-.process-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:30px;
-  position:relative;
-}
-
-.process-card{
-  position:relative;
-  padding:40px 20px;
-  background:var(--white);
-  border-radius:16px;
-  box-shadow:0 5px 25px rgba(0,0,0,0.06);
-  transition:0.5s;
-  animation:fadeUp 0.8s ease forwards;
-  opacity:0;
-}
-
-.process-card:nth-child(1){ animation-delay:0.1s; }
-.process-card:nth-child(2){ animation-delay:0.2s; }
-.process-card:nth-child(3){ animation-delay:0.3s; }
-.process-card:nth-child(4){ animation-delay:0.4s; }
-
-.process-card:hover{
-  transform:translateY(-10px);
-  box-shadow:0 20px 50px rgba(0,0,0,0.12);
-}
-
-.process-number{
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  background:var(--gold-gradient);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-  font-weight:700;
-  margin:0 auto 20px;
-  box-shadow:0 8px 25px rgba(198,169,126,0.4);
-  position:relative;
-  z-index:2;
-}
-
-.process-card h3{
-  font-size:20px;
-  font-weight:600;
-  color:var(--dark);
-  margin-bottom:12px;
-  letter-spacing:1px;
-}
-
-.process-card p{
-  color:var(--text);
-  font-size:14px;
-  line-height:1.7;
-}
-
-/* Connecting line between process cards */
-.process-grid::before{
-  content:"";
-  position:absolute;
-  top:70px;
-  left:12.5%;
-  right:12.5%;
-  height:2px;
-  background:linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
-  opacity:0.3;
-  z-index:0;
-}
-
-/* ================= TESTIMONIALS ================= */
-.testimonials-section{
-  background:linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-  padding:100px 60px;
-  position:relative;
-  overflow:hidden;
-}
-
-.testimonials-section::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=60') center/cover no-repeat;
-  opacity:0.05;
-}
-
-.testimonials-container{
-  max-width:1200px;
-  margin:0 auto;
-  position:relative;
-  z-index:2;
-}
-
-.testimonials-section .section-header h2{
-  color:var(--white);
-}
-
-.testimonials-section .section-header p{
-  color:rgba(255,255,255,0.6);
-}
-
-.testimonials-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:35px;
-}
-
-.testimonial-card{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:16px;
-  padding:40px 30px;
-  transition:0.5s;
-  animation:fadeUp 0.8s ease forwards;
-  opacity:0;
-}
-
-.testimonial-card:nth-child(1){ animation-delay:0.1s; }
-.testimonial-card:nth-child(2){ animation-delay:0.2s; }
-.testimonial-card:nth-child(3){ animation-delay:0.3s; }
-
-.testimonial-card:hover{
-  background:rgba(255,255,255,0.08);
-  transform:translateY(-10px);
-  border-color:rgba(198,169,126,0.3);
-}
-
-.testimonial-stars{
-  color:var(--primary);
-  font-size:14px;
-  margin-bottom:20px;
-}
-
-.testimonial-text{
-  color:rgba(255,255,255,0.8);
-  font-size:15px;
-  line-height:1.8;
-  margin-bottom:25px;
-  font-style:italic;
-}
-
-.testimonial-author{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
-
-.testimonial-author img{
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  object-fit:cover;
-  border:2px solid var(--primary);
-}
-
-.testimonial-author .info h4{
-  color:var(--white);
-  font-size:16px;
-  font-weight:600;
-  margin-bottom:3px;
-}
-
-.testimonial-author .info span{
-  color:var(--primary);
-  font-size:13px;
-}
-
-/* ================= CTA SECTION ================= */
-.cta-section{
-  background:linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-  padding:100px 60px;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.cta-section::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=60') center/cover no-repeat;
-  opacity:0.1;
-}
-
-.cta-content{
-  position:relative;
-  z-index:2;
-  max-width:700px;
-  margin:0 auto;
-  animation:fadeUp 1s ease forwards;
-}
-
-.cta-content h2{
-  font-size:42px;
-  color:var(--white);
-  letter-spacing:4px;
-  margin-bottom:20px;
-  font-weight:300;
-}
-
-.cta-content h2 span{
-  color:var(--primary);
-  font-weight:600;
-}
-
-.cta-content p{
-  color:rgba(255,255,255,0.7);
-  margin-bottom:35px;
-  line-height:1.7;
-}
-
-.cta-buttons{
-  display:flex;
-  gap:20px;
-  justify-content:center;
-  flex-wrap:wrap;
-}
-
-/* ================= FOOTER ================= */
-.main-footer{
-  background:var(--darker);
-  color:#fff;
-  position:relative;
-  overflow:hidden;
-}
-
-.main-footer::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:4px;
-  background:var(--gold-gradient);
-}
-
-/* Wave Divider */
-.footer-wave{
-  position:relative;
-  height:80px;
-  background:var(--light);
-  overflow:hidden;
-}
-
-.footer-wave svg{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  height:80px;
-}
-
-.footer-container{
-  max-width:1300px;
-  margin:0 auto;
-  padding:80px 60px 40px;
-  display:grid;
-  grid-template-columns:1.5fr 1fr 1fr 1fr;
-  gap:50px;
-  position:relative;
-  z-index:2;
-}
-
-/* Brand Column */
-.footer-brand h3{
-  font-size:24px;
-  letter-spacing:3px;
-  margin-bottom:20px;
-  font-weight:600;
-}
-
-.footer-brand h3 span{
-  color:var(--primary);
-}
-
-.footer-brand p{
-  color:rgba(255,255,255,0.6);
-  line-height:1.8;
-  margin-bottom:25px;
-  font-size:14px;
-}
-
-.footer-brand .contact-info{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.contact-item{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:rgba(255,255,255,0.7);
-  font-size:14px;
-  transition:0.3s;
-}
-
-.contact-item i{
-  width:35px;
-  height:35px;
-  background:rgba(198,169,126,0.15);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--primary);
-  font-size:13px;
-  transition:0.3s;
-}
-
-.contact-item:hover i{
-  background:var(--primary);
-  color:#fff;
-  transform:rotateY(360deg);
-}
-
-.contact-item:hover{
-  color:var(--primary);
-}
-
-/* Link Columns */
-.footer-col h4{
-  font-size:16px;
-  letter-spacing:2px;
-  margin-bottom:25px;
-  color:var(--white);
-  position:relative;
-  padding-bottom:12px;
-}
-
-.footer-col h4::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:0;
-  width:40px;
-  height:2px;
-  background:var(--primary);
-  transition:0.4s;
-}
-
-.footer-col:hover h4::after{
-  width:80px;
-}
-
-.footer-col ul{
-  list-style:none;
-}
-
-.footer-col ul li{
-  margin-bottom:12px;
-}
-
-.footer-col ul li a{
-  text-decoration:none;
-  color:rgba(255,255,255,0.6);
-  font-size:14px;
-  transition:0.3s;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.footer-col ul li a::before{
-  content:"›";
-  color:var(--primary);
-  font-size:18px;
-  transition:0.3s;
-}
-
-.footer-col ul li a:hover{
-  color:var(--primary);
-  padding-left:8px;
-}
-
-.footer-col ul li a:hover::before{
-  transform:translateX(5px);
-}
-
-/* Newsletter */
-.newsletter-form{
-  margin-top:20px;
-}
-
-.newsletter-form input{
-  width:100%;
-  padding:14px 18px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:8px;
-  color:#fff;
-  font-size:14px;
-  margin-bottom:12px;
-  outline:none;
-  transition:0.3s;
-  font-family:'Poppins',sans-serif;
-}
-
-.newsletter-form input:focus{
-  border-color:var(--primary);
-  background:rgba(198,169,126,0.05);
-}
-
-.newsletter-form input::placeholder{
-  color:rgba(255,255,255,0.4);
-}
-
-.newsletter-form button{
-  width:100%;
-  padding:14px;
-  background:var(--gold-gradient);
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  font-size:13px;
-  font-weight:600;
-  letter-spacing:2px;
-  cursor:pointer;
-  transition:0.4s;
-  font-family:'Poppins',sans-serif;
-}
-
-.newsletter-form button:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 25px rgba(198,169,126,0.3);
-}
-
-/* Social Icons */
-.footer-social{
-  display:flex;
-  gap:12px;
-  margin-top:25px;
-}
-
-.footer-social a{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:rgba(255,255,255,0.7);
-  text-decoration:none;
-  font-size:14px;
-  transition:0.4s;
-  position:relative;
-  overflow:hidden;
-}
-
-.footer-social a::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:var(--gold-gradient);
-  transform:translateY(100%);
-  transition:0.4s;
-  z-index:0;
-}
-
-.footer-social a:hover::before{
-  transform:translateY(0);
-}
-
-.footer-social a i{
-  position:relative;
-  z-index:1;
-  transition:0.3s;
-}
-
-.footer-social a:hover{
-  border-color:var(--primary);
-}
-
-.footer-social a:hover i{
-  color:#fff;
-  transform:rotateY(360deg);
-}
-
-/* Footer Bottom */
-.footer-bottom{
-  border-top:1px solid rgba(255,255,255,0.06);
-  padding:25px 60px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  max-width:1300px;
-  margin:0 auto;
-  flex-wrap:wrap;
-  gap:15px;
-}
-
-.footer-bottom p{
-  color:rgba(255,255,255,0.4);
-  font-size:13px;
-  letter-spacing:1px;
-}
-
-.footer-bottom-links{
-  display:flex;
-  gap:25px;
-}
-
-.footer-bottom-links a{
-  color:rgba(255,255,255,0.4);
-  text-decoration:none;
-  font-size:13px;
-  transition:0.3s;
-}
-
-.footer-bottom-links a:hover{
-  color:var(--primary);
-}
-
-/* Scroll Top */
-.scroll-top{
-  position:fixed;
-  right:30px;
-  bottom:30px;
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  background:var(--gold-gradient);
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  opacity:0;
-  visibility:hidden;
-  transition:0.4s;
-  z-index:999;
-  border:none;
-  font-size:16px;
-  box-shadow:0 5px 20px rgba(198,169,126,0.3);
-}
-
-.scroll-top.visible{
-  opacity:1;
-  visibility:visible;
-}
-
-.scroll-top:hover{
-  transform:translateY(-5px) scale(1.1);
-  box-shadow:0 10px 30px rgba(198,169,126,0.5);
-}
-
-/* ================= ANIMATIONS ================= */
-@keyframes fadeUp{
-  from{
-    transform:translateY(40px);
-    opacity:0;
-  }
-  to{
-    transform:translateY(0);
-    opacity:1;
-  }
-}
-
-@keyframes fadeLeft{
-  from{
-    transform:translateX(-60px);
-    opacity:0;
-  }
-  to{
-    transform:translateX(0);
-    opacity:1;
-  }
-}
-
-@keyframes fadeRight{
-  from{
-    transform:translateX(60px);
-    opacity:0;
-  }
-  to{
-    transform:translateX(0);
-    opacity:1;
-  }
-}
-
-@keyframes float{
-  0%{ transform:translateY(0); }
-  50%{ transform:translateY(-10px); }
-  100%{ transform:translateY(0); }
-}
-
-@keyframes pulse{
-  0%{ box-shadow:0 0 0 0 rgba(198,169,126,0.5); }
-  70%{ box-shadow:0 0 0 15px rgba(198,169,126,0); }
-  100%{ box-shadow:0 0 0 0 rgba(198,169,126,0); }
-}
-
-/* ================= MOBILE RESPONSIVE ================= */
-@media(max-width:1200px){
-  .services-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .why-container{
-    grid-template-columns:1fr;
-    gap:40px;
-  }
-
-  .process-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .process-grid::before{
-    display:none;
-  }
-
-  .testimonials-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .footer-container{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:992px){
-  header{
-    padding:15px 30px;
-  }
-
-  nav{
-    position:fixed;
-    top:0;
-    right:-100%;
-    height:100vh;
-    width:300px;
-    background:var(--white);
-    flex-direction:column;
-    justify-content:flex-start;
-    align-items:flex-start;
-    gap:0;
-    padding:80px 30px 30px;
-    transition:0.5s;
-    box-shadow:-10px 0 30px rgba(0,0,0,0.1);
-    z-index:1000;
-    overflow-y:auto;
-  }
-
-  nav.active{
-    right:0;
-  }
-
-  nav > a,
-  .dropdown{
-    width:100%;
-    padding:12px 0;
-    border-bottom:1px solid rgba(0,0,0,0.06);
-  }
-
-  nav > a{
-    font-size:15px;
-  }
-
-  .dropdown-toggle{
-    justify-content:space-between;
-    font-size:15px;
-  }
-
-  .dropdown-menu{
-    position:static;
-    opacity:1;
-    visibility:visible;
-    transform:none;
-    box-shadow:none;
-    border:none;
-    background:rgba(198,169,126,0.05);
-    border-radius:8px;
-    margin-top:8px;
-    display:none;
-    min-width:auto;
-    padding:8px 0;
-  }
-
-  .dropdown.open .dropdown-menu{
-    display:block;
-  }
-
-  .dropdown-menu a{
-    padding:10px 16px;
-    font-size:13px;
-  }
-
-  .hamburger{
-    display:flex;
-  }
-
-  .hero-content h1{
-    font-size:36px;
-    letter-spacing:4px;
-  }
-
-  .services-section{
-    padding:60px 30px;
-  }
-
-  .why-section{
-    padding:60px 30px;
-  }
-
-  .process-section{
-    padding:60px 30px;
-  }
-
-  .testimonials-section{
-    padding:60px 30px;
-  }
-
-  .cta-section{
-    padding:80px 30px;
-  }
-
-  .cta-content h2{
-    font-size:32px;
-  }
-
-  .footer-container{
-    padding:60px 30px 30px;
-    gap:40px;
-  }
-
-  .footer-bottom{
-    padding:20px 30px;
-    flex-direction:column;
-    text-align:center;
-  }
-}
-
-@media(max-width:768px){
-  .services-grid{
-    grid-template-columns:1fr;
-  }
-
-  .process-grid{
-    grid-template-columns:1fr;
-  }
-
-  .testimonials-grid{
-    grid-template-columns:1fr;
-  }
-
-  .section-header h2{
-    font-size:28px;
-    letter-spacing:2px;
-  }
-
-  .hero{
-    height:auto;
-    min-height:300px;
-    padding:120px 20px 60px;
-  }
-
-  .hero-content h1{
-    font-size:28px;
-    letter-spacing:3px;
-  }
-
-  .why-content h2{
-    font-size:28px;
-  }
-
-  .footer-container{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .footer-col h4::after{
-    left:50%;
-    transform:translateX(-50%);
-  }
-
-  .footer-col ul li a{
-    justify-content:center;
-  }
-
-  .contact-item{
-    justify-content:center;
-  }
-
-  .footer-social{
-    justify-content:center;
-  }
-
-  .newsletter-form{
-    max-width:350px;
-    margin:20px auto 0;
-  }
-
-  .cta-content h2{
-    font-size:26px;
-    letter-spacing:2px;
-  }
-
-  .why-image .experience-badge{
-    bottom:15px;
-    left:15px;
-    padding:15px 20px;
-  }
-
-  .experience-badge .number{
-    font-size:28px;
-  }
-}
-
-@media(max-width:480px){
-  .service-card{
-    padding:35px 20px;
-  }
-
-  .service-icon{
-    width:65px;
-    height:65px;
-    font-size:22px;
-  }
-
-  .why-feature{
-    flex-direction:column;
-    text-align:center;
-    align-items:center;
-  }
-
-  .process-card{
-    padding:30px 15px;
-  }
-
-  .testimonial-card{
-    padding:30px 20px;
-  }
-}
-.footer-brand-header{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  text-decoration:none;
-  margin-bottom:20px;
-}
-
-.footer-brand-header img{
-  width:55px;
-  height:55px;
-  object-fit:contain;
-}
-
-.footer-brand-header h3{
-  margin:0;
-  font-size:24px;
-  letter-spacing:3px;
-  color:#fff;
-}
-
-.footer-brand-header h3 span{
-  color:var(--primary);
-}
-
-.footer-brand-header:hover{
-  opacity:0.9;
-}
-</style>
-<base target="_blank">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Rapido</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(252, 194, 27, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(252, 194, 27, 0.8); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .shimmer-effect {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FCC21B;
+            border-radius: 5px;
+        }
+        
+        /* Navigation Styles */
+        .nav-transparent {
+            background: transparent;
+        }
+        .nav-solid {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile Navigation */
+        @media (max-width: 1023px) {
+            .mobile-nav-bg {
+                background: #ffffff !important;
+                border-bottom: 2px solid #FCC21B;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ffffff;
+            z-index: 9999;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding-bottom: 100px;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Service Card Hover Effects */
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(252, 194, 27, 0.25);
+            border-color: rgba(252, 194, 27, 0.5);
+        }
+        
+        .service-icon-wrapper {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon-wrapper {
+            background: #FCC21B;
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .service-card:hover .service-icon-wrapper svg {
+            color: #000000;
+        }
+        
+        /* Feature Card */
+        .feature-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid rgba(252, 194, 27, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: rgba(252, 194, 27, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(252, 194, 27, 0.2);
+        }
+        
+        /* Button Effects */
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px -10px rgba(252, 194, 27, 0.5);
+        }
+        
+        /* Navigation Link Hover */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FCC21B;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Dropdown */
+        .dropdown-menu {
+    transform-origin: top;
+    transition: all 0.25s ease;
+}
+
+.dropdown-menu.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+}
+        .group {
+    position: relative;
+}
+        /* Hero Background Pattern */
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(252, 194, 27, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(252, 194, 27, 0.1) 0%, transparent 50%);
+        }
+        
+        /* Pricing Card */
+        .pricing-card {
+            transition: all 0.4s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Process Step */
+        .process-step {
+            position: relative;
+        }
+        
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: #FCC21B;
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+        
+        @media (max-width: 768px) {
+            .process-step::after {
+                display: none;
+            }
+        }
+        
+        .process-step:last-child::after {
+            display: none;
+        }
+
+/* .container {
+    max-width: 100%;
+    overflow-x: hidden;
+} */
+
+@media (max-width: 768px) {
+    .blur-3xl {
+        display: none;
+    }
+}
+
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px){
+
+#navbar{
+background:#ffffff;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+}
+
+
+
+    </style>
 </head>
+<body class="bg-white overflow-x-hidden">
 
-<body>
+    <!-- Navigation Header -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-[9999] nav-transparent transition-all duration-300">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0" data-aos="fade-right" data-aos-duration="800">
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <div class="relative w-12 h-12 bg-[#FCC21B] rounded-xl flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                            <img src="logo.webp" 
+                                 alt="Rapido Logo" 
+                                 class="w-13 h-13 object-contain">
+                        </div>
+<span class="text-xl font-bold text-gray-900">Stackly</span>                    </a>
+                </div>
 
-<!-- ================= HEADER ================= -->
-<header id="mainHeader">
-  <a href="404.html" class="logo">
-    <img src="logo.png" alt="Logo">
-    <div class="logo-text">STACK<span>LY</span></div>
-  </a>
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-1" data-aos="fade-down" data-aos-duration="800" data-aos-delay="200">
+                    <!-- Home Dropdown -->
+                    <div class="relative group px-2">
+                        <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('home-dropdown')">
+                            Home
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i>
+                        </button>
+                        <div id="home-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="index.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Homepage 1</span>
+                            </a>
+                            <a href="home.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="home" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Homepage 2</span>
+                            </a>
+                        </div>
+                    </div>
 
-  
-<nav id="navMenu">
-<div class="dropdown" id="dropdown1">
-      <div class="dropdown-toggle" onclick="toggleDropdown(this)">
-        Home <i class="fas fa-chevron-down"></i>
-      </div>
-      <div class="dropdown-menu">
-        <!-- <a href="404.html"><i class="fas fa-home"></i> Property Buying</a>
-        <a href="404.html"><i class="fas fa-hand-holding-usd"></i> Property Selling</a>
-        <a href="404.html"><i class="fas fa-key"></i> Property Rental</a>
-        <a href="404.html"><i class="fas fa-chart-line"></i> Investment</a> -->
-        <div class="dropdown-divider"></div>
-        <a href="index.html"><i class="fas fa-hard-hat"></i> Home page1</a>
-        <a href="home 2.html"><i class="fas fa-tools"></i> Home page2</a>
-      </div>
-    </div>        <!-- <a href="404.html">ABOUT</a> -->
-    <a href="property.html">Property</a>
-    <a href="service.html" style="color:var(--primary)">Service</a>
-        <a href="page.html">Pages</a>
+                    <a href="service.html" class="nav-link text-[#FCC21B] font-bold px-4 py-2">Services</a>
+                    
+                    <!-- About Dropdown -->
+                    <div class="relative group px-2">
+                     <a href="About.html">   <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('about-dropdown')">
+                            About Us
+                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
+                        </button></a>
+                        <!-- <div id="about-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="info" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Piricing</span>
+                            </a>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="briefcase" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Careers</span>
+                            </a>
+                        </div> -->
+                    </div>
+                    
+                    <!-- Safety Dropdown -->
+                    <div class="relative group px-2">
+                     <a href="safety.html">   <button class="nav-link text-gray-800 font-medium hover:text-[#FCC21B] transition-colors flex items-center gap-1 px-4 py-2" onclick="toggleDropdown('safety-dropdown')">
+                            Safety
+                            <!-- <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"></i> -->
+                        </button></a>
+                        <!-- <div id="safety-dropdown" class="dropdown-menu hidden absolute top-full left-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-[9999] overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-[#FCC21B]"></div>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Safety Features</span>
+                            </a>
+                            <a href="404.html" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-[#FCC21B]/10 hover:text-black transition-colors">
+                                <i data-lucide="shield" class="w-5 h-5 text-[#FCC21B]"></i>
+                                <span>Insurance</span>
+                            </a>
+                        </div> -->
+                    </div>
+                </div>
+
+                <!-- Desktop CTA -->
+                <div class="hidden lg:flex items-center gap-4" data-aos="fade-left" data-aos-duration="800">
+                                      <a href="contact.html">  <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Contact</button></a>
+
+                  <a href="login.html">   <button class="text-gray-800 font-medium hover:text-[#FCC21B] transition-colors">Login</button></a>
+                    <a href="dash.html" class="btn-primary bg-[#FCC21B] text-black px-6 py-2.5 rounded-full font-bold hover:shadow-lg">
+                        Dasbhoard
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center gap-3">
+                <a href="login.html">   <button class="text-gray-800 font-medium text-sm">Login</button></a>
+                    <button onclick="toggleMobileMenu()" class="bg-[#FCC21B] text-black p-2.5 rounded-lg hover:bg-[#e5b100] transition-colors shadow-md">
+                        <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu lg:hidden">
+            <div class="flex flex-col p-6 space-y-1">
+                <!-- Home Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                    <button onclick="toggleMobileDropdown('mobile-home')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <i data-lucide="home" class="w-6 h-6 text-[#FCC21B]"></i>
+                            Home
+                        </span>
+                        <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-home-icon"></i>
+                    </button>
+                    <div id="mobile-home" class="hidden pl-12 space-y-1 py-2">
+                        <a href="index.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="home" class="w-5 h-5"></i> Homepage 1
+                        </a>
+                        <a href="home.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="home" class="w-5 h-5"></i> Homepage 2
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Services -->
+                <a href="service.html" onclick="closeMobileMenu()" class="text-lg font-bold text-[#FCC21B] py-4 border-b border-gray-200 flex items-center gap-3 px-3">
+                    <i data-lucide="grid" class="w-6 h-6 text-[#FCC21B]"></i>
+                    Services
+                </a>
+                
+                <!-- About Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                  <a href="About.html">  <button onclick="toggleMobileDropdown('mobile-about')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <!-- <i data-lucide="info" class="w-6 h-6 text-[#FCC21B]"></i> -->
+                            About Us
+                        </span>
+                        <!-- <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-about-icon"></i> -->
+                    </button></a>
+                    <!-- <div id="mobile-about" class="hidden pl-12 space-y-1 py-2">
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="info" class="w-5 h-5"></i> Pricing
+                        </a>
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="briefcase" class="w-5 h-5"></i> Careers
+                        </a>
+                    </div> -->
+                </div>
+                
+                <!-- Safety Dropdown -->
+                <div class="border-b border-gray-200 py-2">
+                  <a href="safety.html">  <button onclick="toggleMobileDropdown('mobile-safety')" class="w-full text-left text-lg font-bold text-gray-900 hover:text-[#FCC21B] transition-colors py-3 flex justify-between items-center px-3">
+                        <span class="flex items-center gap-3">
+                            <!-- <i data-lucide="shield-check" class="w-6 h-6 text-[#FCC21B]"></i> -->
+                            Safety
+                        </span>
+                        <!-- <i data-lucide="chevron-down" class="w-6 h-6 text-gray-600 transition-transform duration-300" id="mobile-safety-icon"></i> -->
+                    </button></a>
+                    <!-- <div id="mobile-safety" class="hidden pl-12 space-y-1 py-2">
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i> Safety Features
+                        </a>
+                        <a href="404.html" onclick="closeMobileMenu()" class="flex items-center gap-3 text-gray-700 py-3 hover:text-[#FCC21B] transition-colors font-medium">
+                            <i data-lucide="shield" class="w-5 h-5"></i> Insurance
+                        </a>
+                    </div> -->
+                </div>
+                
+
+<div class="pt-6 space-y-4">
+                    <a href="contact.html" class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
+                        <!-- <i data-lucide="download" class="w-6 h-6"></i> -->
+                        Contact
+                    </a>
+                </div>
 
 
-    <!-- Dropdown 1: Services -->
-    <!-- <div class="dropdown" id="dropdown1">
-      <div class="dropdown-toggle" onclick="toggleDropdown(this)">
-        <span style="color:var(--primary)">SERVICES</span> <i class="fas fa-chevron-down"></i>
-      </div>
-      <div class="dropdown-menu">
-        <a href="404.html"><i class="fas fa-home"></i> Home</a>
-        <div class="dropdown-divider"></div>
-        <a href="404.html"><i class="fas fa-home"></i> Property Buying</a>
-        <a href="404.html"><i class="fas fa-hand-holding-usd"></i> Property Selling</a>
-        <a href="404.html"><i class="fas fa-key"></i> Property Rental</a>
-        <a href="404.html"><i class="fas fa-chart-line"></i> Investment</a>
-        <div class="dropdown-divider"></div>
-        <a href="404.html"><i class="fas fa-hard-hat"></i> Construction</a>
-        <a href="404.html"><i class="fas fa-tools"></i> Renovation</a>
-      </div>
-    </div> -->
 
-    <!-- Dropdown 2: Pages -->
-    <!-- <div class="dropdown dropdown-2" id="dropdown2">
-      <div class="dropdown-toggle" onclick="toggleDropdown(this)">
-        PAGES <i class="fas fa-chevron-down"></i>
-      </div>
-      <div class="dropdown-menu">
-        <a href="404.html"><i class="fas fa-home"></i> Home</a>
-        <div class="dropdown-divider"></div>
-        <a href="404.html"><i class="fas fa-user"></i> Our Agents</a>
-        <a href="404.html"><i class="fas fa-star"></i> Testimonials</a>
-        <a href="404.html"><i class="fas fa-images"></i> Gallery</a>
-        <a href="404.html"><i class="fas fa-question-circle"></i> FAQ</a>
-        <div class="dropdown-divider"></div>
-        <a href="404.html"><i class="fas fa-newspaper"></i> Blog</a>
-        <a href="404.html"><i class="fas fa-file-alt"></i> Careers</a>
-        <a href="404.html"><i class="fas fa-lock"></i> Privacy Policy</a>
-      </div>
-    </div> -->
 
-    <a href="contact1.html" class="btn-primary">Contact Us</a>
-  </nav>
-
-  <div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</header>
-
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <div class="hero-content">
-    <h1>OUR <span>SERVICES</span></h1>
-    <p>Comprehensive real estate solutions tailored to meet all your property needs with excellence and professionalism</p>
-    <div class="breadcrumb">
-      <a href="home 2.html">Home</a>
-      <i class="fas fa-chevron-right"></i>
-      <span>Services</span>
-    </div>
-  </div>
-</section>
-
-<!-- ================= SERVICES SECTION ================= -->
-<section class="services-section">
-  <div class="section-header">
-    <h2>WHAT WE <span>OFFER</span></h2>
-    <p>From property buying to investment consulting, we provide end-to-end real estate services to help you achieve your goals.</p>
-  </div>
-
-  <div class="services-grid">
-
-    <!-- Service 1 -->
-    <div class="service-card">
-      <div class="service-icon">
-        <i class="fas fa-home"></i>
-      </div>
-      <h3>Property Buying</h3>
-      <p>Find your dream home with our expert guidance. We help you navigate the market, negotiate the best deals, and handle all paperwork seamlessly.</p>
-      <a href="404.html" class="btn-primary">LEARN MORE</a>
-    </div>
-
-    <!-- Service 2 -->
-    <div class="service-card">
-      <div class="service-icon">
-        <i class="fas fa-hand-holding-usd"></i>
-      </div>
-      <h3>Property Selling</h3>
-      <p>Sell your property at the best market price with our strategic marketing, professional staging, and extensive buyer network.</p>
-      <a href="404.html" class="btn-primary">LEARN MORE</a>
-    </div>
-
-    <!-- Service 3 -->
-    <div class="service-card">
-      <div class="service-icon">
-        <i class="fas fa-key"></i>
-      </div>
-      <h3>Property Rental</h3>
-      <p>Whether you are a landlord or tenant, we manage rentals efficiently with thorough tenant screening and property maintenance.</p>
-      <a href="404.html" class="btn-primary">LEARN MORE</a>
-    </div>
-
-    <!-- Service 4 -->
-    <div class="service-card">
-      <div class="service-icon">
-        <i class="fas fa-chart-line"></i>
-      </div>
-      <h3>Investment Consulting</h3>
-      <p>Maximize your returns with our data-driven investment strategies. We analyze market trends and identify high-yield opportunities.</p>
-      <a href="404.html" class="btn-primary">LEARN MORE</a>
-    </div>
-
-    <!-- Service 5 -->
-    <div class="service-card">
-      <div class="service-icon">
-        <i class="fas fa-hard-hat"></i>
-      </div>
-      <h3>Construction</h3>
-      <p>Build your vision from the ground up with our trusted construction partners. We manage projects from planning to completion.</p>
-      <a href="404.html" class="btn-primary">LEARN MORE</a>
-    </div>
-
-    <!-- Service 6 -->
-    <div class="service-card">
-      <div class="service-icon">
-        <i class="fas fa-tools"></i>
-      </div>
-      <h3>Renovation</h3>
-      <p>Transform your property with our renovation services. From minor updates to major overhauls, we bring your vision to life.</p>
-      <a href="404.html" class="btn-primary">LEARN MORE</a>
-    </div>
-
-  </div>
-</section>
-
-<!-- ================= WHY CHOOSE US ================= -->
-<section class="why-section">
-  <div class="why-container">
-    <div class="why-image">
-      <img src="pho15.webp" alt="Why Choose Us">
-      <div class="experience-badge">
-        <span class="number">15+</span>
-        <span class="text">Years Experience</span>
-      </div>
-    </div>
-    <div class="why-content">
-      <h2>WHY CHOOSE <span>STACKLY</span></h2>
-      <p>With over 15 years of experience in the real estate industry, we have built a reputation for trust, transparency, and exceptional results. Our team of dedicated professionals is committed to making your property journey smooth and successful.</p>
-
-      <div class="why-features">
-        <div class="why-feature">
-          <i class="fas fa-check-circle"></i>
-          <div>
-            <h4>Expert Team</h4>
-            <p>Our certified agents bring deep market knowledge and negotiation expertise to every transaction.</p>
-          </div>
+                <!-- CTA -->
+                <div class="pt-6 space-y-4">
+                    <a href="dash.html" class="btn-primary w-full bg-[#FCC21B] text-black py-4 rounded-xl font-bold text-lg pulse-glow flex items-center justify-center gap-2">
+                        <!-- <i data-lucide="download" class="w-6 h-6"></i> -->
+                        Dasbhoard
+                    </a>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="pt-6 mt-4 border-t border-gray-200">
+                    <p class="text-sm text-gray-500 mb-2">Need help?</p>
+                    <a href="tel:080-XXXXXXX" class="text-lg font-bold text-[#FCC21B] flex items-center gap-2">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                        080-XXXXXXX
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="why-feature">
-          <i class="fas fa-shield-alt"></i>
-          <div>
-            <h4>Trusted Service</h4>
-            <p>We prioritize transparency and integrity, ensuring you feel confident at every step.</p>
-          </div>
-        </div>
-        <div class="why-feature">
-          <i class="fas fa-clock"></i>
-          <div>
-            <h4>24/7 Support</h4>
-            <p>Our dedicated support team is always available to answer your questions and address concerns.</p>
-          </div>
-        </div>
-        <div class="why-feature">
-          <i class="fas fa-award"></i>
-          <div>
-            <h4>Award Winning</h4>
-            <p>Recognized industry-wide for excellence in customer service and successful property deals.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </header>
 
-<!-- ================= PROCESS SECTION ================= -->
-<section class="process-section">
-  <div class="section-header">
-    <h2>OUR <span>PROCESS</span></h2>
-    <p>A simple, streamlined approach to help you achieve your real estate goals with ease and confidence.</p>
-  </div>
-
-  <div class="process-grid">
-    <div class="process-card">
-      <div class="process-number">01</div>
-      <h3>Consultation</h3>
-      <p>We begin with understanding your needs, goals, and budget through a personalized consultation session.</p>
-    </div>
-    <div class="process-card">
-      <div class="process-number">02</div>
-      <h3>Property Search</h3>
-      <p>Our team curates a selection of properties that match your criteria and arranges viewings at your convenience.</p>
-    </div>
-    <div class="process-card">
-      <div class="process-number">03</div>
-      <h3>Negotiation</h3>
-      <p>We handle all negotiations to secure the best possible deal, protecting your interests throughout.</p>
-    </div>
-    <div class="process-card">
-      <div class="process-number">04</div>
-      <h3>Closing</h3>
-      <p>From paperwork to final handover, we manage every detail to ensure a smooth and hassle-free closing.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ================= TESTIMONIALS ================= -->
-<section class="testimonials-section">
-  <div class="testimonials-container">
-    <div class="section-header">
-      <h2>CLIENT <span>TESTIMONIALS</span></h2>
-      <p>Hear what our satisfied clients have to say about their experience working with Stackly Real Estate.</p>
-    </div>
-
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+    <!-- Hero Section -->
+<section id="home" class="pt-24 relative min-h-[90vh] flex items-center justify-center overflow-hidden hero-bg">        <div class="absolute bottom-10 left-10 w-96 h-96 bg-[#FCC21B]/10 rounded-full float-animation blur-3xl" style="animation-delay: 2s;"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    WHAT WE OFFER
+                </span>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight" data-aos="zoom-in" data-aos-duration="1000">
+                    Our <span class="text-[#FCC21B]">Services</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    From quick bike rides to premium cabs, parcel delivery to metro tickets - we have everything you need to move around the city efficiently.
+                </p>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+                        <div class="text-2xl sm:text-3xl font-bold text-[#FCC21B]">8+</div>
+                        <div class="text-gray-600 text-sm">Services</div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+                        <div class="text-2xl sm:text-3xl font-bold text-[#FCC21B]">100+</div>
+                        <div class="text-gray-600 text-sm">Cities</div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-lg border border-gray-100">
+                        <div class="text-2xl sm:text-3xl font-bold text-[#FCC21B]">25M+</div>
+                        <div class="text-gray-600 text-sm">Happy Users</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p class="testimonial-text">"Stackly made buying our first home an absolute breeze. Their team was patient, knowledgeable, and always available to answer our questions. Highly recommend!"</p>
-        <div class="testimonial-author">
-          <img src="pho14.webp" alt="Client">
-          <div class="info">
-            <h4>James Wilson</h4>
-            <span>Home Buyer</span>
-          </div>
-        </div>
-      </div>
+    </section>
 
-      <div class="testimonial-card">
-        <div class="testimonial-stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
+    <!-- Main Services Grid -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Choose Your Ride
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full mb-4" data-aos="zoom-in" data-aos-delay="200"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="300">
+                    Multiple options to suit every need and budget. Select the perfect service for your journey.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
+                <!-- Bike -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="0">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="bike" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Bike</h3>
+                    <p class="text-sm text-gray-500 mb-4">Beat traffic with the quickest way to commute. Perfect for solo travelers.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Starting at ₹15</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Auto -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="car" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Auto</h3>
+                    <p class="text-sm text-gray-500 mb-4">Comfortable 3-wheeler rides for up to 3 passengers. No haggling, fixed fares.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Starting at ₹30</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Auto Share -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="users" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Auto Share</h3>
+                    <p class="text-sm text-gray-500 mb-4">Share your ride and split the cost. Eco-friendly and budget-friendly option.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Save up to 50%</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Parcel -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="package" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Parcel</h3>
+                    <p class="text-sm text-gray-500 mb-4">Send packages across the city instantly. Real-time tracking included.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Starting at ₹25</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Cab Economy -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="car-front" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Cab Economy</h3>
+                    <p class="text-sm text-gray-500 mb-4">Affordable 4-wheeler rides for everyday travel. AC comfort at low prices.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Starting at ₹50</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Cab Premium -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Cab Premium</h3>
+                    <p class="text-sm text-gray-500 mb-4">Luxury sedans and SUVs for special occasions. Professional chauffeurs.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Premium Experience</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Metro Ticket -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="train-front" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Metro Ticket</h3>
+                    <p class="text-sm text-gray-500 mb-4">Book metro tickets digitally. Skip the queues and travel seamlessly.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Zero Booking Fee</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+                
+                <!-- Travel -->
+                <div class="service-card rounded-2xl p-6 text-center cursor-pointer group border border-gray-200" data-aos="fade-up" data-aos-delay="700">
+                    <div class="service-icon-wrapper w-20 h-20 mx-auto mb-4 bg-[#FCC21B]/10 rounded-2xl flex items-center justify-center">
+                        <i data-lucide="palmtree" class="w-10 h-10 text-[#FCC21B] transition-colors"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 text-xl mb-2">Travel</h3>
+                    <p class="text-sm text-gray-500 mb-4">Outstation trips and intercity travel. One-way and round-trip options.</p>
+                    <div class="flex items-center justify-center gap-2 text-[#FCC21B] font-semibold text-sm">
+                        <span>Book Now</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p class="testimonial-text">"I sold my property above market value thanks to Stackly's strategic marketing. Their professionalism and dedication exceeded all my expectations."</p>
-        <div class="testimonial-author">
-          <img src="pho13.webp" alt="Client">
-          <div class="info">
-            <h4>Sarah Chen</h4>
-            <span>Property Seller</span>
-          </div>
-        </div>
-      </div>
+    </section>
 
-      <div class="testimonial-card">
-        <div class="testimonial-stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
+    <!-- How It Works -->
+    <section class="py-24 bg-gray-50 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    SIMPLE STEPS
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    How It Works
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full" data-aos="zoom-in"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div class="process-step text-center" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-[#FCC21B] rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <i data-lucide="smartphone" class="w-10 h-10 text-black"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">1. Open App</h3>
+                    <p class="text-gray-600 text-sm">Launch the Rapido app on your smartphone</p>
+                </div>
+                
+                <div class="process-step text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-[#FCC21B] rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <i data-lucide="map-pin" class="w-10 h-10 text-black"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">2. Enter Location</h3>
+                    <p class="text-gray-600 text-sm">Set your pickup and drop-off points</p>
+                </div>
+                
+                <div class="process-step text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-[#FCC21B] rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <i data-lucide="bike" class="w-10 h-10 text-black"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">3. Choose Service</h3>
+                    <p class="text-gray-600 text-sm">Select from Bike, Auto, Cab or Parcel</p>
+                </div>
+                
+                <div class="process-step text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-[#FCC21B] rounded-full flex items-center justify-center shadow-lg relative z-10">
+                        <i data-lucide="check-circle" class="w-10 h-10 text-black"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-2">4. Enjoy Ride</h3>
+                    <p class="text-gray-600 text-sm">Track your ride and reach destination safely</p>
+                </div>
+            </div>
         </div>
-        <p class="testimonial-text">"Their investment consulting helped me build a profitable real estate portfolio. The insights and market analysis were invaluable for my decisions."</p>
-        <div class="testimonial-author">
-          <img src="pho16.webp" alt="Client">
-          <div class="info">
-            <h4>Michael Torres</h4>
-            <span>Investor</span>
-          </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2" data-aos="fade-right">
+                    <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4">
+                        WHY CHOOSE RAPIDO
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        Features That Make Us <span class="text-[#FCC21B]">#1</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        We constantly innovate to provide you with the best ride experience. Here's what sets us apart from the competition.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="zap" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Lightning Fast</h4>
+                                <p class="text-xs text-gray-500">Avg pickup under 5 mins</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Safe Rides</h4>
+                                <p class="text-xs text-gray-500">Verified captains only</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="wallet" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Best Prices</h4>
+                                <p class="text-xs text-gray-500">Transparent, no hidden fees</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="headphones" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">24/7 Support</h4>
+                                <p class="text-xs text-gray-500">Always here to help</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="map" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Live Tracking</h4>
+                                <p class="text-xs text-gray-500">Real-time ride updates</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card p-4 rounded-xl flex items-start gap-3">
+                            <div class="w-10 h-10 bg-[#FCC21B]/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="credit-card" class="w-5 h-5 text-[#FCC21B]"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 text-sm">Easy Payment</h4>
+                                <p class="text-xs text-gray-500">Multiple payment options</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 relative" data-aos="fade-left">
+                    <div class="absolute -inset-4 bg-[#FCC21B]/20 rounded-3xl blur-xl"></div>
+                    <div class="relative bg-white rounded-3xl shadow-2xl p-6 border border-gray-100">
+                        <img src="homeimg5.webp" alt="Rapido App" class="w-full h-auto rounded-2xl mb-6 object-cover">
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-[#FCC21B] rounded-full flex items-center justify-center">
+                                        <i data-lucide="bike" class="w-5 h-5 text-black"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Bike Taxi</p>
+                                        <p class="text-xs text-gray-500">Nearest captain: 2 mins</p>
+                                    </div>
+                                </div>
+                                <span class="text-[#FCC21B] font-bold">₹45</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-[#FCC21B] rounded-full flex items-center justify-center">
+                                        <i data-lucide="car" class="w-5 h-5 text-black"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Auto</p>
+                                        <p class="text-xs text-gray-500">Nearest captain: 4 mins</p>
+                                    </div>
+                                </div>
+                                <span class="text-[#FCC21B] font-bold">₹78</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-[#FCC21B] rounded-full flex items-center justify-center">
+                                        <i data-lucide="car-front" class="w-5 h-5 text-black"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Cab Economy</p>
+                                        <p class="text-xs text-gray-500">Nearest captain: 6 mins</p>
+                                    </div>
+                                </div>
+                                <span class="text-[#FCC21B] font-bold">₹125</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ================= CTA SECTION ================= -->
-<section class="cta-section">
-  <div class="cta-content">
-    <h2>READY TO GET <span>STARTED?</span></h2>
-    <p>Let our expert team help you with all your real estate needs. Schedule a free consultation today and take the first step towards your property goals.</p>
-    <div class="cta-buttons">
-      <a href="404.html" class="btn-primary">SCHEDULE CONSULTATION</a>
-      <a href="404.html" class="btn-outline">CONTACT US</a>
-    </div>
-  </div>
-</section>
+    <!-- Pricing Comparison -->
+    <section class="py-24 bg-gray-50 relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-1 bg-[#FCC21B]/10 text-[#FCC21B] rounded-full text-sm font-semibold mb-4" data-aos="fade-down">
+                    TRANSPARENT PRICING
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" data-aos="fade-up">
+                    Compare & Save
+                </h2>
+                <div class="w-24 h-1 bg-[#FCC21B] mx-auto rounded-full mb-4" data-aos="zoom-in"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    Sample fares for a 5km ride. Actual prices may vary based on traffic and demand.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="pricing-card bg-white rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="bike" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-1">Bike</h3>
+                    <div class="text-3xl font-bold text-[#FCC21B] mb-2">₹35</div>
+                    <p class="text-sm text-gray-500 mb-4">5km distance</p>
+                    <ul class="text-left space-y-2 mb-6 text-sm text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Fastest option
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Beat traffic
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Solo ride
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
+                        Book Now
+                    </button>
+                </div>
+                
+                <div class="pricing-card bg-white rounded-2xl p-6 border-2 border-[#FCC21B] text-center relative" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#FCC21B] text-black text-xs font-bold px-3 py-1 rounded-full">
+                        POPULAR
+                    </div>
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="car" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-1">Auto</h3>
+                    <div class="text-3xl font-bold text-[#FCC21B] mb-2">₹65</div>
+                    <p class="text-sm text-gray-500 mb-4">5km distance</p>
+                    <ul class="text-left space-y-2 mb-6 text-sm text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Comfortable
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Up to 3 passengers
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Weather protection
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-[#FCC21B] text-black rounded-xl font-bold hover:bg-[#e5b100] transition-colors">
+                        Book Now
+                    </button>
+                </div>
+                
+                <div class="pricing-card bg-white rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="car-front" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-1">Cab Economy</h3>
+                    <div class="text-3xl font-bold text-[#FCC21B] mb-2">₹95</div>
+                    <p class="text-sm text-gray-500 mb-4">5km distance</p>
+                    <ul class="text-left space-y-2 mb-6 text-sm text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            AC comfort
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Up to 4 passengers
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Trunk space
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
+                        Book Now
+                    </button>
+                </div>
+                
+                <div class="pricing-card bg-white rounded-2xl p-6 border border-gray-200 text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#FCC21B]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-[#FCC21B]"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-lg mb-1">Cab Premium</h3>
+                    <div class="text-3xl font-bold text-[#FCC21B] mb-2">₹145</div>
+                    <p class="text-sm text-gray-500 mb-4">5km distance</p>
+                    <ul class="text-left space-y-2 mb-6 text-sm text-gray-600">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Luxury vehicles
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Professional drivers
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Premium experience
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-gray-100 text-gray-900 rounded-xl font-semibold hover:bg-[#FCC21B] transition-colors">
+                        Book Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- ================= FOOTER ================= -->
-<div class="footer-wave">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-    <path fill="#2a2835" d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z"></path>
-  </svg>
+    <!-- CTA Section -->
+    <section class="py-24 bg-[#FCC21B] relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('homeimg4.webp')] opacity-10"></div>
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+            <div class="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl float-animation"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-white/10 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-6" data-aos="fade-up">
+                Ready to Get Moving?
+            </h2>
+            <p class="text-black/70 mb-10 max-w-2xl mx-auto text-lg" data-aos="fade-up" data-aos-delay="100">
+                Download the app now and experience the fastest, most affordable way to travel in your city.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="200">
+                <button class="btn-primary bg-black text-white px-8 py-4 rounded-xl flex items-center gap-4 hover:bg-gray-900 group">
+                    <i data-lucide="apple" class="w-8 h-8"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-400">Download on the</div>
+                        <div class="text-xl font-bold">App Store</div>
+                    </div>
+                </button>
+                
+                <button class="btn-primary bg-black text-white px-8 py-4 rounded-xl flex items-center gap-4 hover:bg-gray-900 group">
+                    <i data-lucide="play" class="w-8 h-8"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-400">Get it on</div>
+                        <div class="text-xl font-bold">Google Play</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+     <footer class="bg-black text-white py-16 border-t border-gray-800">
+
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-12 text-center md:text-left">
+<!-- BRAND -->
+<div class="md:col-span-2">
+
+<a href="index.html" class="flex items-center justify-center md:justify-start gap-2 md:gap-3 mb-6 group">
+<div class="relative w-10 h-10 md:w-12 md:h-12 bg-[#FCC21B] rounded-xl flex items-center justify-center shadow-lg">
+
+<img src="logo.webp"
+class="w-8 h-8 md:w-9 md:h-9 object-contain">
+
 </div>
 
-<footer class="main-footer">
-  <div class="footer-container">
+<span class="text-xl md:text-2xl font-bold text-white">
+Stackly
+</span>
 
-    <!-- Brand Column --> <div class="footer-brand">
+</a>
 
-  <a href="home 2.html" class="footer-brand-header">
-    <img src="logoo.webp" alt="Stackly Logo">
-    <h3>STACK<span>LY</span></h3>
-  </a>
+<p class="text-gray-400 text-sm leading-relaxed max-w-sm mx-auto md:mx-0">Stackly is India's fastest growing mobility platform.
+<!-- Book rides, deliver parcels and travel across cities easily -->
+with reliable transportation services.
+</p>
 
-  <p>
-    We are providing best real estate solutions for buying,
-    selling and renting properties with trusted service and
-    modern technology.
-  </p>
-      
-      <div class="contact-info">
-        <div class="contact-item">
-          <i class="fas fa-map-marker-alt"></i>
-          <span>123 Luxury Avenue, Beverly Hills, CA 90210</span>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-phone"></i>
-          <span>+1 (800) 555-0199</span>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-envelope"></i>
-          <span>contact@stackly.com</span>
-        </div>
-      </div>
+</div>
 
-      <div class="footer-social">
-        <a href="404.html"><i class="fab fa-facebook-f"></i></a>
-        <a href="404.html"><i class="fab fa-twitter"></i></a>
-        <a href="404.html"><i class="fab fa-linkedin-in"></i></a>
-        <a href="404.html"><i class="fab fa-instagram"></i></a>
-        <a href="404.html"><i class="fab fa-youtube"></i></a>
-      </div>
-    </div>
+<!-- COMPANY -->
+<div>
 
-    <!-- Quick Links -->
-    <div class="footer-col">
-      <h4>QUICK LINKS</h4>
-      <ul>
-        <li><a href="404.html">About Us</a></li>
-        <li><a href="service.html"> Services</a></li>
-        <li><a href="property.html">Properties</a></li>
-        <li><a href="page.html">Pages</a></li>
-        <li><a href="404.html">Testimonials</a></li>
-        <li><a href="contact1.html">Contact</a></li>
-      </ul>
-    </div>
+<h3 class="font-bold text-lg mb-4 text-[#FCC21B]">
+Company
+</h3>
 
-    <!-- Services -->
-    <div class="footer-col">
-      <h4>OUR SERVICES</h4>
-      <ul>
-        <li><a href="404.html">Property Buying</a></li>
-        <li><a href="404.html">Property Selling</a></li>
-        <li><a href="404.html">Property Rental</a></li>
-        <li><a href="404.html">Property Investment</a></li>
-        <li><a href="404.html">Construction</a></li>
-        <li><a href="404.html">Consultation</a></li>
-      </ul>
-    </div>
+<ul class="space-y-3">
 
-    <!-- Newsletter -->
-    <div class="footer-col">
-      <h4>NEWSLETTER</h4>
-      <p style="color:rgba(255,255,255,0.6); font-size:14px; line-height:1.7; margin-bottom:15px;">Subscribe to get the latest property listings and real estate news delivered to your inbox.</p>
+<li>
+<a href="About.html" class="text-gray-400 hover:text-white transition">
+About Us
+</a>
+</li>
 
-      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed!');">
-        <input type="email" placeholder="Your email address" required>
-        <button type="submit">SUBSCRIBE NOW</button>
-      </form>
-    </div>
+<li>
+<a href="service.html" class="text-gray-400 hover:text-white transition">
+Services
+</a>
+</li>
 
-  </div>
+<li>
+<a href="safety.html" class="text-gray-400 hover:text-white transition">
+Safety
+</a>
+</li>
 
-  <div class="footer-bottom">
-    <p>© 2026 Stackly Real Estate. All Rights Reserved.</p>
-    <div class="footer-bottom-links">
-      <a href="404.html">Privacy Policy</a>
-      <a href="404.html">Terms of Service</a>
-      <a href="404.html">Sitemap</a>
-    </div>
-  </div>
-</footer>
+<li>
+<a href="contact.html" class="text-gray-400 hover:text-white transition">
+Contact
+</a>
+</li>
 
-<!-- Scroll Top -->
-<button class="scroll-top" id="scrollTop" onclick="scrollToTop()">
-  <i class="fas fa-chevron-up"></i>
+
+
+</ul>
+
+</div>
+
+<!-- PRODUCTS -->
+<div>
+
+<h3 class="font-bold text-lg mb-4 text-[#FCC21B]">
+Products
+</h3>
+
+<ul class="space-y-3">
+
+<li><a href="404.html" class="text-gray-400 hover:text-white transition">Ride</a></li>
+
+<li><a href="404.html" class="text-gray-400 hover:text-white transition">Drive</a></li>
+
+<li><a href="404.html" class="text-gray-400 hover:text-white transition">Eat</a></li>
+
+<!-- <li><a href="404.html" class="text-gray-400 hover:text-white transition">Freight</a></li> -->
+
+<li><a href="404.html" class="text-gray-400 hover:text-white transition">Gift Cards</a></li>
+
+</ul>
+
+</div>
+
+<!-- TRAVEL -->
+<div>
+
+<h3 class="font-bold text-lg mb-4 text-[#FCC21B]">
+Travel
+</h3>
+
+<ul class="space-y-3">
+
+<li><a href="404.html" class="text-gray-400 hover:text-white transition">Reserve</a></li>
+
+<li><a href="404.html" class="text-gray-400 hover:text-white transition">Airports</a></li>
+
+<li><a href="404.html" class="text-gray-400 hover:text-white transition">Cities</a></li>
+
+</ul>
+
+</div>
+
+</div>
+
+<!-- SOCIAL + LANGUAGE -->
+
+<div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-gray-800 gap-4">
+
+<div class="flex gap-4 justify-center md:justify-start">
+<a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="7" r="2"/></svg>
+
+</a>
+
+<a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+
+</a>
+
+<a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+
+</a>
+
+<a href="404.html" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-[#FCC21B] hover:text-black transition">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+
+</a>
+
+</div>
+<div class="flex items-center gap-6 justify-center">
+<button class="flex items-center gap-2 text-gray-400 hover:text-white transition">
+
+<i data-lucide="globe" class="w-5 h-5"></i>
+
+English
+
 </button>
 
-<script>
-/* ================= MOBILE MENU ================= */
-const hamburger = document.getElementById("hamburger");
-const nav = document.getElementById("navMenu");
+<button class="flex items-center gap-2 text-gray-400 hover:text-white transition">
 
-hamburger.addEventListener("click", ()=>{
-  hamburger.classList.toggle("active");
-  nav.classList.toggle("active");
-});
+<i data-lucide="map-pin" class="w-5 h-5"></i>
 
-/* Close menu when clicking a link */
-document.querySelectorAll("#navMenu > a").forEach(link => {
-  link.addEventListener("click", ()=>{
-    hamburger.classList.remove("active");
-    nav.classList.remove("active");
-  });
-});
+India
 
-/* ================= DROPDOWN TOGGLE (Mobile) ================= */
-function toggleDropdown(element){
-  const dropdown = element.parentElement;
-  const isMobile = window.innerWidth <= 992;
+</button>
 
-  if(isMobile){
-    dropdown.classList.toggle("open");
-    const icon = element.querySelector("i");
-    if(dropdown.classList.contains("open")){
-      icon.style.transform = "rotate(180deg)";
-    } else {
-      icon.style.transform = "rotate(0deg)";
-    }
-  }
-}
+</div>
 
-/* Close dropdowns when clicking outside */
-document.addEventListener("click", function(e){
-  if(window.innerWidth > 992) return;
+</div>
 
-  const dropdowns = document.querySelectorAll(".dropdown");
-  dropdowns.forEach(dropdown => {
-    if(!dropdown.contains(e.target)){
-      dropdown.classList.remove("open");
-      const icon = dropdown.querySelector("i");
-      if(icon) icon.style.transform = "rotate(0deg)";
-    }
-  });
-});
+<div class="text-center mt-8 text-gray-500 text-sm">
 
-/* ================= HEADER SCROLL EFFECT ================= */
-window.addEventListener("scroll", ()=>{
-  const header = document.getElementById("mainHeader");
-  if(window.scrollY > 50){
-    header.style.padding = "12px 60px";
-    header.style.boxShadow = "0 5px 30px rgba(0,0,0,0.1)";
-  } else {
-    header.style.padding = "20px 60px";
-    header.style.boxShadow = "0 2px 20px rgba(0,0,0,0.05)";
-  }
-});
+© 2026 Stackly. All rights reserved.
 
-/* ================= SCROLL TOP ================= */
-const scrollTopBtn = document.getElementById("scrollTop");
+</div>
 
-window.addEventListener("scroll", ()=>{
-  if(window.scrollY > 400){
-    scrollTopBtn.classList.add("visible");
-  } else {
-    scrollTopBtn.classList.remove("visible");
-  }
-});
+</div>
 
-function scrollToTop(){
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-}
-
-/* ================= SCROLL REVEAL ================= */
-const revealElements = document.querySelectorAll(".service-card, .process-card, .testimonial-card");
-
-function revealOnScroll(){
-  revealElements.forEach(el => {
-    const top = el.getBoundingClientRect().top;
-    if(top < window.innerHeight - 80){
-      el.style.opacity = "1";
-      el.style.transform = "translateY(0)";
-    }
-  });
-}
-
-window.addEventListener("scroll", revealOnScroll);
-revealOnScroll();
-</script>
-
+</footer>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            const navbar = document.getElementById('navbar');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.setAttribute('data-lucide', 'menu');
+                if (window.scrollY <= 100) {
+                    navbar.classList.remove('mobile-nav-bg');
+                }
+            } else {
+                menu.classList.add('active');
+                icon.setAttribute('data-lucide', 'x');
+                navbar.classList.add('mobile-nav-bg');
+            }
+            lucide.createIcons();
+        }
+        
+        // Close Mobile Menu
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.remove('active');
+            icon.setAttribute('data-lucide', 'menu');
+            lucide.createIcons();
+        }
+        
+        // Dropdown Toggle
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const isHidden = dropdown.classList.contains('hidden');
+            
+            document.querySelectorAll('.dropdown-menu').forEach(d => {
+                d.classList.add('hidden');
+                d.classList.remove('active');
+            });
+            
+            if (isHidden) {
+                dropdown.classList.remove('hidden');
+                setTimeout(() => dropdown.classList.add('active'), 10);
+            }
+        }
+        
+        // Mobile Dropdown Toggle
+        function toggleMobileDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            
+            if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.group')) {
+                document.querySelectorAll('.dropdown-menu').forEach(d => {
+                    d.classList.add('hidden');
+                    d.classList.remove('active');
+                });
+            }
+        });
+        
+        // Header scroll effect
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                navbar.classList.remove('nav-transparent');
+                navbar.classList.add('nav-solid');
+            } else {
+                navbar.classList.remove('nav-solid');
+                navbar.classList.add('nav-transparent');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

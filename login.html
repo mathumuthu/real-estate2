@@ -3,209 +3,177 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luxury Estate Portal</title>
+
+<title>Login - Ride App</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
-}
 
 body{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:
-linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
-url('home4 img.webp');
-background-size:cover;
-background-position:center;
-padding:20px;
+background:#f5f5f5;
+font-family: Arial;
 }
 
-.container{
-width:100%;
-max-width:420px;
-background:rgba(255,255,255,.12);
-backdrop-filter:blur(15px);
-padding:30px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.4);
-color:#fff;
+/* Card animation */
+
+.card{
+animation: slideUp 0.7s ease;
 }
 
-h2{
-text-align:center;
-margin-bottom:20px;
-color:#f8d56b;
+@keyframes slideUp{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
-.form{
-display:none;
+/* Shake animation */
+
+.shake{
+animation:shake 0.3s;
 }
 
-.form.active{
-display:block;
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-5px)}
+50%{transform:translateX(5px)}
+75%{transform:translateX(-5px)}
+100%{transform:translateX(0)}
 }
 
-input{
-width:100%;
-padding:14px;
-margin:10px 0;
-border:none;
-outline:none;
-border-radius:10px;
-}
-
-button{
-width:100%;
-padding:14px;
-border:none;
-border-radius:10px;
-background:#f8d56b;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
-}
-
-button:hover{
-background:#ffd84d;
-}
-
-.links{
-text-align:center;
-margin-top:15px;
-}
-
-.links a{
-color:#f8d56b;
-text-decoration:none;
-margin:0 5px;
-font-size:14px;
-}
-
-.logo{
-text-align:center;
-font-size:28px;
-margin-bottom:15px;
-font-weight:bold;
-color:#f8d56b;
-}
-
-@media(max-width:480px){
-.container{
-padding:20px;
-}
-}
 </style>
 </head>
-<body>
 
-<div class="container">
 
- <div class="logo"><img src="logoo.webp" width="35px" height="35px" alt="Stackly Logo"> STACKLY</div>
+<body class="flex items-center justify-center min-h-screen">
 
-<!-- LOGIN -->
-<div class="form active" id="loginForm">
-<h2>Login</h2>
 
-<input type="email" id="loginEmail" placeholder="Email">
-<input type="password" id="loginPassword" placeholder="Password">
+<div class="bg-white shadow-xl rounded-xl p-8 w-full max-w-md card">
 
-<button onclick="login()">Login</button>
+<h2 class="text-3xl font-bold text-center mb-6 text-black">
+Login
+</h2>
 
-<div class="links">
-<a href="#" onclick="showForm('signupForm')">Sign Up</a> |
-<a href="#" onclick="showForm('forgotForm')">Forgot Password?</a>
-</div>
-</div>
 
-<!-- SIGNUP -->
-<div class="form" id="signupForm">
-<h2>Sign Up</h2>
+<p id="errorMsg" class="text-red-500 text-center mb-4 hidden">
+Please fill all fields
+</p>
 
-<input type="text" id="name" placeholder="Full Name">
-<input type="email" id="signupEmail" placeholder="Email">
-<input type="password" id="signupPassword" placeholder="Password">
 
-<button onclick="signup()">Create Account</button>
+<form id="loginForm">
 
-<div class="links">
-<a href="#" onclick="showForm('loginForm')">Back Login</a>
-</div>
-</div>
+<div class="mb-4">
 
-<!-- FORGOT -->
-<div class="form" id="forgotForm">
-<h2>Forgot Password</h2>
+<label class="block text-gray-600 mb-2">
+Email
+</label>
 
-<input type="email" id="forgotEmail" placeholder="Enter Email">
-
-<button onclick="forgotPassword()">Reset Password</button>
-
-<div class="links">
-<a href="#" onclick="showForm('loginForm')">Back Login</a>
-</div>
-</div>
+<input 
+id="email"
+type="email"
+placeholder="Enter email"
+class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
 
 </div>
+
+
+
+<div class="mb-4">
+
+<label class="block text-gray-600 mb-2">
+Password
+</label>
+
+<input 
+id="password"
+type="password"
+placeholder="Enter password"
+class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
+
+</div>
+
+
+<div class="flex justify-between text-sm mb-5">
+
+<label>
+<input type="checkbox"> Remember me
+</label>
+
+<a href="for.html" class="text-yellow-500 font-semibold">
+Forgot Password?
+</a>
+
+</div>
+
+
+<button 
+type="submit"
+class="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition">
+
+Login
+
+</button>
+
+
+<p class="text-center mt-6 text-sm">
+
+Don't have account?
+
+<a href="sig.html" class="font-bold text-yellow-500">
+Sign Up
+</a>
+
+</p>
+
+</form>
+
+</div>
+
 
 <script>
 
-function showForm(formId){
-document.querySelectorAll('.form').forEach(form=>{
-form.classList.remove('active');
+
+const form = document.getElementById("loginForm");
+
+form.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const error = document.getElementById("errorMsg");
+
+if(email.value === "" || password.value === ""){
+
+    error.classList.remove("hidden");
+
+    email.classList.add("shake");
+    password.classList.add("shake");
+
+    setTimeout(() => {
+        email.classList.remove("shake");
+        password.classList.remove("shake");
+    }, 300);
+
+}else{
+
+    error.classList.add("hidden");
+
+    // Redirect to 404 page
+    window.location.href = "404.html";
+
+}
+
 });
 
-document.getElementById(formId).classList.add('active');
-}
-
-function login(){
-
-let email=document.getElementById("loginEmail").value.trim();
-let password=document.getElementById("loginPassword").value.trim();
-
-if(email==="" || password===""){
-alert("⚠️ Please fill all login fields.");
-return;
-}
-
-alert("✅ Login Successful!");
-window.location.href="404.html";
-}
-
-function signup(){
-
-let name=document.getElementById("name").value.trim();
-let email=document.getElementById("signupEmail").value.trim();
-let password=document.getElementById("signupPassword").value.trim();
-
-if(name==="" || email==="" || password===""){
-alert("⚠️ Please fill all signup fields.");
-return;
-}
-
-alert("✅ Account Created Successfully!");
-window.location.href="404.html";
-}
-
-function forgotPassword(){
-
-let email=document.getElementById("forgotEmail").value.trim();
-
-if(email===""){
-alert("⚠️ Please enter your email.");
-return;
-}
-
-alert("📧 Password reset link sent!");
-window.location.href="404.html";
-}
-
 </script>
+</script>
+
 
 </body>
 </html>
