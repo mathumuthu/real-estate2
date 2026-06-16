@@ -479,7 +479,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     <!-- Navigation Links -->
                     <a href="about.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">About</a>
                     <a href="ami.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap bg-white/20">Amenities</a>
-                    <a href="feature.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Features</a>
+                    <!-- <a href="feature.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Features</a> -->
                     <a href="floor.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Floor Plans</a>
                     <!-- <a href="#reviews" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Reviews</a> -->
                     <a href="location.html" class="nav-link px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all duration-300 whitespace-nowrap">Locations</a>
@@ -563,7 +563,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
                 <a href="about.html" class="mobile-link ">About</a>
                 <a href="ami.html" class="mobile-link active">Amenities</a>
-                <a href="feature.html" class="mobile-link">Features</a>
+                <!-- <a href="feature.html" class="mobile-link">Features</a> -->
                 <a href="floor.html" class="mobile-link">Floor Plans</a>
                 <!-- <a href="#reviews" class="mobile-link">Reviews</a> -->
                 <a href="location.html" class="mobile-link">Locations</a>
@@ -572,13 +572,13 @@ document.addEventListener("DOMContentLoaded", function(){
 
             <!-- Social Links -->
             <div class="mobile-social opacity-0 translate-y-8">
-                <a href="https://www.instagram.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                <a href="error.html" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://www.facebook.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                <a href="error.html" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
                     <i class="fab fa-facebook-f"></i>
                 </a>
-                <a href="https://x.com/" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
+                <a href="error.html" class="w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-accent hover:border-accent transition-all">
                     <i class="fab fa-twitter"></i>
                 </a>
             </div>
@@ -761,66 +761,81 @@ document.addEventListener("DOMContentLoaded", function(){
     </section>
 
     <!-- Footer -->
-    <footer class="bg-primary border-t border-white/10 py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
+    <footer class="bg-primary border-t border-white/10 py-12 sm:py-16">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-10 sm:mb-12">
                 <div>
-                    <div class="text-xl font-black text-white mb-6 flex items-center gap-3">
-                        <img src="https://via.placeholder.com/45x45/2c5f4a/ffffff?text=S" alt="STACKLY" class="h-8 w-auto brightness-0 invert">
-                        STACKLY
+                    <div class="flex items-center gap-2 mb-4 sm:mb-6">
+                        <!-- <div class="w-8 h-8 sm:w-10 sm:h-10 bg-accent rounded-lg flex items-center justify-center text-white">
+                            <i class="fas fa-building text-sm sm:text-base"></i>
+                        </div> -->
+                    <a href="index.html">
+                        <div class="text-xl font-black text-white mb-6 flex items-center gap-3">
+                            <img src="logo.png" alt="STACKLY" class="h-8 w-auto brightness-0 invert">
+                            STACKLY
+                        </div>
+                    </a>
                     </div>
-                    <p class="text-gray-400 mb-6">Luxury living redefined. Experience the perfect blend of elegance, comfort, and nature.</p>
-                    <div class="flex gap-4">
-                        <a href="https://www.facebook.com/" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
-                            <i class="fab fa-facebook-f"></i>
+                    <p class="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">Luxury living redefined. Experience the perfect blend of elegance, comfort, and nature.</p>
+                    <div class="flex gap-3 sm:gap-4">
+                        <a href="error.html" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-facebook-f text-sm"></i>
                         </a>
-                        <a href="https://x.com/" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
-                            <i class="fab fa-twitter"></i>
+                        <a href="error.html" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-twitter text-sm"></i>
                         </a>
-                        <a href="https://www.instagram.com/" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
-                            <i class="fab fa-instagram"></i>
+                        <a href="error.html" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="error.html" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-accent transition-all">
+                            <i class="fab fa-linkedin-in text-sm"></i>
                         </a>
                     </div>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
-                    <ul class="space-y-3">
-                        <li><a href="about.html" class="text-gray-400 hover:text-accent transition-colors">About Us</a></li>
-                        <li><a href="ami.html" class="text-gray-400 hover:text-accent transition-colors">Amenities</a></li>
-                        <li><a href="floor.html" class="text-gray-400 hover:text-accent transition-colors">Floor Plans</a></li>
-                        <li><a href="location.html" class="text-gray-400 hover:text-accent transition-colors">Contact</a></li>
+                    <h4 class="text-white font-bold mb-4 sm:mb-6 text-base sm:text-lg">Quick Links</h4>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="about.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">About Us</a></li>
+                        <li><a href="ami.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">Amenities</a></li>
+                        <li><a href="floor.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">Floor Plans</a></li>
+                        <li><a href="location.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">Locations</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-6">Properties</h4>
-                    <ul class="space-y-3">
-                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">3 BHK Apartments</a></li>
-                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">4 BHK Apartments</a></li>
-                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">5 BHK Apartments</a></li>
-                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors">Penthouse Suites</a></li>
+                    <h4 class="text-white font-bold mb-4 sm:mb-6 text-base sm:text-lg">Properties</h4>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">3 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">4 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">5 BHK Apartments</a></li>
+                        <li><a href="error.html" class="text-gray-400 hover:text-accent transition-colors text-sm sm:text-base">Penthouse Suites</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold mb-6">Newsletter</h4>
-                    <p class="text-gray-400 mb-4">Subscribe for updates.</p>
+                    <h4 class="text-white font-bold mb-4 sm:mb-6 text-base sm:text-lg">Newsletter</h4>
+                    <p class="text-gray-400 mb-4 text-sm sm:text-base">Subscribe to get latest updates and offers.</p>
                     <div class="flex gap-2">
-                        <input type="email" placeholder="Your email" class="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-accent">
-                        <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary transition-all">
+                        <input type="email" placeholder="Your email" class="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-accent text-sm">
+                        <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary transition-all" onclick="alert('Thank you for subscribing!\n\nSMS Alert: You will receive updates via SMS.');">
                             <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-gray-500 text-sm">&copy; 2023 STACKLY Real Homes. All rights reserved.</p>
-                <div class="flex gap-6 text-sm text-gray-500">
+            <div class="border-t border-white/10 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-xs sm:text-sm text-center md:text-left">&copy; 2023 Real Homes. All rights reserved.</p>
+                <div class="flex gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
                     <a href="error.html" class="hover:text-accent transition-colors">Privacy Policy</a>
                     <a href="error.html" class="hover:text-accent transition-colors">Terms of Service</a>
+                    <a href="error.html" class="hover:text-accent transition-colors">Cookie Policy</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Scroll to Top -->
+    <button id="scrollTop" class="fixed bottom-6 sm:bottom-8 right-6 sm:right-8 w-12 h-12 sm:w-14 sm:h-14 bg-accent text-white rounded-full shadow-2xl flex items-center justify-center opacity-0 translate-y-10 transition-all duration-300 hover:bg-primary hover:scale-110 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
     <!-- Scroll to Top -->
     <button id="scrollTop" class="fixed bottom-8 right-8 w-12 h-12 bg-accent text-white rounded-full shadow-lg flex items-center justify-center opacity-0 translate-y-10 transition-all duration-300 hover:bg-primary z-50">
         <i class="fas fa-arrow-up"></i>
